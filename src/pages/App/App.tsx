@@ -27,6 +27,8 @@ import StudentsResults from "../students/studentsresults/Students-Results";
 
 import LecturerGrades from "../lecturers/lecturesGradeExam/lec_grade";
 
+import GradeExamPage from "../grade_exams_page/GradeExamPage";
+
 function App() {
   return (
     <>
@@ -185,6 +187,9 @@ function App() {
             />
           }
         />
+        <Route
+        path="/lecturers/grade-exams-dashboard"
+        element={<GradeExamPage/>}/>
       </Routes>
     </>
   );
