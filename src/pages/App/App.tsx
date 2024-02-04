@@ -86,7 +86,7 @@ function App() {
               form_title="Sign into QuickGrade"
               id_or_email="Student Registration Number"
               placeholder="Enter your Registration number"
-              backgroundImage={student_login_page_bg}
+              backgroundimage={student_login_page_bg}
               userType="/students/forgot-password"
             />
           }
@@ -99,7 +99,7 @@ function App() {
               form_title="Sign into QuickGrade"
               id_or_email="Employee ID"
               placeholder="Enter emplooyee id"
-              backgroundImage={lecturer_login_page_bg}
+              backgroundimage={lecturer_login_page_bg}
               userType="/lecturers/forgot-password"
             />
           }
@@ -167,7 +167,7 @@ function App() {
           path="/students/check-your-email"
           element={
             <CheckYourEmail
-              information="We sent your Registration Number and password to your verified email,
+              information="We sent your Registration Number to your verified email,
               kindly use the detail to login."
               location="/students/signin"
               location_text="Proceed to login"
@@ -178,7 +178,7 @@ function App() {
           path="/lecturers/check-your-email"
           element={
             <CheckYourEmail
-              information="We sent your EmployeeID and password to your verified email,
+              information="We sent your EmployeeID to your verified email,
             kindly use the detail to login."
               location="/lecturers/signin"
               location_text="Proceed to login"
