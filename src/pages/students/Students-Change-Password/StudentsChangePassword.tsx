@@ -19,7 +19,7 @@ function StudentsChangePassword() {
 
     // Validate the form fields
     if (!oldPassword || !newPassword || !confirmNewPassword) {
-      setError("All fields are required");
+      setError("All fields are required, try again");
       return;
     }
 

@@ -86,7 +86,7 @@ function App() {
               form_title="Sign into QuickGrade"
               id_or_email="Student Registration Number"
               placeholder="Enter your Registration number"
-              backgroundImage={student_login_page_bg}
+              backgroundimage={student_login_page_bg}
               userType="/students/forgot-password"
             />
           }
@@ -99,7 +99,7 @@ function App() {
               form_title="Sign into QuickGrade"
               id_or_email="Employee ID"
               placeholder="Enter emplooyee id"
-              backgroundImage={lecturer_login_page_bg}
+              backgroundimage={lecturer_login_page_bg}
               userType="/lecturers/forgot-password"
             />
           }
