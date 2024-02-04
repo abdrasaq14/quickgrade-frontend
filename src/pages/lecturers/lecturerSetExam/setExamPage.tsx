@@ -1058,7 +1058,7 @@ function SetExamPage() {
                                         )
                                       }
                                     />
-                                    <button
+                                    <button className="fill-in-the-blanks-remove-question"
                                       type="button"
                                       onClick={() =>
                                         removeQuestion(1, questionIndex)

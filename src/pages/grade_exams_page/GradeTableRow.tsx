@@ -8,7 +8,7 @@ function GradeTableRow(){
                         <td className="grade-exams-page-table-cell">0/211</td>
                         <td className="grade-exams-page-table-cell">0/0</td>
                         <td className="grade-exams-page-table-cell">0/0</td>
-                        <td className="grade-exams-page-table-cell">Not Started</td>
+                        <td className="grade-exams-page-table-cell">[Not Started]</td>
                         <td className="grade-exams-page-table-button-cell">
                             <form action="/INSERT-END-POINT" method="post" className="grade-exams-page-table-grade-form">
                                 <button className="grade-exams-page-table-grade-button">Grade</button>
