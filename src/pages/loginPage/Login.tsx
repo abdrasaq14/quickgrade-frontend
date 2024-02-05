@@ -58,12 +58,12 @@ export function LoginPage(props: Props) {
         else if (res.status === 200 && res.data.inValidPassword) {
 
           setError("Invalid password")
-          setUserId("")
           setPassword("")
         
         }
         else if(res.status === 200 && res.data.studentNotFoundError){
           setError("Student not found, invalid registration number")
+          
           setUserId("")
           setPassword("")
           

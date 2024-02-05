@@ -1,18 +1,19 @@
 import { FormEvent, ReactNode } from "react";
 import "./signUpPageStyle.css";
 import { Link } from "react-router-dom";
-import pagepic from "../../assets/sign_up_page_bg_pic copy.png";
+
 import Footer from "../footer/footer";
 import MainButton from "../buttons/mainButton";
 interface SignUpPageProps {
   signin_link: string;
+  pagepic: string;
   children: {
     signupFormElement: ReactNode;
   };
   onsubmit: (event: FormEvent) => Promise<void>;
 }
 
-function SignUpPage({ signin_link, onsubmit, children }: SignUpPageProps) {
+function SignUpPage({ signin_link, onsubmit, pagepic, children }: SignUpPageProps) {
   const { signupFormElement } = children;
   return (
     <div className="entire-signup-page-container">

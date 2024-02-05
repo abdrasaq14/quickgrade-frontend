@@ -68,8 +68,6 @@ function StudentEnrolledCourses() {
     }
   };
 
-  const newUser = studentData?.firstName || "newUser";
-
   return (
     <>
       <div className="enrolled-courses-page-container">
@@ -116,7 +114,7 @@ function StudentEnrolledCourses() {
         </SideBar>
 
         <section className="enrolled-courses-dashboard-container">
-          <Header newUser={newUser} />
+          <Header newUser={studentData?.firstName || ""} />
 
           <main className="enrolled-courses-body">
             <div className="enrolled-courses-title">Enrolled Courses</div>
@@ -137,6 +135,7 @@ function StudentEnrolledCourses() {
                   <label htmlFor="courses-semester">Semester: </label>
                   <select
                     name="courses-semester"
+                    id="courses-semester"
                     value={selectedSemester}
                     onChange={(e) => setSelectedSemester(e.target.value)}
                   >
@@ -145,9 +144,8 @@ function StudentEnrolledCourses() {
                   </select>
                 </div>
                 <div className="enrolled-courses-session">
-                  <label htmlFor="courses-sem">Session: </label>
-                  <select name="courses-semester" id="">
-                    <option value="">2022/2023</option>
+                  <label htmlFor="courses-session">Session: </label>
+                  <select name="courses-session" id="courses-session">
                     <option value="">2023/2024</option>
                   </select>
                 </div>
@@ -170,16 +168,19 @@ function StudentEnrolledCourses() {
                   </thead>
                   <tbody className="enrolled-courses-table-body">
                     {exams.length === 0 && (
-                      <tr>
+  
+                        <tr>
                         <td colSpan={5}>No exams found</td>
                       </tr>
+                    
+                      
                     )}
                     {exams.map((exam) => (
                       <tr key={exam.examId}>
                         <td>{exam.courseCode}</td>
                         <td>{exam.courseTitle}</td>
                         <td>
-                          {format(exam.examDate, "d MMM, yyyy / h:mmaaaa")}
+                          {format(exam.examDate, "d MMM, yyyy / h:mmaa")}
                         </td>
                         <td>Campus E-center</td>
                         <td style={calculateStatus(exam.examDate).style}>

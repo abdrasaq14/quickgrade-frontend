@@ -1,0 +1,145 @@
+
+.lecturer-dashboard-container{
+  display: flex;
+  width: 100%;
+
+}
+
+.lecturer-dashboard-body{
+  width: 80%;
+  margin-left: 20%;
+  background-color: #f9fafb;
+}
+
+.lecturer-blue-header{
+    width: 90%;
+    margin: 1rem auto 2rem;
+    border-radius: 1rem;
+    background-color: rgba(45, 0, 247, 1);
+    padding: 2rem 1rem;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.lecturer-blue-header-content{
+    color: var(--White, #FFF);
+    font-family: "Inter";
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 140%; 
+    letter-spacing: 0.01563rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem 0rem;
+
+
+}
+
+.lecturer-dashboard-exam-timetable-container{
+  width: 90%;
+  margin: 1rem auto;
+  
+}
+
+.lecturer-dashboard-semester-session-container{
+
+    font-family: "Inter";
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 34px;
+    letter-spacing: 0px;
+    text-align: left;
+    margin-bottom: 1rem;
+  
+}
+
+.lecturer-dashboard-exam-timetable-header{
+  font-family: "Inter";
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0.15000000596046448px;
+  text-align: left;
+  
+}
+
+.student-result-table-header-item{
+  text-align: left;
+  margin: 0;
+  padding: 0rem 1.2rem 1rem;
+  
+}
+
+
+.lecturer-exam-timetable{
+  border-collapse: separate;
+  border-spacing: 0 2rem;
+  table-layout: auto;
+  width: 96%;
+  background-color: white;
+  margin: 1rem auto 1rem;
+  
+}
+.lecturer-exam-timetable thead{
+  margin: 0rem;
+  padding: 0rem;  
+}
+
+.lecturer-exam-timetable thead th{
+  margin: 0rem;
+  padding: 0rem 0.4rem;
+
+}
+
+.lecturer-exam-timetable-row td {
+  padding: 1rem 0.6rem;
+}
+
+.lecturer-exam-timetable-row td{
+border-top: 1px solid #98A2B3;
+border-bottom: 1px solid #98A2B3;
+
+}
+
+.lecturer-exam-timetable-row td:first-child{
+border-left: 1px solid #98A2B3;
+}
+
+.lecturer-exam-timetable-row td:nth-child(2){
+  width: 20%;
+
+}
+
+.lecturer-exam-timetable-row td:nth-child(4){
+  width: 16%;
+
+}
+
+.lecturer-exam-timetable-row td:last-child{
+border-right: 1px solid #98A2B3;
+width: 10%;
+}
+
+
+.lecturer-exam-timetable-row button{
+  border-radius: 1.875rem;
+  cursor: pointer;
+  border: 1px solid #2D00F7;
+  color: #2D00F7;
+  font-family: "Inter";
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0.15000000596046448px;
+  text-align: center;
+  padding: 0.5rem 0.5rem;
+  background-color: white;
+  width: 100%;
+
+  
+}
+
+.lecturer-exam-timetable-row td:last-child{
+  padding: 0 0.2rem;
+}
