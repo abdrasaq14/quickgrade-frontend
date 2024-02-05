@@ -14,7 +14,7 @@ import StudentSignup from "../students/studentSignup/studentSignup";
 import { CheckYourEmail } from "../check-you-email/check_your_email";
 import { ForgotPassword } from "../forgotPassword/forget_password";
 import LecturerResults from "../lecturers/LecturerResultsPage/LecturerResults";
-import { StudentDash } from "../students/studentDashboard/StudentDash";
+import {StudentDash} from "../students/studentDashboard/StudentDash";
 import StudentTakeExamsInstructions from "../students/studentTakeExamsInstructions/studentTakeExamsInstructions";
 import TakeExamOBJ from "../students/studentTakeExam/TakeExamOBJ";
 import StudentsChangePassword from "../students/Students-Change-Password/StudentsChangePassword";
@@ -76,7 +76,11 @@ function App() {
                   path="change-password"
                   element={<StudentsChangePassword />}
                 />
+                <Route
+                path="grade-exams-dashboard"
+                element={<GradeExamPage/>}/>
               </Routes>
+              
             </StudentProtectedRoute>
           }
         />
@@ -187,9 +191,7 @@ function App() {
             />
           }
         />
-        <Route
-        path="/lecturers/grade-exams-dashboard"
-        element={<GradeExamPage/>}/>
+        
       </Routes>
     </>
   );

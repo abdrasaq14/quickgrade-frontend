@@ -36,6 +36,8 @@
 .signup-page-photo {
   width: 100%;
   height: 100%;
+  object-fit: fill;
+  
 }
 
 .signup-uni-title {
@@ -104,7 +106,7 @@
 
 .sign-in-form-message {
   text-align: left;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
 }
 
 .signup-form-labels {
@@ -125,6 +127,17 @@
   padding: 12px;
   margin-bottom: 1rem;
   border-radius: 4px;
+}
+
+.signup-form-selects {
+  border: 1px solid rgba(189, 189, 189, 1);
+  border-radius: 4px;
+  width: 100%;
+  height: 24px;
+  padding: 0.1rem 0.7rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+ 
 }
 
 .signup-form-inputs ::placeholder {

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import SignUpPage from "../../components/signup/signUpPage";
+import lecturerPic from "../../assets/lecturer_signin_bg.png"
 
 export default function LecturerSignup() {
   const navigate = useNavigate();
@@ -13,8 +14,10 @@ export default function LecturerSignup() {
   const [password, setPassword] = useState("");
   const [faculty, setFaculty] = useState("");
   const [department, setDepartment] = useState("");
-  const handleTitle = (event: ChangeEvent<HTMLInputElement>) => {
-    setTitle((event.currentTarget as HTMLInputElement).value);
+  const [error, setError] = useState("");
+
+  const handleTitle = (event: ChangeEvent<HTMLSelectElement>) => {
+    setTitle((event.currentTarget as HTMLSelectElement).value);
   };
   const handleFirstName = (event: ChangeEvent<HTMLInputElement>) => {
     setFirstName((event.currentTarget as HTMLInputElement).value);
@@ -28,15 +31,21 @@ export default function LecturerSignup() {
   const handleUserPassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword((event.currentTarget as HTMLInputElement).value);
   };
-  const handleUserFaculty = (event: ChangeEvent<HTMLInputElement>) => {
-    setFaculty((event.currentTarget as HTMLInputElement).value);
+  const handleUserFaculty = (event: ChangeEvent<HTMLSelectElement>) => {
+    setFaculty((event.currentTarget as HTMLSelectElement).value);
   };
-  const handleUserDepartment = (event: ChangeEvent<HTMLInputElement>) => {
-    setDepartment((event.currentTarget as HTMLInputElement).value);
+  const handleUserDepartment = (event: ChangeEvent<HTMLSelectElement>) => {
+    setDepartment((event.currentTarget as HTMLSelectElement).value);
   };
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+
+    if (!title ||!firstName || !lastName || !email || !password || !department || !faculty) {
+      setError("All fields are required, try again");
+      return;
+    }
+
     try {
       const currentRoute = location.pathname;
       console.log("currentRoute: ", currentRoute);
@@ -52,8 +61,20 @@ export default function LecturerSignup() {
       });
       // checking the response
       if (res.status === 200 && res.data.existingLecturerError) {
-        navigate("/lecturers/signup");
-      } else if (res.status === 200 && res.data.successfulSignup) {
+        setError("Account already exists, try another email")
+        setEmail("");
+        
+      } else if (res.status === 200 && res.data.failedSignup) {
+        setError("signup failed, try again")
+        setTitle("");
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setFaculty("");
+        setDepartment(""); 
+        setPassword("");
+      }
+       else if (res.status === 200 && res.data.successfulSignup) {
         navigate("/lecturers/confirm-email");
       }
     } catch (error) {
@@ -64,23 +85,26 @@ export default function LecturerSignup() {
   };
 
   return (
-    <SignUpPage signin_link="/lecturers/signin" onsubmit={handleSubmit}>
+    <SignUpPage signin_link="/lecturers/signin" onsubmit={handleSubmit} pagepic={lecturerPic}>
       {{
         signupFormElement: (
           <>
-            <label className="signup-form-labels" htmlFor="emailInput">
+          {error && <div className="error-message">{error} </div>}
+          
+            <label className="signup-form-labels" htmlFor="titleInput">
               Title
             </label>
             <br></br>
-            <input
-              className="signup-form-inputs"
-              placeholder="Enter your Title"
-              id="titleInput"
-              name="title"
-              value={title}
-              onChange={handleTitle}
-            />
-            <label className="signup-form-labels" htmlFor="emailInput">
+            <select className="signup-form-selects" onChange={handleTitle} value={title} name="title" id="titleInput">
+              <option value="">Select Title</option>
+              <option value="Mr">Mr</option>
+              <option value="Mrs">Mrs</option>
+              <option value="Dr">Dr</option>
+              <option value="Prof">Prof</option>
+            </select>
+            
+            
+            <label className="signup-form-labels" htmlFor="firstNameInput">
               First Name
             </label>
             <br></br>
@@ -93,13 +117,13 @@ export default function LecturerSignup() {
               onChange={handleFirstName}
             />
 
-            <label className="signup-form-labels" htmlFor="emailInput">
+            <label className="signup-form-labels" htmlFor="lastNameInput">
               Last Name
             </label>
             <br></br>
             <input
               className="signup-form-inputs"
-              placeholder="Enter your LastName"
+              placeholder="Enter your last name"
               id="lastNameInput"
               name="lastName"
               value={lastName}
@@ -122,34 +146,27 @@ export default function LecturerSignup() {
             <label className="signup-form-labels" htmlFor="facultyInput">
               Faculty
             </label>
-            <input
-              className="signup-form-inputs"
-              placeholder="Enter faculty"
-              id="facultyInput"
-              name="faculty"
-              value={faculty}
-              onChange={handleUserFaculty}
-            />
+            <select value={faculty} className="signup-form-selects" onChange={handleUserFaculty} name="faculty" id="facultyInput">
+              <option value="">Select Faculty</option>
+              <option value="Engineering">Engineering</option>
+            </select>
+          
 
             <label className="signup-form-labels" htmlFor="departmentInput">
               Department
             </label>
-            <input
-              className="signup-form-inputs"
-              placeholder="Enter department"
-              id="departmentInput"
-              name="department"
-              value={department}
-              onChange={handleUserDepartment}
-            />
+            <select value={department} className="signup-form-selects" onChange={handleUserDepartment} name="department" id="departmentInput">
+              <option value="">Select Department</option>
+              <option value="Chemical Engineering" >Chemical Engineering</option>
+            </select>
 
             <label className="signup-form-labels" htmlFor="passwordInput">
               Password
             </label>
             <input
               className="signup-form-pw-input"
-                      placeholder="Enter password"
-                      type="password"
+              placeholder="Enter password"
+              type="password"
               id="passwordInput"
               name="passwordInput"
               value={password}

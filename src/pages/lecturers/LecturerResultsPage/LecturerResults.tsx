@@ -1,5 +1,5 @@
 import "./LecturerResults.css";
-import "../lecturerDashboard/Dashboard.css";
+import "../lecturerDashboard/LecturerDashboard.css"
 import "../../../assets/menu-board.png";
 import SideBar from "../../../components/sidebar/sideBar";
 import { Link } from "react-router-dom";

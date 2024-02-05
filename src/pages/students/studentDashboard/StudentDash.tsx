@@ -116,7 +116,8 @@ export const StudentDash = () => {
         {courses && (
           <div>
             <div>
-              <div>
+
+              <div className="semester-session-container">
                 <div className="semester-div-container">
                   <div>Semester:</div>
                   <div className="session-dropdown">
@@ -139,59 +140,7 @@ export const StudentDash = () => {
                   </div>
                 </div>
               </div>
-              {/* <div className="student-result-table">
-        {courses && (
-          <div>
-            <div>
-              <div>
-                <div className="semester-div-container">
-                  <div>Semester:</div>
-                  <div className="session-dropdown">
-                    <select
-                      className="session-button-default"
-                      value={selectedSemester}
-                      onChange={(e) => setSelectedSemester(e.target.value)}
-                    >
-                      <option value="First">First</option>
-                      <option value="Second">Second</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="session-div-container">
-                  <div>Session:</div>
-                  <div className="session-dropdown">
-                    <select className="session-button-default">
-                      <option>2023/2024</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              {/* <div className="student-result-table">
-                  <div className="student-result-table-header">
-                    <div className="student-result-table-header-item">
-                      Course Code
-                    </div>
-                    <div className="student-result-table-header-item">
-                      Course Title
-                    </div>
-                    <div className="student-result-table-header-item">
-                      Credit Unit
-                    </div>
-                  </div>
-                  
-                  {/* < StudentResultDiv courseCode="BCH 401" courseTitle="Anatomy" creditUnit="3 Units" />
-                  < StudentResultDiv courseCode="MAT 201" courseTitle="Geometry" creditUnit="4 Units" /> */}
 
-              {/* {courses.map((course) => (
-              {/* {courses.map((course) => (
-                      <StudentResultDiv
-                    key={course.courseId}
-                    courseCode={course.courseCode}
-                    courseTitle={course.courseTitle}
-                    creditUnit={course.creditUnit} courseId={""}  />
-                ))} */}
-
-              {/* </div> */}
               <table className="student-result-table">
                 <thead>
                   <tr>
@@ -208,12 +157,18 @@ export const StudentDash = () => {
                   </tr>
                 </thead>
                 <tbody>
+                  {courses.length === 0 && (
+                    <tr className="table-row">
+                      <td className="table-row-data" colSpan={5}>No courses available this semester</td>
+                    </tr>
+                  )}
+
                   {courses.map((course) => (
                     <tr className="table-row" key={course.courseCode}>
                       <td className="table-row-data">{course.courseCode}</td>
-                      <td>{course.courseTitle}</td>
-                      <td>{course.creditUnit}</td>
-                      <td>
+                      <td className="table-row-data">{course.courseTitle}</td>
+                      <td className="table-row-data">{course.creditUnit}</td>
+                      <td className="table-row-data">
                         <button
                           type="submit"
                           className="enroll-button"
@@ -227,6 +182,7 @@ export const StudentDash = () => {
                   ))}
                 </tbody>
               </table>
+              
             </div>
           </div>
         )}
