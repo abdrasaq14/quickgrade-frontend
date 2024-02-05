@@ -1,7 +1,10 @@
-import uploadlogo from "../../assets/upload_logo.png"
 import "./GradeExamPageStyle.css"
-function GradeTableRow(){
-    
+import uploadlogo from "../../assets/upload_logo.png"
+import { useState } from "react";
+
+
+const GradeTable = () => {
+     
     interface LecturerCoursesToGrade{
         courseCode: string;
         submissions: string;
@@ -32,21 +35,52 @@ function GradeTableRow(){
         notGraded: `101/210`,
         examStatus: "Complete"
         }
-    ]
+    ] 
+
+    const [examStatusColour, setExamStatusColour] = useState("grey")
+    
+
+    
+    const determineColour = (content:any)=>{
+       let colour;
+        if (content=="Not Started") colour = "grey";
+        if (content=="Ongoing")colour = "orange";
+        if (content=="Complete") colour = "green";
+        return colour
+
+    }
+
+    const handleExamStatus = (examStatus:string)=>{
+        if(examStatus== "Not Started") setExamStatusColour("grey")
+        if(examStatus== "Ongoing") setExamStatusColour("orange")
+        if(examStatus== "Complete") setExamStatusColour("green")
+
+    }
 
 
-
-    return(
-        <div>
+  return (
+    <div>
+        <table className="grade-exams-page-table-contents">
+            
+            <tr className="grade-exams-page-table-header-row">
+                            <th className="grade-exams-page-table-header">Course Code</th>
+                            <th className="grade-exams-page-table-header">Submissions</th>
+                            <th className="grade-exams-page-table-header">Graded</th>
+                            <th className="grade-exams-page-table-header">Not Graded</th>
+                            <th className="grade-exams-page-table-header">Exam Status</th>     
+                          </tr> 
+            
+            
             {coursesToGrade.map((course)=>{
                 return(
-                   <div>
+                   <>
+                   <br/>
                      <tr className="grade-exams-page-table-row">
                         <td className="grade-exams-page-table-cell-coursecode" key="courseCode">{course.courseCode}</td>
                         <td className="grade-exams-page-table-cell-submissions" key="submissions">{course.submissions}</td>
                         <td className="grade-exams-page-table-cell-graded" key="graded" >{course.graded}</td>
                         <td className="grade-exams-page-table-cell-not-graded" key="notGraded" >{course.notGraded}</td>
-                        <td className="grade-exams-page-table-cell-exam-status" key="examStatus">{course.examStatus}</td>
+                        <td className="grade-exams-page-table-cell-exam-status" key="examStatus" style={{color:determineColour(course.examStatus)}} onChange={()=>handleExamStatus(course.examStatus)}>{course.examStatus}</td>
                         <td className="grade-exams-page-table-button-cell" key="gradeButton">
                                 <button className="grade-exams-page-table-grade-button">Grade</button>
                             
@@ -57,40 +91,20 @@ function GradeTableRow(){
                                     <img src={uploadlogo} className="upload-icon"/><span>Upload</span>
                                 </button>
                         </td>
-                    </tr>
-                    <br/>
-                   </div>
+                       
+                    </tr> 
+                    
+                    </>
+                    
+                   
                 
                 )
             })}
-        
-                    
-        
-        </div>
-    )
+         
+            
+        </table>
+    </div>
+  )
 }
 
-export default GradeTableRow
-
-
-/*
-
-<tr className="grade-exams-page-table-row">
-                        <td className="grade-exams-page-table-cell-coursecode" key="courseCode">Chem 404</td>
-                        <td className="grade-exams-page-table-cell-submissions" key="submissions">0/211</td>
-                        <td className="grade-exams-page-table-cell-graded" key="graded" >0/0</td>
-                        <td className="grade-exams-page-table-cell-not-graded" key="notGraded" >0/0</td>
-                        <td className="grade-exams-page-table-cell-exam-status" key="examStatus">[Not Started]</td>
-                        <td className="grade-exams-page-table-button-cell" key="gradeButton">
-                                <button className="grade-exams-page-table-grade-button">Grade</button>
-                            
-                        </td>
-                        <td className="grade-exams-page-table-button-cell" key="uploadButton">
-                            
-                                <button className="grade-exams-page-table-upload-button">
-                                    <img src={uploadlogo} className="upload-icon"/><span>Upload</span>
-                                </button>
-                        </td>
-                    </tr>
-
-*/
+export default GradeTable

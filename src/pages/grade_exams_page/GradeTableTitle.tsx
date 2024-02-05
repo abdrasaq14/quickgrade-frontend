@@ -1,10 +1,10 @@
 import "./GradeExamPageStyle.css"
 interface GradeTableTitleProps{
-    year: string;
+    year?: string
     semester: string
 }
 
-function GradeTableTitle({year, semester}:GradeTableTitleProps){
+function GradeTableTitle({year ="2023/2024", semester}:GradeTableTitleProps){
     return(
         <>
          <div className="grade-exams-page-table-header-container">
