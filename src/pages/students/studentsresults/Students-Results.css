@@ -39,6 +39,21 @@
     padding-left: 24px;
     align-items: center;
   }
+
+  .top-selection-labels{
+    font-size: 16px;
+    font-weight: 600;
+
+
+}
+  .top-selection-options{
+    border: none;
+    background-color: rgba(249, 250, 251, 1);
+    font-size: 16px;
+    font-weight: 400;
+    
+
+  }
   
   .search-section {
     width: 98%;
@@ -53,10 +68,25 @@
     margin: 1rem auto;
     
   }
+
+  .search-button{
+    position: relative;
+    left: 2.3rem;
+    top: 0.8rem;
+    width:1rem;
+    height:1rem
+  }
   
   .search-by-course-input {
     width: 25%;
     padding-left: 2rem;
+    height: 6vh;
+    border-radius: 4px;
+    border: 1px solid rgba(189, 189, 189, 1);
+    font-size: 17px;
+    
+    
+    
   }
   
   .results-info {
