@@ -6,6 +6,7 @@ import "./GradeExamPageStyle.css"
 import TableHeadings from "./GradeTableHeadings";
 import TableTitle from "./GradeTableTitle";
 import TableRow from "./GradeTableRow";
+import GradeTable from "./GradeTable";
 
 
 
@@ -92,13 +93,12 @@ function GradeExamPage() {
            <TableTitle year={sessionYear} semester="First"/>
        
                <div className="grade-exams-page-table-container">
+                <GradeTable/>
                    
-                   <table className="grade-exams-page-table-contents">
+                   {/* <table className="grade-exams-page-table-contents">
                    <TableHeadings/>
                    <TableRow/>
-                   <TableRow/>
-                   <TableRow/>
-                   </table>
+                   </table> */}
                </div>
 
            </div>
@@ -107,13 +107,12 @@ function GradeExamPage() {
            <TableTitle year={sessionYear} semester="Second"/>
        
                <div className="grade-exams-page-table-container">
+                <GradeTable/>
                    
-                   <table className="grade-exams-page-table-contents">
+                   {/* <table className="grade-exams-page-table-contents">
                    <TableHeadings/>
                    <TableRow/>
-                   <TableRow/>
-                   <TableRow/>
-                   </table>
+                   </table> */}
                </div>
 
            </div>
