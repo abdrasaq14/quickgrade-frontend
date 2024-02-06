@@ -5,7 +5,10 @@
   background-color: #F9FAFB;
   min-height: 100vh;
   font-family: 'Inter', 'sans-serif';
+  /* border: 2px solid red; */
 }
+
+
 
 .set-exams-page-main-section {
   /* overflow: scroll;*/

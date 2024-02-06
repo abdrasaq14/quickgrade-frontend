@@ -2,6 +2,7 @@ import "./setExamStyle.css";
 import addButton from "../../../assets/add_button_logo copy.png";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
 import SideBar from "../../../components/sidebar/sideBar";
+import Header from "../../../components/header/header";
 import { Link } from "react-router-dom";
 import { useEffect, useState, FormEvent } from "react";
 import axios from "axios";
@@ -288,11 +289,16 @@ function SetExamPage() {
           ),
         }}
       </SideBar>
+      
+      
       {/* Main content */}
       <main className="set-exams-page-main-section">
+    
         {/* set exams heading wrapper */}
        <div className="set-exams-inner-wrapper">
+        
        <div className="set-exams-page-main-section-title-container">
+        
           <h1 className="set-exams-page-main-section-title">Set Exams</h1>
         </div>
         {/* set exam form wrapper */}
