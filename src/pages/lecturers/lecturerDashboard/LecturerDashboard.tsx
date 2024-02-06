@@ -128,7 +128,7 @@ function LecturerDashboard() {
         {/* Main content */}
         <main className="lecturer-dashboard-exam-timetable-container">
           <div className="lecturer-dashboard-semester-session-container">
-          2022/2023 : Second Semester 
+          2022/2023 : First Semester 
            </div>
 
           
@@ -163,8 +163,6 @@ function LecturerDashboard() {
               </tbody>
             </table>
             
-
-
 
           )}
         </main>
