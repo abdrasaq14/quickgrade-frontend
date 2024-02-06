@@ -1,7 +1,7 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
 import SideBar from "../../../components/sidebar/sideBar";
 import "./TakeExamOBJ.css";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
 interface Question {
@@ -11,15 +11,42 @@ interface Question {
   optionB: string;
   optionC: string;
   optionD: string;
+  questionId: string;
+  scoreObtainable: string;
+  sectionAlphabet: string;
 }
+interface ExamsDetail {
+  examDuration: string;
+  courseTitle: string;
+  courseCode: string;
+  examInstruction: string;
+  semester: string;
+  session: string;
+  faculty: string;
+  department: string;
+  examDate: string;
+  totalScore: string;
+  totalNoOfQuestions: string;
+  examId: string;
+  firstSection: string;
+  secondSection: string;
+  thirdSection: string;
+}
+
+interface SelectedOption {
+  questionId: string;
+  questionText: string;
+  typedAnswer?: string;
+}
+
 const TakeExamOBJ = () => {
   const { courseCode } = useParams();
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [examsDetail, setExamDetails] = useState<ExamsDetail>();
   const { studentData } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
     async function fetchData() {
-      console.log("courseCode: ", courseCode);
       const res = await axios.get(
         `http://localhost:3000/students/dashboard/take-exams/${courseCode}`,
         {
@@ -34,15 +61,88 @@ const TakeExamOBJ = () => {
       ) {
         navigate("/students/signin");
         // window.location.reload();
-      } else if (res.status === 200 && res.data.questions) {
+      } else if (
+        res.status === 200 &&
+        res.data.questions &&
+        res.data.examsDetail
+      ) {
         setQuestions(res.data.questions);
+        setExamDetails(res.data.examsDetail);
       }
     }
     fetchData();
     return;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // State to store the selected options for each question
+  const [selectedOptions, setSelectedOptions] = useState<SelectedOption[]>([]);
 
+  // Function to handle radio button changes
+  // const handleRadioChange = (questionId: string, selectedOption: string) => {
+  //   const updatedOptions = [
+  //     ...selectedOptions.filter((item) => item.questionId !== questionId),
+  //     { questionId, selectedOption },
+  //   ];
+  //   setSelectedOptions(updatedOptions);
+  // };
+
+  // Function to handle text input changes for fill-in-the-blanks and theory questions
+  const handleTextChange = (
+    questionId: string,
+    typedAnswer: string,
+    questionText: string
+  ) => {
+    const updatedOptions = [
+      ...selectedOptions.filter((item) => item.questionId !== questionId),
+      { questionId, typedAnswer, questionText },
+    ];
+    setSelectedOptions(updatedOptions);
+  };
+
+  // Function to handle form submission
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    // Assemble questions array`
+    const assembledQuestions = questions.map((question) => {
+      const selectedOption = selectedOptions.find(
+        (item) => item.questionId === question.questionId
+      );
+      console.log("Selected Option:", selectedOption);
+      return {
+        questionId: question.questionId,
+        questionType: question.questionType,
+        questionText: selectedOption ? selectedOption.questionText : null,
+        typedAnswer: selectedOption ? selectedOption.typedAnswer : null,
+      };
+    });
+
+    console.log("Assembled Questions:", assembledQuestions);
+    const courseCode = examsDetail?.courseCode;
+    const studentId = studentData?.studentId;
+    const examId = examsDetail?.examId;
+    const sendStudentResponse = await axios.post(
+      `http://localhost:3000/lecturers/grade-exam-objectives/${courseCode}`,
+      {
+        examId,
+        studentId,
+        courseCode,
+        assembledQuestions,
+      }
+    );
+    if (
+      sendStudentResponse.status === 200 &&
+      sendStudentResponse.data.objectivesAutoGradedSuccessfully
+    ) {
+      console.log("Student response sent successfully");
+    } else if (
+      sendStudentResponse.status === 200 &&
+      sendStudentResponse.data.error
+    ) {
+      console.log("Student response not sent successfully");
+    }
+
+    // You can send assembledQuestions to the backend server here
+  };
   return (
     <div className="examContainer">
       <section className="hero">
@@ -65,7 +165,7 @@ const TakeExamOBJ = () => {
                   className="img-feat"
                   src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-menu.svg"
                 />
-                <Link to="/" className="text-wrapper-6">
+                <Link to="/students/dashboard" className="text-wrapper-6">
                   Dashboard
                 </Link>
               </div>
@@ -74,7 +174,10 @@ const TakeExamOBJ = () => {
                   className="img-2"
                   src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-book-square.svg"
                 />
-                <Link to="/" className="text-wrapper-6">
+                <Link
+                  to="/students/dashboard/enrolled-courses"
+                  className="text-wrapper-6"
+                >
                   Enrolled Courses
                 </Link>
               </div>
@@ -83,7 +186,10 @@ const TakeExamOBJ = () => {
                   className="img-2"
                   src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-sort.svg"
                 />
-                <Link to="/" className="text-wrapper-6">
+                <Link
+                  to="/students/dashboard/results"
+                  className="text-wrapper-6"
+                >
                   Results
                 </Link>
               </div>
@@ -91,7 +197,6 @@ const TakeExamOBJ = () => {
           ),
         }}
       </SideBar>
-
       <div className="takeExamTimer">
         <p className="tagBold">TAKE EXAM</p>
 
@@ -116,7 +221,7 @@ const TakeExamOBJ = () => {
 
       {questions && (
         <div className="main-container">
-          <form className="take-exam-container">
+          <form className="take-exam-container" onSubmit={handleSubmit}>
             <div className="div-for-first-form">
               <div className="first-form">
                 <div>
@@ -124,7 +229,7 @@ const TakeExamOBJ = () => {
                   <br />
                   <input
                     type="text"
-                    value="2022/2023"
+                    value={examsDetail?.session}
                     className="input-form-1"
                   />
                 </div>
@@ -132,13 +237,21 @@ const TakeExamOBJ = () => {
                 <div>
                   <label htmlFor="Semester">Semester</label>
                   <br />
-                  <input type="text" value="Second" className="input-form-1" />
+                  <input
+                    type="text"
+                    value={examsDetail?.semester}
+                    className="input-form-1"
+                  />
                 </div>
 
                 <div>
                   <label htmlFor="Faculty">Faculty</label>
                   <br />
-                  <input type="text" value="Science" className="input-form-1" />
+                  <input
+                    type="text"
+                    value={examsDetail?.faculty}
+                    className="input-form-1"
+                  />
                 </div>
 
                 <div>
@@ -146,7 +259,7 @@ const TakeExamOBJ = () => {
                   <br />
                   <input
                     type="text"
-                    value="Biochemistry"
+                    value={examsDetail?.department}
                     className="input-form-1"
                   />
                 </div>
@@ -154,7 +267,11 @@ const TakeExamOBJ = () => {
                 <div>
                   <label htmlFor="Course Code">Course Code</label>
                   <br />
-                  <input type="text" value="BCH 208" className="input-form-1" />
+                  <input
+                    type="text"
+                    value={examsDetail?.courseCode}
+                    className="input-form-1"
+                  />
                 </div>
 
                 <div>
@@ -162,7 +279,7 @@ const TakeExamOBJ = () => {
                   <br />
                   <input
                     type="text"
-                    value="Enzymology"
+                    value={examsDetail?.courseTitle}
                     className="input-form-1"
                   />
                 </div>
@@ -170,7 +287,11 @@ const TakeExamOBJ = () => {
                 <div>
                   <label htmlFor="Total Score">Total Score</label>
                   <br />
-                  <input type="text" value="70" className="input-form-1" />
+                  <input
+                    type="text"
+                    value={examsDetail?.totalScore}
+                    className="input-form-1"
+                  />
                 </div>
 
                 <div>
@@ -178,7 +299,7 @@ const TakeExamOBJ = () => {
                   <br />
                   <input
                     type="text"
-                    value="120 Minutes"
+                    value={examsDetail?.examDuration}
                     className="input-form-1"
                   />
                 </div>
@@ -186,170 +307,306 @@ const TakeExamOBJ = () => {
 
               <div className="lower-part-of-first-form">
                 <p>Instructions</p>
-                <p className="second-p">
-                  1. There are 2 sections. Answer all questions in section A and
-                  any 5 questions in section B
-                </p>
-                <p className="second-p">
-                  2. Time allowed is 2 hours, after which the session ends and
-                  your exam is automatically submitted.
-                </p>
+                <p className="second-p">{examsDetail?.examInstruction}</p>
               </div>
             </div>
             <div className="div-student-id-section">
               <p>
-                ID: <span>20/21/03/051</span>
+                ID: <span>{examsDetail?.examId}</span>
               </p>
               <div className="sub-div">
                 <p>Total score</p>
-                <div className="green-circle"></div>
+                <div className="green-circle">{examsDetail?.totalScore}</div>
               </div>
             </div>
 
-            <div className="div-for-section-A">
-              <p id="section-p">
-                Section A <span> (Multiple choice questions)</span>
-                <hr />
-              </p>
+            <div className="all-sections-wrapper">
+              <>
+                <p id="section-p">
+                  Section
+                  {examsDetail?.firstSection.split("|")[0]}
+                  {/* Section{" "}
+                  {questions
+                    .filter((question) => {
+                      return question.questionType === "Objective";
+                    })[0]
+                    .sectionAlphabet?.toString()} */}
+                </p>
+              </>
 
-              <p id="section-p2">40 Marks</p>
-              <div className="section-score">
+              <p id="section-p2">
+                {/* {questions
+                  .filter((question) => {
+                    return question.questionType === "Objective";
+                  })[0]
+                  .sectionAlphabet?.toString()}{" "} */}
+                {examsDetail?.firstSection.split("|")[1]}
+                Marks
+              </p>
+              {/* <div className="section-score">
                 <p>Section score</p>
                 <div className="brown-circle"></div>
+              </div> */}
+
+              {/* objectives questions */}
+              {questions
+                .filter((question) => {
+                  return (
+                    question.questionType === "Objective"
+                    // examsDetail?.firstSection.split("|")[2]
+                  );
+                })
+                .map((question, index) => (
+                  <>
+                    <div className="second-form" key={index}>
+                      <span>{index + 1}</span>
+                      <p>{question.questionText}</p>
+                      <label htmlFor="option1">
+                        A. <span>{question.optionA}</span>
+                        <input
+                          type="radio"
+                          name={question.questionId}
+                          id="option1"
+                          className="option"
+                          onChange={() =>
+                            handleTextChange(
+                              question.questionId,
+                              question.optionA,
+                              question.questionText
+                            )
+                          }
+                          // onChange={() =>
+                          //   handleRadioChange(
+                          //     question.questionId,
+                          //     question.optionA
+                          //   )
+                          // }
+                        />
+                      </label>
+
+                      <label htmlFor="option1">
+                        B. <span>{question.optionB}</span>
+                        <input
+                          type="radio"
+                          name={question.questionId}
+                          id="option1"
+                          className="option"
+                          onChange={() =>
+                            handleTextChange(
+                              question.questionId,
+                              question.optionB,
+                              question.questionText
+                            )
+                          }
+                          // onChange={() =>
+                          //   handleRadioChange(
+                          //     question.questionId,
+                          //     question.optionB
+                          //   )
+                          // }
+                        />
+                      </label>
+
+                      <label htmlFor="option1">
+                        C. <span>{question.optionC}</span>
+                        <input
+                          type="radio"
+                          name={question.questionId}
+                          id="option1"
+                          className="option"
+                          onChange={() =>
+                            handleTextChange(
+                              question.questionId,
+                              question.optionC,
+                              question.questionText
+                            )
+                          }
+                          // onChange={() =>
+                          //   handleRadioChange(
+                          //     question.questionId,
+                          //     question.optionC
+                          //   )
+                          // }
+                        />
+                      </label>
+
+                      <label htmlFor="option1">
+                        D. <span>{question.optionD}</span>
+                        <input
+                          type="radio"
+                          name={question.questionId}
+                          id="option1"
+                          className="option"
+                          onChange={() =>
+                            handleTextChange(
+                              question.questionId,
+                              question.optionD,
+                              question.questionText
+                            )
+                          }
+                          // onChange={() =>
+                          //   handleRadioChange(
+                          //     question.questionId,
+                          //     question.optionD
+                          //   )
+                          // }
+                        />
+                      </label>
+                    </div>
+                  </>
+                ))}
+              {/* fill in the blanks questions */}
+              <div className="fill-in-the-blanks-wrapper">
+                <>
+                  <p id="section-p">
+                    Section
+                    {examsDetail?.secondSection.split("|")[0]}
+                    {/* Section{" "}
+                  {questions
+                    .filter((question) => {
+                      return question.questionType === "Objective";
+                    })[0]
+                    .sectionAlphabet?.toString()} */}
+                  </p>
+                </>
+
+                <p id="section-p2">
+                  {/* {questions
+                  .filter((question) => {
+                    return question.questionType === "Objective";
+                  })[0]
+                  .sectionAlphabet?.toString()}{" "} */}
+                  {examsDetail?.secondSection.split("|")[1]}
+                  Marks
+                </p>
+                {questions
+                  .filter((question) => {
+                    return question.questionType === "fill-in-the-blank";
+                  })
+                  .map((question, index) => (
+                    <>
+                      <div className="second-form" key={index}>
+                        <span>
+                          {questions.filter((question) => {
+                            return question.questionType === "Objective";
+                          }).length +
+                            index +
+                            1}
+                        </span>
+                        <p>{question.questionText}</p>
+
+                        <label htmlFor="your Answer">
+                          <input
+                            type="text"
+                            name={question.questionId}
+                            placeholder="Your Answer"
+                            className="option"
+                            value={
+                              selectedOptions.find(
+                                (option) =>
+                                  option.questionId === question.questionId
+                              )?.typedAnswer || ""
+                            }
+                            onChange={(e) =>
+                              handleTextChange(
+                                question.questionId,
+                                e.target.value,
+                                question.questionText
+                              )
+                            }
+                          />
+                        </label>
+                      </div>
+                    </>
+                  ))}
+              </div>
+              {/* theory */}
+              <div className="theory-question-wrapper">
+                <>
+                  <p id="section-p">
+                    Section
+                    {examsDetail?.thirdSection.split("|")[0]}
+                    {/* Section{" "}
+                  {questions
+                    .filter((question) => {
+                      return question.questionType === "Objective";
+                    })[0]
+                    .sectionAlphabet?.toString()} */}
+                  </p>
+                </>
+
+                <p id="section-p2">
+                  {/* {questions
+                  .filter((question) => {
+                    return question.questionType === "Objective";
+                  })[0]
+                  .sectionAlphabet?.toString()}{" "} */}
+                  {examsDetail?.thirdSection.split("|")[1]}
+                  Marks
+                </p>
+                {questions
+                  .filter((question) => {
+                    return question.questionType === "Theory";
+                  })
+                  .map((question, index) => (
+                    <>
+                      <div className="second-form" key={index}>
+                        <span>
+                          {questions.filter((question) => {
+                            return question.questionType === "Objective";
+                          }).length +
+                            questions.filter((question) => {
+                              return (
+                                question.questionType === "fill-in-the-blank"
+                              );
+                            }).length +
+                            index +
+                            1}
+                        </span>
+                        <p>{question.questionText}</p>
+
+                        <label htmlFor="your Answer">
+                          <input
+                            type="text"
+                            name={question.questionId}
+                            id="option1"
+                            placeholder="Your Answer"
+                            value={
+                              selectedOptions.find(
+                                (option) =>
+                                  option.questionId === question.questionId
+                              )?.typedAnswer || ""
+                            }
+                            onChange={(e) =>
+                              handleTextChange(
+                                question.questionId,
+                                e.target.value,
+                                question.questionText
+                              )
+                            }
+                            className="option"
+                          />
+                        </label>
+                      </div>
+                    </>
+                  ))}
               </div>
             </div>
-            {/* objectives questions */}
-            {questions
-              .filter((question) => {
-                return question.questionType === "Objective";
-              })
-              .map((question, index) => (
-                <>
-                  <div className="second-form" key={index}>
-                    <span>{index + 1}</span>
-                    <p>{question.questionText}</p>
-
-                    <label htmlFor="option1">
-                      A. <span>{question.optionA}</span>
-                      <input
-                        type="radio"
-                        name={question.questionText}
-                        id="option1"
-                        value={question.optionA}
-                        className="option"
-                      />
-                    </label>
-
-                    <label htmlFor="option1">
-                      B. <span>{question.optionB}</span>
-                      <input
-                        type="radio"
-                        name={question.questionText}
-                        id="option1"
-                        value={question.optionB}
-                        className="option"
-                      />
-                    </label>
-
-                    <label htmlFor="option1">
-                      C. <span>{question.optionC}</span>
-                      <input
-                        type="radio"
-                        name={question.questionText}
-                        id="option1"
-                        value={question.optionC}
-                        className="option"
-                      />
-                    </label>
-
-                    <label htmlFor="option1">
-                      D. <span>{question.optionD}</span>
-                      <input
-                        type="radio"
-                        name={question.questionText}
-                        id="option1"
-                        value={question.optionD}
-                        className="option"
-                      />
-                    </label>
-                  </div>
-                </>
-              ))}
-            {/* fill in the blanks questions */}
-            {questions
-              .filter((question) => {
-                return question.questionType === "fill-in-the-blank";
-              })
-              .map((question, index) => (
-                <>
-                  <div className="second-form" key={index}>
-                    <span>
-                      {questions.filter((question) => {
-                        return question.questionType === "Objective";
-                      }).length +
-                        index +
-                        1}
-                    </span>
-                    <p>{question.questionText}</p>
-
-                    <label htmlFor="your Answer">
-                      <input
-                        type="text"
-                        name="options"
-                        id="option1"
-                        placeholder="Your Answer"
-                        // value={question.optionA}
-                        className="option"
-                      />
-                    </label>
-                  </div>
-                </>
-              ))}
-            {/* theory */}
-            {questions
-              .filter((question) => {
-                console.log("question", question);
-                return question.questionType === "Theory";
-              })
-              .map((question, index) => (
-                <>
-                  <div className="second-form" key={index}>
-                    <span>
-                      {questions.filter((question) => {
-                        return question.questionType === "Objective";
-                      }).length +
-                        questions.filter((question) => {
-                          return question.questionType === "fill-in-the-blank";
-                        }).length +
-                        index +
-                        1}
-                    </span>
-                    <p>{question.questionText}</p>
-
-                    <label htmlFor="your Answer">
-                      <input
-                        type="text"
-                        name="options"
-                        id="option1"
-                        placeholder="Your Answer"
-                        // value={question.optionA}
-                        className="option"
-                      />
-                    </label>
-                  </div>
-                </>
-              ))}
-
+            <button id="submit-btn" type="submit">
+              Submit
+            </button>
             <div className="anchor-div">
               <a href="./take-exam-obj" id="first-anchor">
                 &larr; Previous Section
               </a>
-              <button id="button1">1</button>
-              <button>2</button>
-              <button>3</button>
-              <button>4</button>
-              <button>5</button>
-              <button>6</button>
+              <button id="button1" type="button">
+                1
+              </button>
+              <button type="button">2</button>
+              <button type="button">3</button>
+              <button type="button">4</button>
+              <button type="button">5</button>
+              <button type="button">6</button>
               <a href="./take-exam-theory" id="second-anchor">
                 Next Section &rarr;
               </a>

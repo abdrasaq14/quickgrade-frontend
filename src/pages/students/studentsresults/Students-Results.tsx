@@ -5,11 +5,21 @@ import arrowdown from "../../../assets/arrowdown.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
+<<<<<<< HEAD
 import searchButton from "../../../assets/searchButton.png"
 import Header from "../../../components/header/header";
 
+=======
+import { useEffect, useState } from "react";
+import axios from "axios";
+>>>>>>> 6c04353 (improved the setexams and take exams page functinaities)
 
+interface StudentResult {
+  courseCode: number;
+  sectionMark: number;
+}
 function StudentsResults() {
+<<<<<<< HEAD
   
 
   interface Student {
@@ -84,6 +94,31 @@ function StudentsResults() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSemester]);
 
+=======
+  const { studentData } = useAuth();
+  const [studentResultSectionA, setStudentResultSectionA] = useState<
+    StudentResult[]
+  >([]);
+  const [studentResultSectionB, setStudentResultSectionB] = useState<
+    StudentResult[]
+  >([]);
+  useEffect(() => {
+    const fetchStudentResult = async () => {
+      try {
+        const studentResult = await axios.post(
+          `http://localhost:3000/students/dashboard/get-results`,
+          { studentId: studentData?.studentId }
+        );
+        if (studentResult.status === 200 && studentResult.data.StudentResult) {
+          setStudentResultSectionA(studentResult.data.StudentResult);
+        }
+      } catch (error) {
+        console.log("Error fetching student results:", error);
+      }
+    };
+    fetchStudentResult();
+  }, []);
+>>>>>>> 6c04353 (improved the setexams and take exams page functinaities)
   return (
     <div className="students-Results-main-body-wrapper">
       <SideBar>
