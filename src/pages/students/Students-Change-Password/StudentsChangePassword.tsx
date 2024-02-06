@@ -5,8 +5,11 @@ import { FormEvent } from "react";
 import axios from "axios";
 import { useState } from "react";
 import MainButton from "../../../components/buttons/mainButton";
+import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
+import Header from "../../../components/header/header";
 
 function StudentsChangePassword() {
+  const studentData = useAuth();
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -31,6 +34,7 @@ function StudentsChangePassword() {
 
     // API call to update password
     try {
+      
       const res = await axios.put(
         "http://localhost:3000/students/dashboard/change-password",
         {
@@ -101,6 +105,7 @@ function StudentsChangePassword() {
           }}
         </SideBar>
         <div className="change-password-body">
+        <Header newUser={studentData?.studentData?.firstName || ""} />
           <div className="change-password-form">
             <h3>Change Password</h3>
             <form onSubmit={handleFormSubmit}>
