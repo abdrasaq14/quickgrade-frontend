@@ -220,7 +220,7 @@ const TakeExamOBJ = () => {
         </div>
       </div>
 
-      {questions && (
+      {questions.length ? (
         <div className="main-container">
           <form className="take-exam-container" onSubmit={handleSubmit}>
             <div className="div-for-first-form">
@@ -457,141 +457,156 @@ const TakeExamOBJ = () => {
                   </>
                 ))}
               {/* fill in the blanks questions */}
-              <div className="fill-in-the-blanks-wrapper">
-                <>
-                  <p id="section-p">
-                    Section
-                    {examsDetail?.secondSection.split("|")[0]}
-                    {/* Section{" "}
+              {questions.map((question) => {
+                return question.questionType === "fill-in-the-blank" ? (
+                  <>
+                    <div className="fill-in-the-blanks-wrapper">
+                      <>
+                        <p id="section-p">
+                          Section
+                          {examsDetail?.secondSection.split("|")[0]}
+                          {/* Section{" "}
                   {questions
                     .filter((question) => {
                       return question.questionType === "Objective";
                     })[0]
                     .sectionAlphabet?.toString()} */}
-                  </p>
-                </>
+                        </p>
+                      </>
 
-                <p id="section-p2">
-                  {/* {questions
+                      <p id="section-p2">
+                        {/* {questions
                   .filter((question) => {
                     return question.questionType === "Objective";
                   })[0]
                   .sectionAlphabet?.toString()}{" "} */}
-                  {examsDetail?.secondSection.split("|")[1]}
-                  Marks
-                </p>
-                {questions
-                  .filter((question) => {
-                    return question.questionType === "fill-in-the-blank";
-                  })
-                  .map((question, index) => (
-                    <>
-                      <div className="second-form" key={index}>
-                        <span>
-                          {questions.filter((question) => {
-                            return question.questionType === "Objective";
-                          }).length +
-                            index +
-                            1}
-                        </span>
-                        <p>{question.questionText}</p>
+                        {examsDetail?.secondSection.split("|")[1]}
+                        Marks
+                      </p>
+                      {questions
+                        .filter((question) => {
+                          return question.questionType === "fill-in-the-blank";
+                        })
+                        .map((question, index) => (
+                          <>
+                            <div className="second-form" key={index}>
+                              <span>
+                                {questions.filter((question) => {
+                                  return question.questionType === "Objective";
+                                }).length +
+                                  index +
+                                  1}
+                              </span>
+                              <p>{question.questionText}</p>
 
-                        <label htmlFor="your Answer">
-                          <input
-                            type="text"
-                            name={question.questionId}
-                            placeholder="Your Answer"
-                            className="option"
-                            value={
-                              selectedOptions.find(
-                                (option) =>
-                                  option.questionId === question.questionId
-                              )?.typedAnswer || ""
-                            }
-                            onChange={(e) =>
-                              handleTextChange(
-                                question.questionId,
-                                e.target.value,
-                                question.questionText
-                              )
-                            }
-                          />
-                        </label>
-                      </div>
-                    </>
-                  ))}
-              </div>
-              {/* theory */}
-              <div className="theory-question-wrapper">
-                <>
-                  <p id="section-p">
-                    Section
-                    {examsDetail?.thirdSection.split("|")[0]}
-                    {/* Section{" "}
+                              <label htmlFor="your Answer">
+                                <input
+                                  type="text"
+                                  name={question.questionId}
+                                  placeholder="Your Answer"
+                                  className="option"
+                                  value={
+                                    selectedOptions.find(
+                                      (option) =>
+                                        option.questionId ===
+                                        question.questionId
+                                    )?.typedAnswer || ""
+                                  }
+                                  onChange={(e) =>
+                                    handleTextChange(
+                                      question.questionId,
+                                      e.target.value,
+                                      question.questionText
+                                    )
+                                  }
+                                />
+                              </label>
+                            </div>
+                          </>
+                        ))}
+                    </div>
+                  </>
+                ) : null;
+              })}
+              {/* theory question */}
+              {questions.map((question) => {
+                return question.questionType === "Theory" ? (
+                  <>
+                    <div className="theory-question-wrapper">
+                      <>
+                        <p id="section-p">
+                          Section
+                          {examsDetail?.thirdSection.split("|")[0]}
+                          {/* Section{" "}
                   {questions
                     .filter((question) => {
                       return question.questionType === "Objective";
                     })[0]
                     .sectionAlphabet?.toString()} */}
-                  </p>
-                </>
+                        </p>
+                      </>
 
-                <p id="section-p2">
-                  {/* {questions
+                      <p id="section-p2">
+                        {/* {questions
                   .filter((question) => {
                     return question.questionType === "Objective";
                   })[0]
                   .sectionAlphabet?.toString()}{" "} */}
-                  {examsDetail?.thirdSection.split("|")[1]}
-                  Marks
-                </p>
-                {questions
-                  .filter((question) => {
-                    return question.questionType === "Theory";
-                  })
-                  .map((question, index) => (
-                    <>
-                      <div className="second-form" key={index}>
-                        <span>
-                          {questions.filter((question) => {
-                            return question.questionType === "Objective";
-                          }).length +
-                            questions.filter((question) => {
-                              return (
-                                question.questionType === "fill-in-the-blank"
-                              );
-                            }).length +
-                            index +
-                            1}
-                        </span>
-                        <p>{question.questionText}</p>
+                        {examsDetail?.thirdSection.split("|")[1]}
+                        Marks
+                      </p>
+                      {questions
+                        .filter((question) => {
+                          return question.questionType === "Theory";
+                        })
+                        .map((question, index) => (
+                          <>
+                            <div className="second-form" key={index}>
+                              <span>
+                                {questions.filter((question) => {
+                                  return question.questionType === "Objective";
+                                }).length +
+                                  questions.filter((question) => {
+                                    return (
+                                      question.questionType ===
+                                      "fill-in-the-blank"
+                                    );
+                                  }).length +
+                                  index +
+                                  1}
+                              </span>
+                              <p>{question.questionText}</p>
 
-                        <label htmlFor="your Answer">
-                          <input
-                            type="text"
-                            name={question.questionId}
-                            id="option1"
-                            placeholder="Your Answer"
-                            value={
-                              selectedOptions.find(
-                                (option) =>
-                                  option.questionId === question.questionId
-                              )?.typedAnswer || ""
-                            }
-                            onChange={(e) =>
-                              handleTextChange(
-                                question.questionId,
-                                e.target.value,
-                                question.questionText
-                              )
-                            }
-                            className="option"
-                          />
-                        </label>
-                      </div>
-                    </>
-                  ))}
-              </div>
+                              <label htmlFor="your Answer">
+                                <input
+                                  type="text"
+                                  name={question.questionId}
+                                  id="option1"
+                                  placeholder="Your Answer"
+                                  value={
+                                    selectedOptions.find(
+                                      (option) =>
+                                        option.questionId ===
+                                        question.questionId
+                                    )?.typedAnswer || ""
+                                  }
+                                  onChange={(e) =>
+                                    handleTextChange(
+                                      question.questionId,
+                                      e.target.value,
+                                      question.questionText
+                                    )
+                                  }
+                                  className="option"
+                                />
+                              </label>
+                            </div>
+                          </>
+                        ))}
+                    </div>
+                  </>
+                ) : null;
+              })}
             </div>
             <button id="submit-btn" type="submit">
               Submit
@@ -613,6 +628,10 @@ const TakeExamOBJ = () => {
               </a>
             </div>
           </form>
+        </div>
+      ) : (
+        <div className="main-container">
+          <p>No Question available for this course yet</p>
         </div>
       )}
     </div>
