@@ -8,6 +8,7 @@ import MainButton from "../../components/buttons/mainButton";
 interface EnterOtpProps {
   enter_otp_heading: string;
 }
+
 function EnterOtp(props: EnterOtpProps) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -55,12 +56,12 @@ function EnterOtp(props: EnterOtpProps) {
     // redirect to a different page based on user type
   };
   return (
-    <div className="reset-otp-body-wrapper">
+    <div className="reset-otp-page-body-wrapper">
       <header className="reset-otp-header">
         <img src={quickgradelogo} alt="Quickgrade Logo" />
       </header>
 
-      <div className="reset-otp-app">
+      <div className="reset-otp-page-app">
         <h1 className="reset-otp-heading">{props.enter_otp_heading}</h1>
         <label className="reset-otp-label">
           Enter the OTP sent to your email:

@@ -56,34 +56,66 @@
 
 .enrolled-courses-year{
     width: 100%;
+    margin: 0 auto;
     display: flex;
-    gap: 1.5rem;
-    color: #667085;
-    font-family: 'Inter', sans-serif;
-    font-size: 22px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 140%;
-    padding: 0.8rem 0;
-    margin: 0 auto 1rem ;
+    gap: 3.5rem;
 
 }
 
-.enrolled-courses-year select{
-    height: 44px;
-    padding: 2px 16px;
-    gap: 8px;
+.enrolled-courses-semester{
     color: #667085;
-    font-family: Inter, sans-serif;
-    font-size: 22px;
+    font-family: "Inter";
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 700;
-    line-height: 140%;
-    text-align: center;
+    line-height: 140%; 
+    width: 24%;
+    display: flex;
+    align-items: center;
+
+
+}
+.enrolled-courses-semester select{
+  color: #667085;
+    font-family: "Inter";
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%; 
     border: none;
-    background-color: #F9FAFB;
+    padding: 0.5rem;
+    width: 100%;
 
 }
+
+.enrolled-courses-session{
+    color: #667085;
+    font-family: 'Inter';
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%; 
+    width: 25%;
+    display: flex;
+    align-items: center;
+
+}
+
+.enrolled-courses-session select{
+    color: #667085;
+    font-family: 'Inter';
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%; 
+    width: 70%;
+    display: flex;
+    align-items: center;
+    border: none;
+
+}
+    
+
 
 .enrolled-courses-timetable{
     color: #2D00F7;
@@ -94,22 +126,30 @@
     line-height: 140%; 
     letter-spacing: 0.15px;
     margin-bottom: 0rem;
-    padding: 0.5rem 0;
+    padding: 0.8rem 0;
+    
+}
+
+.enrolled-courses-table-container{
+    width: 100%;
+    margin: 0rem auto;
+    background-color: white;
+    padding: 0;
     
 }
 
 
 .enrolled-courses-table {
     border-collapse: separate;
-    border-spacing: 0 0rem;
+    border-spacing: 0 1rem;
     width: 100%;
-    text-align: center;
-    
+    padding: 0rem 2rem 1rem;
+    margin: 0rem auto 1rem;    
 
   }
   
   .enrolled-courses-table-header {
-    padding: 1rem 1rem; 
+    padding: 0rem 1rem 1rem; 
     color: #000;
     font-family: Inter, sans-serif;
     font-size: 16px;
@@ -117,9 +157,9 @@
     font-weight: 600;
     line-height: 140%; 
     letter-spacing: 0.15px; 
-    
-   
+
   }
+ 
 
   .enrolled-courses-table tbody td {
     /* padding: 1rem 2rem; */
@@ -133,7 +173,6 @@
     line-height: 140%; 
     letter-spacing: 0.15px;
     
-   
   }
 
   .enrolled-courses-table tbody td:first-child {

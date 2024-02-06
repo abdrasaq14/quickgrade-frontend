@@ -7,7 +7,8 @@
 
 .student-dashboard-body{
     width: 80%;
-    margin-left: 20%;   
+    margin-left: 20%;
+    background-color: #f9fafb;
 }
 
 .heading-dashboard{
@@ -38,25 +39,7 @@
     line-height: 140%;
     letter-spacing: 0.00938rem;
     padding: 0.2rem 1rem;
-  }
-
-  .student-result-table{
-    border-collapse: collapse;
-    margin: 1.5rem 0 0 4rem;
-    width: 87%;
-  }
-
-
-
-  .student-result-table-header-item{
-    text-align: left;
-  }
-
-
-
-
-  .student-result-table-body p{
-    white-space: nowrap;
+    
   }
 
   
@@ -85,9 +68,10 @@
     font-style: normal;
     font-weight: 700;
     line-height: 140%; 
-    width: 30%;
+    width: 27%;
     display: flex;
     align-items: center;
+   
   }
 
   .session-div-container{
@@ -97,9 +81,10 @@
     font-style: normal;
     font-weight: 700;
     line-height: 140%; 
-    width: 80%;
+    width: 27%;
     display: flex;
     align-items: center;
+    
   }
 
 
@@ -124,20 +109,52 @@
     font-weight: 700;
     line-height: 140%; 
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.5rem;
   }
 
-  .table-row{
-    border-collapse: separate;
-    border: 1px solid black;
-    border-spacing: 0 1rem;
-    margin-bottom: 2rem;
+
+  .student-result-table-header-item{
+    text-align: left;
+    margin: 0;
+    padding: 0rem 1.2rem 1rem;
+    
+  }
+
+  .table-row:hover {
+    background-color:#d0d6e1;
   }
   
 .student-result-table{
+    border-collapse: separate;
     border-spacing: 0 1rem;
     width: 90%;
-    margin: 1rem auto;
-    padding: 1rem 2rem;
+    background-color: white;
+    padding: 0rem 2rem 1rem;
+    margin: 2rem auto 1rem;
+    
 }
+
+.student-result-table tbody tr {
+
+  padding-bottom: 10px;
+}
+
+.table-row-data{
+  border-top: 1px solid #98A2B3;
+  border-bottom: 1px solid #98A2B3;
+ 
+}
+
+.table-row .table-row-data:first-child{
+  border-left: 1px solid #98A2B3;
+}
+
+.table-row .table-row-data:last-child{
+  border-right: 1px solid #98A2B3;
+}
+
+
+
+
+
 
