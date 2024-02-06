@@ -220,7 +220,7 @@ const TakeExamOBJ = () => {
         </div>
       </div>
 
-      {questions && (
+      {questions.length ? (
         <div className="main-container">
           <form className="take-exam-container" onSubmit={handleSubmit}>
             <div className="div-for-first-form">
@@ -613,6 +613,10 @@ const TakeExamOBJ = () => {
               </a>
             </div>
           </form>
+        </div>
+      ) : (
+        <div className="main-container">
+          <p>No Question available for this course yet</p>
         </div>
       )}
     </div>
