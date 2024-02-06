@@ -1,18 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:wght@700&family=Inter:wght@300;400;600&family=Libre+Baskerville&family=Orbitron&family=Public+Sans&display=swap");
 
-
-
 * {
   box-sizing: border-box;
 }
 
-.examContainer{
+.examContainer {
   background-color: #ffffff;
-  overflow: auto; 
+  overflow: auto;
   height: 100%;
 }
 
-.tagBold{
+.tagBold {
   margin-left: 22%;
   margin-top: 2%;
   font-weight: 700;
@@ -20,21 +18,20 @@
   font-family: inter;
 }
 
-
-.examHeader{
+.examHeader {
   margin-top: 2%;
   height: 100%;
   background-color: darkblue;
   width: 100%;
 }
 
-.main-container{
+.main-container {
   width: 80%;
   border-radius: 5px;
   font-size: 12px;
   margin-left: 20%;
   background-color: #ffffff;
-  overflow: auto; 
+  overflow: auto;
 }
 
 .header {
@@ -44,32 +41,30 @@
   font-weight: 700;
   line-height: 140%;
   letter-spacing: 0.25px;
-
 }
 
-.header span{
-  color: #2D00F7;
+.header span {
+  color: #2d00f7;
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
   line-height: 140%;
 }
 
-.div-for-first-form{
-background-color: #2D00F7;
-margin-left: 1.5rem;
+.div-for-first-form {
+  background-color: #2d00f7;
+  margin-left: 1.5rem;
 
-/* width: 100%; */
-margin: 2rem;
-height: 20rem;
-width: 85%;
+  /* width: 100%; */
+  margin: 2rem;
+  height: 20rem;
+  width: 85%;
 
-/* @media screen and (max-width: 500px) {
+  /* @media screen and (max-width: 500px) {
   width: 100%;
   height: ;
   margin-left: 0rem;
 } */
-
 }
 
 .first-form {
@@ -95,80 +90,78 @@ width: 85%;
       } */
 }
 
-.first-form div label{
-      font-family: Heebo;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-      letter-spacing: 0px;
-      text-align: left;
-      color: #ffffff;
+.first-form div label {
+  font-family: Heebo;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #ffffff;
 }
 
-.input-form-1{
-  border: 1px solid #BDBDBD;
+.input-form-1 {
+  border: 1px solid #bdbdbd;
   width: 70%;
   font-family: Heebo;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 150%;
-  padding: 12px ;
-  border-radius: 4px ;
-  border: 1px ;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px;
   gap: 8px;
-  background: linear-gradient(0deg, #BDBDBD, #BDBDBD),
-          linear-gradient(0deg, #D0D5DD, #D0D5DD);
- 
+  background: linear-gradient(0deg, #bdbdbd, #bdbdbd),
+    linear-gradient(0deg, #d0d5dd, #d0d5dd);
+
   /* @media screen and (max-width: 500px) {
       font-size: 10px;
       height: .1vh;
   } */
 }
 
-.lower-part-of-first-form{
-      font-family: Heebo;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-      letter-spacing: 0px;
-      text-align: left;
-      color: #ffffff;
-      margin: 0rem 1.5rem;  
-      width: 92.5%;
+.lower-part-of-first-form {
+  font-family: Heebo;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #ffffff;
+  margin: 0rem 1.5rem;
+  width: 92.5%;
 }
 
-.second-p{
+.second-p {
   padding: 12px;
   border-radius: 4px;
   border: 1px;
   gap: 8px;
-  background: linear-gradient(0deg, #BDBDBD, #BDBDBD),
-          linear-gradient(0deg, #D0D5DD, #D0D5DD);
-  border: 1px solid #BDBDBD;
-  margin: .1rem;
+  background: linear-gradient(0deg, #bdbdbd, #bdbdbd),
+    linear-gradient(0deg, #d0d5dd, #d0d5dd);
+  border: 1px solid #bdbdbd;
+  margin: 0.1rem;
   color: #101828;
- 
 }
 
-
-.div-student-id-section{
+.div-student-id-section {
   display: flex;
-width: 88%;
-padding: 0px 16px;
-justify-content: space-between;
-align-items: flex-start;
-margin-left: 3%;
+  width: 88%;
+  padding: 0px 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-left: 3%;
 }
 
-.div-student-id-section p{
- color: #000000;
-/* Headline Medium -24 */
-font-family: Inter;
-font-size: 24px;
-font-style: normal;
-font-weight: 500;
-line-height: 140%; /* 33.6px */
+.div-student-id-section p {
+  color: #000000;
+  /* Headline Medium -24 */
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%; /* 33.6px */
 }
 
 .sub-div {
@@ -178,22 +171,21 @@ line-height: 140%; /* 33.6px */
   gap: 8px;
 }
 
-.sub-div p{
+.sub-div p {
   color: #000;
 
-/* Body Text Bold - 16 */
-font-family: Inter;
-font-size: 16px;
-font-style: normal;
-font-weight: 600;
-line-height: 140%; /* 22.4px */
-letter-spacing: 0.15px;
-  
+  /* Body Text Bold - 16 */
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%; /* 22.4px */
+  letter-spacing: 0.15px;
 }
 
-.green-circle{
-  border-radius:50%;
-  background-color: #EAECF0;
+.green-circle {
+  border-radius: 50%;
+  background-color: #eaecf0;
   width: 3.5rem;
   height: 3.5rem;
   display: flex;
@@ -201,48 +193,44 @@ letter-spacing: 0.15px;
   justify-content: center;
   color: white;
   margin-top: 9px;
- 
 }
 
-.div-for-section-A{
+.all-sections-wrapper {
   margin: 0 auto;
   align-items: center;
-  width: 30%;
-   
-
 }
 
-#section-p{
-      font-family: Inter;
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 34px;
-      letter-spacing: 0px;
-      color: #101828;
+#section-p {
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 34px;
+  letter-spacing: 0px;
+  color: #101828;
 }
 
-#section-p span{
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 22px;
-      margin: 0rem;
+#section-p span {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  margin: 0rem;
 }
 
-.div-for-section-A hr{
+.div-for-section-A hr {
   width: 95%;
-height: 1px;
+  height: 1px;
 }
 
-#section-p2{
-      font-family: Inter;
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 22px;
-      text-align: center;
-      margin-top: 2%;
+#section-p2 {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  text-align: center;
+  margin-top: 2%;
 }
 
-.section-score{
+.section-score {
   display: flex;
   text-align: center;
   justify-content: center;
@@ -252,34 +240,33 @@ height: 1px;
   gap: 0.5rem;
 }
 
-.section-score p{
+.section-score p {
   font-family: Inter;
   font-size: 16px;
   font-weight: 600;
   line-height: 22px;
   color: #000000;
   margin-top: 0.2rem;
-
 }
 
-.brown-circle{
+.brown-circle {
   border-radius: 50%;
-      background-color: #F2F4F7;
-      width: 2rem;
-      height: 2rem;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
+  background-color: #f2f4f7;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.second-form{
+.second-form {
   width: 100%;
   margin-top: 2%;
   margin-left: 9%;
 }
 
-.second-form p{
-  border: 1px solid #98A2B3;
+.second-form p {
+  border: 1px solid #98a2b3;
   display: flex;
   width: 810px;
   /* padding: 5px 609px 4px 10px; */
@@ -294,51 +281,42 @@ height: 1px;
   width: 76%;
 }
 
-.second-form label{
+.second-form label {
   font-size: 16px;
   letter-spacing: 0.15px;
   /* text-align: center; */
   margin: 5%;
-  
-
 }
 
-
-.second-form label span{
-  color:#101828;
+.second-form label span {
+  color: #101828;
   font-family: Inter;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
   letter-spacing: 0.15px;
-  border: 1px solid #EAECF0;
-  
-  
-  
+  border: 1px solid #eaecf0;
 }
 
-.option{
-  padding: 0rem 26rem 0rem .2rem;
-
+.option {
+  padding: 0rem 26rem 0rem 0.2rem;
 }
 
-
-.anchor-div{
+.anchor-div {
   display: flex;
   align-content: center;
   justify-content: center;
-  margin:1.5rem;
-
+  margin: 1.5rem;
 }
 
-.anchor-div a{
+.anchor-div a {
   text-decoration: none;
   padding: 0rem 2rem;
 }
 
-#first-anchor{
-  color: #98A2B3;
+#first-anchor {
+  color: #98a2b3;
   font-family: Heebo;
   font-size: 14px;
   font-style: normal;
@@ -346,8 +324,8 @@ height: 1px;
   line-height: 20px;
 }
 
-#second-anchor{
-  color:#004FFF;
+#second-anchor {
+  color: #004fff;
   font-family: Heebo;
   font-size: 14px;
   font-style: normal;
@@ -355,27 +333,23 @@ height: 1px;
   line-height: 20px;
 }
 
-.anchor-div button{
+.anchor-div button {
   margin: 0rem 1rem;
   border-radius: 8px;
-  background:#F2F4F7;
-  border: 1px solid #EAECF0;
-  color: #98A2B3;
+  background: #f2f4f7;
+  border: 1px solid #eaecf0;
+  color: #98a2b3;
 }
 
-#button1{
-  background-color: #2D00F7;
+#button1 {
+  background-color: #2d00f7;
   color: #ffffff;
 }
 
-
-
-.takeExamTimer{
+.takeExamTimer {
   display: flex;
   justify-content: space-between;
-
 }
-
 
 .timer-container {
   margin-top: 2%;
@@ -389,17 +363,15 @@ height: 1px;
   align-items: center;
   height: 5rem;
   padding-top: 0.5rem;
-
 }
 
 .timer-circle {
   display: flex;
-padding: 13px 9.5px 13px 10.5px;
-justify-content: center;
-align-items: center;
-border-radius: 30px;
-border: 1px solid var(--Grey-100, #F2F4F7);
-  
+  padding: 13px 9.5px 13px 10.5px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  border: 1px solid var(--Grey-100, #f2f4f7);
 }
 
 .timer-labels {
@@ -412,33 +384,33 @@ border: 1px solid var(--Grey-100, #F2F4F7);
   line-height: 140%;
   margin-left: 10px; /* Adjust margin as needed */
 }
-.circle-box{
+.circle-box {
   display: flex;
-justify-content: center;
-align-items: center;
-gap: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
-.minute-seconds{
+.minute-seconds {
   display: flex;
-justify-content: center;
-align-items: flex-start;
-  color: #FFFFFF;
+  justify-content: center;
+  align-items: flex-start;
+  color: #ffffff;
   gap: 0.5rem;
   margin-top: 0.2rem;
 }
 .timer-circle p {
-color: #FFF;
-font-family: Inter;
-font-size: 1em;
-font-style: normal;
-font-weight: 700;
+  color: #fff;
+  font-family: Inter;
+  font-size: 1em;
+  font-style: normal;
+  font-weight: 700;
 }
 
-.dot{
-  color: #FFF;
-font-family: Inter;
-font-size: 24px;
-font-style: normal;
-font-weight: 700;
-line-height: 140%; 
+.dot {
+  color: #fff;
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%;
 }

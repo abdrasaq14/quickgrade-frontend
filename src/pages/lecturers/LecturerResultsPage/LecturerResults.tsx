@@ -23,15 +23,7 @@ const LecturerResults = () => {
                   Dashboard
                 </Link>
               </div>
-              <div className="feature-2">
-                <img
-                  className="img-2"
-                  src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-book-square.svg"
-                />
-                <Link to="/" className="text-wrapper-6">
-                  Courses
-                </Link>
-              </div>
+
               <div className="feature-2">
                 <img
                   className="img-2"

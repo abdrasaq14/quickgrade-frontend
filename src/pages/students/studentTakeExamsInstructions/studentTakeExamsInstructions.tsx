@@ -12,6 +12,7 @@ function StudentTakeExamsInstructions() {
   const handleSubmit = () => {
     navigate(`/students/dashboard/take-exams/${courseCode}`);
   };
+
   return (
     <>
       <div className="take-exams-instructions-wrapper">

@@ -2,8 +2,51 @@ import "./lec_grade.css";
 import SideBar from "../../../components/sidebar/sideBar";
 import Header from "../../../components/header/header";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
+import axios from "axios";
+import { useState, useEffect, ChangeEvent } from "react";
 
+interface StudentsResultsDetail {
+  studentId: string;
+  firstName: string;
+  matricNo: string;
+  department: string;
+  faculty: string;
+  courseCode: string;
+  objectiveGrade: number;
+  theoryGrade: number;
+  totalGrade: number;
+}
 function LecturerGrades() {
+  const { lecturerData } = useAuth();
+  console.log("lecturer", lecturerData?.lecturerId);
+  const [studentsResultsDetail, setStudentsResultsDetail] = useState<
+    StudentsResultsDetail[]
+  >([]);
+  const [selectedSemester, setSelectedSemester] = useState("first semester");
+  // const [secondSemester, setSecondSemester] = useState("second");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const lecturerId = lecturerData?.lecturerId;
+        console.log("lecturerId", lecturerId);
+        const res = await axios.get(
+          `http://localhost:3000/lecturers/get-graded-exam-objectives/`,
+          {
+            params: { lecturerId, semester: selectedSemester },
+          }
+        );
+
+        if (res.status === 200 && res.data.StudentResult) {
+          setStudentsResultsDetail(res.data.StudentResult);
+        }
+      } catch (error) {
+        console.log("Error fetching dashboard data:", error);
+      }
+    };
+
+    fetchData();
+  }, [lecturerData?.lecturerId, selectedSemester]);
   return (
     <div className="grades-main-body-wrapper">
       <SideBar>
@@ -19,15 +62,7 @@ function LecturerGrades() {
                   Dashboard
                 </Link>
               </div>
-              <div className="feature-2">
-                <img
-                  className="img-2"
-                  src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-book-square.svg"
-                />
-                <Link to="/" className="text-wrapper-6">
-                  Courses
-                </Link>
-              </div>
+
               <div className="feature-2">
                 <img
                   className="img-2"
@@ -70,67 +105,105 @@ function LecturerGrades() {
         }}
       </SideBar>
       <div className="grades-right-body-wrapper">
-        <Header newUser="New User" />
-
-        <div className="grades-first">
-          <div className="grades-results-info">
-            <h3 className="grades-results">
-              Grade Exams/ <span className="grades-results-span">CE 522</span>
-            </h3>
-          </div>
-
-          {/* <div className="session-info">
-            <label htmlFor="session">Session :</label>
-            <select id="session">
-              <option value="2022/2023">2022/2023</option>
-              <option value="2023/2024">2023/2024</option>
-            </select>
-          </div>
-
-          <div className="semester-info">
-            <label htmlFor="semester">Semester :</label>
-            <select id="semester">
-              <option value="grades-first">First</option>
-              <option value="second">Second</option>
-            </select>
-          </div> */}
-
-          <div className="grades-session-info">
-            <h3 className="grades-sess-info">
-              2022/2023 : Second Semester Examinations
-            </h3>
-            <h4 className="grades-sess-sub">210 submissions</h4>
-          </div>
-        </div>
-
-        <div className="grades-grid-container">
-          <div className="grades-course-card">
-            <div className="grades-middle-card">
-              <div className="grades-middle-left">
-                <p className="grades-complete">62</p>
-                <h4 className="grades-totalscore">Grade Complete</h4>
+        {lecturerData && (
+          <Header
+            newUser={`${lecturerData.title}, ${lecturerData.firstName}}`}
+          />
+        )}
+        {studentsResultsDetail.length > 0 ? (
+          <>
+            <div className="grades-first">
+              <div className="grades-results-info">
+                <h3 className="grades-results">
+                  Grade Exams/{" "}
+                  <span className="grades-results-span">
+                    {studentsResultsDetail.length &&
+                      studentsResultsDetail[0].courseCode}
+                  </span>
+                </h3>
               </div>
-              <div className="grades-middle-right">
-                <h5 className="grades-grade-sections">20/21/03/011</h5>
+
+              <div className="grades-session-info">
+                <div className="session-semester-wrapper">
+                  <h3 className="grades-sess-info">2022/2023</h3>
+                  <select
+                    name="semester"
+                    id="semester"
+                    onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                      setSelectedSemester(e.currentTarget.value)
+                    }
+                  >
+                    <option value="first semester" selected>
+                      First Semester
+                    </option>
+                    <option value="second semester">Second Semester</option>
+                  </select>
+                </div>
+
+                <h4 className="grades-sess-sub">
+                  {studentsResultsDetail.length} submissions
+                </h4>
               </div>
             </div>
-          </div>
 
-          <div className="grades-course-card">
-            <div className="grades-middle-card">
-              <div className="grades-middle-left">
-                <p className="grades-incomplete">09</p>
-                <h4 className="grades-totalscore">Grade Incomplete</h4>
-              </div>
-              <div className="grades-middle-right">
-                <h5 className="grades-grade-sections">20/21/03/011</h5>
-              </div>
+            <div className="grades-grid-container">
+              {studentsResultsDetail.length &&
+                studentsResultsDetail.map((student, index) => {
+                  return (
+                    <>
+                      <div key={index} className="grades-course-card">
+                        <div className="grades-middle-card">
+                          <div className="grades-middle-left">
+                            <p
+                              className={
+                                student.theoryGrade
+                                  ? "grades-complete"
+                                  : "grades-incomplete"
+                              }
+                            >
+                              {student.theoryGrade
+                                ? student.theoryGrade + student.objectiveGrade
+                                : student.objectiveGrade}
+                            </p>
+                            <h4 className="grades-totalscore">
+                              {student.theoryGrade
+                                ? "Grading Completed"
+                                : "Grading Incomplete"}
+                            </h4>
+                          </div>
+                          <div className="grades-middle-right">
+                            <h5 className="grades-grade-sections">
+                              {student.matricNo}
+                            </h5>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
             </div>
-          </div>
-        </div>
-        <div className="grades-upload-score">
-          <button className="grades-upload-btn">Upload Score</button>
-        </div>
+            <div className="grades-upload-score">
+              <button className="grades-upload-btn">Upload Score</button>
+            </div>
+          </>
+        ) : (
+          <>
+            <p>You have not set any exam question for this semster, select another semester below</p>
+            <select
+              name="semester"
+              id="semester"
+              onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                setSelectedSemester(e.currentTarget.value)
+              }
+            >
+              <option value="select semester" selected>
+                select semester
+              </option>
+              <option value="first semester">First Semester</option>
+              <option value="second semester">Second Semester</option>
+            </select>
+          </>
+        )}
       </div>
     </div>
   );

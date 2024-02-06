@@ -2,13 +2,17 @@ import "./Students-Results.css";
 import SideBar from "../../../components/sidebar/sideBar";
 import { Link, useNavigate } from "react-router-dom";
 import arrowdown from "../../../assets/arrowdown.png";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
 import searchButton from "../../../assets/searchButton.png"
 import Header from "../../../components/header/header";
 
 
+interface StudentResult {
+  courseCode: number;
+  sectionMark: number;
+}
 function StudentsResults() {
   
 
