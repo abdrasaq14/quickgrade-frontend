@@ -92,7 +92,6 @@ function SetExamPage() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionDetailCopy]);
-  
 
   // fetchting each course detail frm the backedn
   const [courseDetails, setCourseDetails] = useState([]);
@@ -280,7 +279,9 @@ function SetExamPage() {
       {/* Main content */}
       <main className="set-exams-page-main-section">
         {/* set exams heading wrapper */}
-        {lecturerData && <Header newUser={ lecturerData.title + " " + lecturerData.firstName} />}
+        {lecturerData && (
+          <Header newUser={lecturerData.title + " " + lecturerData.firstName} />
+        )}
         <div className="set-exams-inner-wrapper">
           <div className="set-exams-page-main-section-title-container">
             <h1 className="set-exams-page-main-section-title">Set Exams</h1>
@@ -714,15 +715,20 @@ function SetExamPage() {
                       </button>
                     </div>
                     <div className="set-exams-page-questions-section-container">
+
                       <div className="set-exams-page-multiple-choice-questions-container">
+
                         <div className="set-exams-page-multiple-choice-questions-form">
+
                           {section === "blank-section" && (
                             <>
                               <h1 className="set-exams-page-questions-section-title">
-                                Click on the add section button above above to get started{" "}
+                                Click on the add section button above above to
+                                get started{" "}
                               </h1>
                             </>
                           )}
+
                           {section === "MultipleChoice" && (
                             <div className="multiple-choice-question-wrapper">
                               <div className="set-exams-page-questions-section-header-and-marks">
@@ -774,7 +780,7 @@ function SetExamPage() {
                                     (question, questionIndex) => (
                                       <div key={`objectives-${questionIndex}`}>
                                         <div className="number-question-input-wrapper">
-                                          <div className="btn-wrapper">
+                                          <div className="remove-new-question-btn-wrapper">
                                             <button
                                               className="remove-new-question-btn"
                                               type="button"
@@ -782,7 +788,7 @@ function SetExamPage() {
                                                 removeQuestion(0, questionIndex)
                                               }
                                             >
-                                              X
+                                              x
                                             </button>
                                           </div>
                                           <span className="number-question-input-wrapper-number">
@@ -995,7 +1001,7 @@ function SetExamPage() {
                                 </button>
                               </div>
                               <div className="theory-question-wrapper">
-                                <h2>Theory Questions</h2>
+                                
                                 {sections[1].questions.map(
                                   (question, questionIndex) => (
                                     <div key={`theory-${questionIndex}`}>
@@ -1110,6 +1116,7 @@ function SetExamPage() {
                               </div>
                             </div>
                           )}
+
                           {section === "FillInTheBlank" && (
                             <div className="fill-in-the-blank-wrapper">
                               <div className="set-exams-page-questions-section-header-and-marks">
@@ -1143,7 +1150,6 @@ function SetExamPage() {
                                 </button>
                               </div>
                               <div className="Fill-in-the-blank">
-                                <h2>Fill in the blanks</h2>
                                 {sections[2].questions.map(
                                   (question, questionIndex) => (
                                     <div
@@ -1168,7 +1174,7 @@ function SetExamPage() {
                                           }
                                         />
                                       </div>
-                                      <input
+                                      {/* <input
                                         type="text"
                                         placeholder="Option A"
                                         className="theory-question-input-options"
@@ -1237,7 +1243,7 @@ function SetExamPage() {
                                             e.target.value
                                           )
                                         }
-                                      />
+                                      /> */}
                                       <button
                                         type="button"
                                         className="fill-in-the-blanks-remove-question"
@@ -1250,20 +1256,30 @@ function SetExamPage() {
                                     </div>
                                   )
                                 )}
-                                <button
+                                {/* <button
                                   type="button"
                                   onClick={() => addFillInTheBlankQuestions(2)}
                                 >
                                   Add question
-                                </button>
+                                </button> */}
                               </div>
                             </div>
                           )}
                         </div>
 
+
                         {/* next and previous button */}
                         {sectionValue.length >= 2 ? (
-                          <>
+                          
+                          <div className="set-exams-page-change-section-buttons-container">
+                            <button
+                              className="set-exams-page-change-section-buttons"
+                              type="button"
+                              onClick={prevSectionToggle}
+                            >
+                              Previous Section
+                            </button>
+
                             <button
                               className="set-exams-page-change-section-buttons"
                               type="button"
@@ -1277,18 +1293,26 @@ function SetExamPage() {
                             >
                               Submit
                             </button>
-                            <button
-                              className="set-exams-page-change-section-buttons"
-                              type="button"
-                              onClick={prevSectionToggle}
-                            >
-                              Previous Section
-                            </button>
-                          </>
+                            
+                          </div>
+                          
+                            
+                          
                         ) : (
+
                           ""
+                          // <button
+                          //     className="set-exams-page-change-section-buttons"
+                          //     type="submit"
+                          //   >
+                          //     Submit
+                          // </button>
                         )}
+
+                        
+                        
                       </div>
+
                     </div>
                   </div>
                 </form>
