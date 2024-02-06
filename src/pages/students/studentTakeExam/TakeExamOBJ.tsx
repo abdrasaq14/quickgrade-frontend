@@ -134,6 +134,7 @@ const TakeExamOBJ = () => {
       sendStudentResponse.data.objectivesAutoGradedSuccessfully
     ) {
       console.log("Student response sent successfully");
+      navigate("/students/dashboard");
     } else if (
       sendStudentResponse.status === 200 &&
       sendStudentResponse.data.error
