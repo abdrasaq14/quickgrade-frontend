@@ -137,8 +137,13 @@ width: 10%;
   background-color: white;
   width: 100%;
 
-  
 }
+
+.lecturer-exam-timetable-row button:hover{
+  background-color: #2D00F7;
+  color: white;
+}
+
 
 .lecturer-exam-timetable-row td:last-child{
   padding: 0 0.2rem;
