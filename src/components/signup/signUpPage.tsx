@@ -36,13 +36,12 @@ function SignUpPage({ signin_link, onsubmit, pagepic, children }: SignUpPageProp
         </div>
 
         <div className="form-section">
+        
           <div className="whole-sign-up-form-container">
-            <div className="top-sign-in-message">
-              Already Created an Account? Sign in
-              <Link to={signin_link}> here</Link>
-            </div>
-
+          
+            
             <div className="sign-in-form-container">
+            <Link to="/" className="style-home-btn"><i className="fa-solid fa-house home-btn "></i></Link>
               <div className="sign-in-form-message">
                 Create QuickGrade Account
               </div>
@@ -53,6 +52,11 @@ function SignUpPage({ signin_link, onsubmit, pagepic, children }: SignUpPageProp
                 <MainButton button_text="Sign up" />
               </form>
             </div>
+            <div className="top-sign-in-message">
+              Already Created an Account? Sign in
+              <Link to={signin_link}> here</Link>
+            </div>
+
           </div>
         </div>
       </div>
