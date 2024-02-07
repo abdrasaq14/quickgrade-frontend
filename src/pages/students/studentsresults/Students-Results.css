@@ -178,6 +178,7 @@
   font-size: 14px;
   line-height: 22.4px;
   text-align: center;
+  margin-left: -1.5rem;
 }
 
 .grade-sections {
@@ -236,18 +237,21 @@
 }
 
 .middle-left .noresults {
-  background-color: rgba(208, 213, 221, 1);
+  background-color: rgb(2, 221, 126);
   color: rgba(255, 255, 255, 1);
-  border-radius: 50%;
+  border-radius: 100%;
   text-align: center;
   line-height: normal;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
+  font-size: 2rem;
   font-weight: bold;
-  padding: 1.5rem;
-  font-weight: 400px;
+  height: 3rem;
+  width: 3rem;
+  padding: 3rem;
+
+  
 }
 
 /* Media Query for Tablets */
