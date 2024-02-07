@@ -1,5 +1,4 @@
- /* Global Styles or Reset Styles (if any) */
-
+ 
 .students-Results-main-body-wrapper {
     margin: 0;
     padding: 0;
@@ -13,82 +12,22 @@
     width: 80%;
     min-height: 100%;
     margin-left: 20%;
-    position: relative;
-    overflow-y: scroll!important; 
+    
   }
   
-  .header-wrapper {
-    width: 1155px;
-    height: 88px;
-    margin-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-    border: 0px, 0px, 1px, 0px;
-    background-color: rgba(234, 236, 240, 1);
-  }
   
  
   
-  .first {
-    width: 96%;
-    margin: 1rem auto;
+  .student-results-header {
+    width: 90%;
+    margin: 1rem auto 1rem;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     justify-content: flex-start;
-    align-items: flex-start;
-    padding-left: 24px;
+    padding-left: 1rem;
     align-items: center;
+ 
   }
-
-  .top-selection-labels{
-    font-size: 16px;
-    font-weight: 600;
-
-
-}
-  .top-selection-options{
-    border: none;
-    background-color: rgba(249, 250, 251, 1);
-    font-size: 16px;
-    font-weight: 400;
-    
-
-  }
-  
-  .search-section {
-    width: 98%;
-    height: 24px;
-    gap: 8px;
-    overflow-x: visible;
-    border-radius: 4px;
-    border: 5px;
-    display: flex;
-    padding-left: 2rem;
-    color: rgba(189, 189, 189, 1);
-    margin: 1rem auto;
-    
-  }
-
-  .search-button{
-    position: relative;
-    left: 2.3rem;
-    top: 0.8rem;
-    width:1rem;
-    height:1rem
-  }
-  
-  .search-by-course-input {
-    width: 25%;
-    padding-left: 2rem;
-    height: 6vh;
-    border-radius: 4px;
-    border: 1px solid rgba(189, 189, 189, 1);
-    font-size: 17px;
-    
-    
-    
-  }
-  
   .results-info {
     width: 119px;
     height: 45px;
@@ -106,6 +45,142 @@
     line-height: 44.8px;
     letter-spacing: 0.25px;
   }
+
+  .top-selection-labels{
+    font-size: 16px;
+    font-weight: 600;
+
+
+}
+  .top-selection-options{
+    border: none;
+    background-color: rgba(249, 250, 251, 1);
+    font-size: 16px;
+    font-weight: 400;
+    
+
+  }
+  
+  .student-results-search-section {
+    width: 90%;
+    border-radius: 4px;
+    display: flex;
+    color: rgba(189, 189, 189, 1);
+    margin: 0rem auto 1rem;
+    padding: 1rem 0rem;
+    
+  }
+
+  .search-button{
+    position: relative;
+    left: 1.6rem;
+    top: 1rem;
+    width:1rem;
+    height:1rem
+  }
+  
+  .search-by-course-input {
+    width: 25%;
+    padding-left: 2rem;
+    height: 6vh;
+    border-radius: 4px;
+    border: 1px solid rgba(189, 189, 189, 1);
+    font-size: 17px;
+    
+  }
+  .search-by-course-input::placeholder {
+
+    font-family: 'Heebo';
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0px;
+    text-align: left;
+
+  }
+
+  .student-results-grid-container {
+    border-radius: 1rem;
+    flex-wrap: wrap;
+    background-color: rgba(255, 255, 255, 1);
+    width: 90%;
+    margin: 1rem auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5rem; 
+    padding: 1.5rem;
+  
+  }
+
+  
+  .students-results-course-card,
+  .course-card {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 0.8rem 1rem;
+    border-radius: 16px;
+    background-color: rgba(234, 236, 240, 1);
+    width: 100%;
+  }
+  
+  .card-header {
+    font-size: 24px;
+    color: rgba(45, 0, 247, 1);
+    font-weight: 700;
+    size-adjust: 24px;
+    font-size: 20px;
+    line-height: 33.6px;
+    width: 90%;
+    margin: 0rem auto;
+
+  }
+  
+  .middle-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    margin: 1rem auto;
+    width: 90%;
+    gap: 0.5rem;
+    
+  }
+  
+  .middle-left,
+  .middle-right {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    gap: 0.5rem;
+  
+  }
+  
+  .middle-left p {
+    font-size: 20px;
+    margin: 0;
+  }
+  
+  .middle-right h5 {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+  
+  .course-info {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    justify-content: flex-end;
+    color: rgba(0, 79, 255, 1);
+    margin: 0rem auto;
+    gap: 0.5rem;
+    
+  }
+  
+  .arrowdown {
+    width: 20px;
+  }
+  
   
   .text-wrapper {
     display: flex;
@@ -119,44 +194,15 @@
   }
   
   /* Grid Container Styles */
-  .grid-container {
-    display: grid;
-    overflow-y: scroll;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    /* gap: 0.5rem; */
-    border-radius: 1rem;
-    flex-wrap: wrap;
-    background-color: rgba(255, 255, 255, 1);
-    padding: 1.5rem;
-    width: 97%;
-    margin: 2rem auto;
-  
-  }
-  
-  .card-header {
-    
-    color: rgba(45, 0, 247, 1);
-    width: 102px;
-    height: 34px;
-    font-weight: 700;
-    size-adjust: 24px;
-    font-size: 20px;
-    line-height: 33.6px;
-    width: 80%;
-    margin: 1rem auto;
-  }
+
   
   .totalscore {
-    width: 89px;
-    height: 25px;
-    size-adjust: 16px;
     font-weight: 500;
     font-size: 14px;
-    background-color: 000;
     line-height: 22.4px;
-    padding-top: -1rem;
+    text-align: center;
   }
+
   
   .grade-sections {
     height: 22px;
@@ -180,29 +226,10 @@
     text-align: center;
     color: rgba(102, 112, 133, 1);
   }
+
   
-  .course-card {
-    padding: 1rem 0.2rem 1rem 0.2rem;
-    margin: -1rem 0.75rem 1.5rem 0.2rem;
-    border-radius: 16px;
-    height: 230px;
-    width: 337px;
-    background-color: rgba(234, 236, 240, 1);
-  }
   
-  .middle-card {
-    display: flex;
-    margin: 1rem auto;
-    width: 80%;
-    justify-content: space-between;
-  }
-  
-  .middle-left {
-    display: block;
-    display: flex;
-    flex-direction: column;
-    width: 40%;
-  }
+
   
   .middle-right {
     width: 58%;
@@ -214,11 +241,7 @@
 
   }
   
-  .course-info {
-    display: flex;
-    margin-left: 12rem;
-    color: rgba(0, 79, 255, 1);
-  }
+
   
   .info {
     font-size: small;
@@ -243,9 +266,7 @@
     font-size: 25px;
   }
   
-  .noresults {
-    width: 80px;
-    height: 80px;
+  .middle-left .noresults {
     background-color: rgba(208, 213, 221, 1);
     color: rgba(255, 255, 255, 1);
     border-radius: 50%;
@@ -254,9 +275,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     font-weight: bold;
-    padding: 1rem;
+    padding: 1.5rem;
     font-weight: 400px;
   }
 
@@ -293,7 +314,7 @@
       gap: 12px;
     }
   
-    .course-card {
+    .students-results-course-card {
       width: 100%;
       margin: 0 0 1.5rem 0;
     }
@@ -346,7 +367,7 @@
       gap: 12px;
     }
   
-    .course-card {
+    .students-results-course-card {
       width: 100%;
       margin: 0 0 1.5rem 0;
     }

@@ -984,7 +984,7 @@ function SetExamPage() {
                                             removeQuestion(0, questionIndex)
                                           }
                                         >
-                                          x
+                                          Remove Question
                                         </button>
                                       </div>
                                     )

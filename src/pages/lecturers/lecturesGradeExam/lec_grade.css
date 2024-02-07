@@ -19,7 +19,7 @@
 .grades-first {
   width: 70rem;
   height: 150px;
-  /* display: grid; */
+
   grid-template-columns: 1fr 1fr 1fr;
   justify-content: flex-start;
   align-items: flex-start;
@@ -57,6 +57,7 @@
   font-weight: 700px;
   size-adjust: 32px;
   line-height: 44.8px;
+  align-items: center;
 }
 
 .grades-results {
@@ -67,14 +68,17 @@
 }
 
 .grades-results-span {
-  font-size: 18px;
+  font-size: 1.2rem;
   width: 300px;
   height: 45px;
   font-weight: 700;
   size-adjust: 32px;
-  line-height: 44.8px;
-  letter-spacing: 0.25 px;
-  border: 1px solid black;
+  font-family: "Inter";
+  font-weight: 700;
+  line-height: 34px;
+  text-align: left;
+
+
 }
 .grade-text-wrapper {
   display: flex;
@@ -142,33 +146,29 @@
   text-wrap: wrap;
 }
 .grades-course-card {
-  margin: -1rem 0.75rem 1.5rem 0.2rem;
+  
   border-radius: 16px;
-  height: 10rem;
-  width: 20rem;
+  width: 100%;
   background-color: rgba(234, 236, 240, 1);
+  padding: 1rem;
+  height: 10rem;
+  
 }
 
 .grades-middle-card {
   display: flex;
-  width: 230px;
-  height: 110px;
-  gap: 20px;
-  padding-top: 0.5rem;
+
 }
 .grades-middle-left {
-  display: block;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 1rem;
   align-items: center;
 }
 .grades-middle-right {
-  width: 160px;
-  height: 30px;
-  margin-top: 1.5rem;
-  margin-left: -3rem;
-  gap: 16px;
+  margin-top: 3rem;
+  margin-left: -2.2rem;
 }
 .grades-complete {
   width: 80px;
@@ -210,3 +210,13 @@
   border-radius: 100px;
   border: none;
 }
+
+.lecturer-grade-exam-wrapper{
+  margin-top: 2rem;
+}
+
+.lecturer-grade-exam-wrapper h3{
+  margin: 3.2rem;
+}
+
+

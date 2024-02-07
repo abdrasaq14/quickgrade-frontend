@@ -12,7 +12,7 @@ function StudentTakeExamsInstructions() {
   console.log("path", path);
   console.log("course-code", courseCode);
   const navigate = useNavigate();
-  
+
   const handleSubmit = () => {
     navigate(`/students/dashboard/take-exams/${courseCode}`);
   };
@@ -84,22 +84,22 @@ function StudentTakeExamsInstructions() {
                 <div>
                   <ul>
                     <li>
-                      - Camera is turned on from examination start to finish.
+                      Camera is turned on from examination start to finish.
                     </li>
                     <li>
-                      - Examination is timed and countdown begins once the start
+                      Examination is timed and countdown begins once the start
                       button is clicked.
                     </li>
                     <li>
-                      - When the submit button is clicked, answers will be
+                      When the submit button is clicked, answers will be
                       submitted and you will be logged out of the examination.
                     </li>
                     <li>
-                      - Once the assigned examination time ends, you will be
+                      Once the assigned examination time ends, you will be
                       logged out of the exam and your answers will be
                       automatically submitted.
                     </li>
-                    <li>- Read examination instructions carefully.</li>
+                    <li>Read examination instructions carefully.</li>
                   </ul>
                 </div>
                 <div className="exam-instructions-body-wrapper-btn">
