@@ -108,6 +108,7 @@ function StudentsChangePassword() {
         <Header newUser={studentData?.studentData?.firstName || ""} />
           <div className="change-password-form">
             <h3>Change Password</h3>
+            
             <form onSubmit={handleFormSubmit}>
               {error && <div className="error-message">{error}</div>}
               {successMessage && (
