@@ -4,7 +4,7 @@ import Header from "../../../components/header/header";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
 import axios from "axios";
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect } from "react";
 
 interface StudentsResultsDetail {
   studentId: string;
@@ -125,7 +125,6 @@ function LecturerGrades() {
               </div>
 
               <div className="grades-session-info">
-
                 <div className="semester-session-container">
                   <div className="semester-div-container">
                     <div>Semester:</div>
@@ -198,36 +197,36 @@ function LecturerGrades() {
           </>
         ) : (
           <>
-
-<div style={{ marginTop: "1rem", marginLeft: "1rem"}} className="semester-session-container">
-                  <div  className="semester-div-container">
-                    <div>Semester:</div>
-                    <div className="session-dropdown">
-                      <select
-                        className="session-button-default"
-                        value={selectedSemester}
-                        onChange={(e) => setSelectedSemester(e.target.value)}
-                      >
-                        <option value="first semester">First</option>
-                        <option value="second semester">Second</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="session-div-container">
-                    <div>Session:</div>
-                    <div className="session-dropdown">
-                      <select className="session-button-default">
-                        <option>2023/2024</option>
-                      </select>
-                    </div>
-                  </div>
+            <div
+              style={{ marginTop: "1rem", marginLeft: "1rem" }}
+              className="semester-session-container"
+            >
+              <div className="semester-div-container">
+                <div>Semester:</div>
+                <div className="session-dropdown">
+                  <select
+                    className="session-button-default"
+                    value={selectedSemester}
+                    onChange={(e) => setSelectedSemester(e.target.value)}
+                  >
+                    <option value="first semester">First</option>
+                    <option value="second semester">Second</option>
+                  </select>
                 </div>
-            
+              </div>
+              <div className="session-div-container">
+                <div>Session:</div>
+                <div className="session-dropdown">
+                  <select className="session-button-default">
+                    <option>2023/2024</option>
+                  </select>
+                </div>
+              </div>
+            </div>
 
-            <h3 style={{ marginLeft: "1rem", marginTop: "1rem"}}>
+            <h3 style={{ marginLeft: "1rem", marginTop: "1rem" }}>
               No exams have been set for this semester
             </h3>
-
           </>
         )}
       </div>

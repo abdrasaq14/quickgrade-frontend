@@ -14,13 +14,15 @@ import StudentSignup from "../students/studentSignup/studentSignup";
 import { CheckYourEmail } from "../check-you-email/check_your_email";
 import { ForgotPassword } from "../forgotPassword/forget_password";
 import LecturerResults from "../lecturers/LecturerResultsPage/LecturerResults";
-import {StudentDash} from "../students/studentDashboard/StudentDash";
+import { StudentDash } from "../students/studentDashboard/StudentDash";
 import StudentTakeExamsInstructions from "../students/studentTakeExamsInstructions/studentTakeExamsInstructions";
 import TakeExamOBJ from "../students/studentTakeExam/TakeExamOBJ";
 import StudentsChangePassword from "../students/Students-Change-Password/StudentsChangePassword";
 import SetExamPage from "../lecturers/lecturerSetExam/setExamPage";
 import { StudentProtectedRoute } from "../../components/protectedRoutes/protectedRoute";
 import { LecturerProtectedRoute } from "../../components/protectedRoutes/protectedRoute";
+import SetExamPageSuccessMessage from "../lecturers/lecturerSetExamSuccess/setExamSuccessMessage";
+import TakeExamSuccessMessage from "../students/studentTakeExamSuccess/takeExamSuccessMessage";
 // import CompletedExamOBJ from "../completed exam/completedExamObj";
 
 import StudentsResults from "../students/studentsresults/Students-Results";
@@ -46,6 +48,10 @@ function App() {
                 <Route path="results" element={<LecturerResults />} />
                 <Route path="set-exams" element={<SetExamPage />} />
                 <Route path="grade-exams" element={<LecturerGrades />} />
+                <Route
+                  path="set-exams/success/:courseCode"
+                  element={<SetExamPageSuccessMessage />}
+                />
               </Routes>
             </LecturerProtectedRoute>
           }
@@ -78,10 +84,14 @@ function App() {
                   element={<StudentsChangePassword />}
                 />
                 <Route
-                path="grade-exams-dashboard"
-                element={<GradeExamPage/>}/>
+                  path="grade-exams-dashboard"
+                  element={<GradeExamPage />}
+                />
+                <Route
+                  path="take-exams/success/:courseCode"
+                  element={<TakeExamSuccessMessage />}
+                />
               </Routes>
-              
             </StudentProtectedRoute>
           }
         />
@@ -194,13 +204,13 @@ function App() {
         />
 
         <Route
-        path="/lecturers/grade-exams-dashboard"
-        element={<GradeExamPage/>}/>
-        <Route path="/lecturers/grade-exams-theory"
-        element={<GradeExamTheory/>}/>
-
-        
-
+          path="/lecturers/grade-exams-dashboard"
+          element={<GradeExamPage />}
+        />
+        <Route
+          path="/lecturers/grade-exams-theory"
+          element={<GradeExamTheory />}
+        />
       </Routes>
     </>
   );

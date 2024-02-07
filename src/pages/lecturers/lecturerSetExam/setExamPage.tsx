@@ -2,7 +2,7 @@ import "./setExamStyle.css";
 import addButton from "../../../assets/add_button_logo copy.png";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
 import SideBar from "../../../components/sidebar/sideBar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState, FormEvent } from "react";
 import axios from "axios";
 import Header from "../../../components/header/header";
@@ -21,12 +21,17 @@ interface Section {
   questions: Question[];
 }
 
+interface SectionValue {
+  sectionAlphabet: string;
+  ScoreObtainable: string;
+  questionType: string;
+}
+
 function SetExamPage() {
   const { lecturerData } = useAuth();
+  const navigate = useNavigate()
   // section handling state
-  const [sectionValue, setSectionValue] = useState<Record<string, string>[]>(
-    []
-  );
+  const [sectionValue, setSectionValue] = useState<SectionValue[]>([]);
 
   const [popup, setPopup] = useState(false);
   const toggleAddSectionModal = () => {
@@ -63,7 +68,6 @@ function SetExamPage() {
     ScoreObtainable: "",
     questionType: "",
   });
-  console.log("1", sectionValue);
   const handleAddSectionModalSubmitForm = (e: FormEvent) => {
     e.preventDefault();
     const updatedSectionDetail = JSON.parse(JSON.stringify(sectionDetail));
@@ -191,6 +195,85 @@ function SetExamPage() {
   const [examDate, setExamDate] = useState("");
   const [courseTitle, setCourseTitle] = useState("");
 
+  const isObjectivesSectionValid = (section: Section) => {
+    return section.questions.every((question) => {
+      if (
+        !totalScore.trim() ||
+        !examDuration.trim() ||
+        !examDate.trim() ||
+        !courseCode.trim() ||
+        !courseTitle.trim() ||
+        !department.trim() ||
+        !semester.trim() ||
+        !session.trim() ||
+        !faculty.trim() ||
+        !instruction.trim()
+      ) {
+        return false;
+      }
+      if (!question.questionText.trim()) return false;
+
+      // Check if all options are filled
+      if (
+        !question.optionA.trim() ||
+        !question.optionB.trim() ||
+        !question.optionC.trim() ||
+        !question.optionD.trim()
+      ) {
+        return false;
+      }
+
+      // Check if the correct answer is selected
+      if (!question.correctAnswer.trim()) return false;
+
+      return true;
+    });
+  };
+
+  const isTheorySectionValid = (section: Section) => {
+    return section.questions.every((question) => {
+      if (
+        !totalScore.trim() &&
+        !examDuration.trim() &&
+        !examDate.trim() &&
+        !courseCode.trim() &&
+        !courseTitle.trim() &&
+        !department.trim() &&
+        !semester.trim() &&
+        !session.trim() &&
+        !faculty.trim() &&
+        !instruction.trim()
+      ) {
+        return false;
+      }
+      if (!question.questionText.trim()) return false;
+
+      return true;
+    });
+  };
+
+  const isFillInTheBlankSectionValid = (section: Section) => {
+    return section.questions.every((question) => {
+      if (
+        !totalScore.trim() &&
+        !examDuration.trim() &&
+        !examDate.trim() &&
+        !courseCode.trim() &&
+        !courseTitle.trim() &&
+        !department.trim() &&
+        !semester.trim() &&
+        !session.trim() &&
+        !faculty.trim() &&
+        !instruction.trim()
+      ) {
+        return false;
+      }
+      if (!question.questionText.trim()) return false;
+
+      return true;
+    });
+  };
+
   const submitQuestions = async (e: FormEvent) => {
     e.preventDefault();
     const assembledQuestions: Question[] = sections.reduce(
@@ -217,7 +300,7 @@ function SetExamPage() {
 
       if (res.status === 200 && res.data.examQuestionCreated) {
         console.log("Exam created successfully");
-        window.location.reload();
+        navigate(`/lecturers/dashboard/set-exams/success/${courseCode}`);
       } else {
         console.log("res", res);
       }
@@ -728,8 +811,8 @@ function SetExamPage() {
                           {section === "blank-section" && (
                             <>
                               <h1 className="set-exams-page-questions-section-title">
-                                Click on the add section button above to
-                                get started{" "}
+                                Click on the add section button above to get
+                                started{" "}
                               </h1>
                             </>
                           )}
@@ -746,7 +829,10 @@ function SetExamPage() {
                                     )
                                     .map((section) => {
                                       return (
-                                        <>Section {section.sectionAlphabet}</>
+                                        <>
+                                          Section{" "}
+                                          {section.sectionAlphabet.toUpperCase()}
+                                        </>
                                       );
                                     })}
                                   <span className="set-exams-page-questions-section-header-subtitle">
@@ -984,16 +1070,24 @@ function SetExamPage() {
                                             removeQuestion(0, questionIndex)
                                           }
                                         >
-                                          Remove Question
+                                          Remove question
                                         </button>
                                       </div>
                                     )
                                   )}
                                 </div>
                               </div>
-                              <div className="set-exams-page-bottom-form-base-button-section">
-                                <div className="set-exams-page-next-section-and-save-button-container"></div>
-                              </div>
+                              {sections[0].questions.length > 0 && (
+                                <button
+                                  className="set-exams-page-change-section-buttons set-exams-final-submit-btn"
+                                  type="submit"
+                                  disabled={
+                                    !isObjectivesSectionValid(sections[0])
+                                  }
+                                >
+                                  Submit
+                                </button>
+                              )}
                             </div>
                           )}
 
@@ -1008,7 +1102,10 @@ function SetExamPage() {
                                     )
                                     .map((section) => {
                                       return (
-                                        <>Section {section.sectionAlphabet}</>
+                                        <>
+                                          Section{" "}
+                                          {section.sectionAlphabet.toUpperCase()}
+                                        </>
                                       );
                                     })}
                                   <span className="set-exams-page-questions-section-header-subtitle">
@@ -1062,76 +1159,7 @@ function SetExamPage() {
                                           }
                                         />
                                       </div>
-                                      <input
-                                        type="text"
-                                        placeholder="Option A"
-                                        className="theory-question-input-options"
-                                        value={question.optionA}
-                                        onChange={(e) =>
-                                          handleQuestionChange(
-                                            1,
-                                            questionIndex,
-                                            "optionA",
-                                            e.target.value
-                                          )
-                                        }
-                                      />
-                                      <input
-                                        type="text"
-                                        placeholder="Option B"
-                                        className="theory-question-input-options"
-                                        value={question.optionB}
-                                        onChange={(e) =>
-                                          handleQuestionChange(
-                                            1,
-                                            questionIndex,
-                                            "optionB",
-                                            e.target.value
-                                          )
-                                        }
-                                      />
-                                      <input
-                                        type="text"
-                                        placeholder="Option C"
-                                        className="theory-question-input-options"
-                                        value={question.optionC}
-                                        onChange={(e) =>
-                                          handleQuestionChange(
-                                            1,
-                                            questionIndex,
-                                            "optionC",
-                                            e.target.value
-                                          )
-                                        }
-                                      />
-                                      <input
-                                        type="text"
-                                        placeholder="Option D"
-                                        className="theory-question-input-options"
-                                        value={question.optionD}
-                                        onChange={(e) =>
-                                          handleQuestionChange(
-                                            1,
-                                            questionIndex,
-                                            "optionD",
-                                            e.target.value
-                                          )
-                                        }
-                                      />
-                                      <input
-                                        type="text"
-                                        placeholder="Correct Answer"
-                                        className="theory-question-input-options"
-                                        value={question.correctAnswer}
-                                        onChange={(e) =>
-                                          handleQuestionChange(
-                                            1,
-                                            questionIndex,
-                                            "correctAnswer",
-                                            e.target.value
-                                          )
-                                        }
-                                      />
+
                                       <button
                                         className="fill-in-the-blanks-remove-question"
                                         type="button"
@@ -1145,6 +1173,15 @@ function SetExamPage() {
                                   )
                                 )}
                               </div>
+                              {sections[1].questions.length > 0 && (
+                                <button
+                                  className="set-exams-page-change-section-buttons set-exams-final-submit-btn"
+                                  type="submit"
+                                  disabled={!isTheorySectionValid(sections[1])}
+                                >
+                                  Submit
+                                </button>
+                              )}
                             </div>
                           )}
 
@@ -1160,7 +1197,10 @@ function SetExamPage() {
                                     )
                                     .map((section) => {
                                       return (
-                                        <>Section {section.sectionAlphabet}</>
+                                        <>
+                                          Section{" "}
+                                          {section.sectionAlphabet.toUpperCase()}
+                                        </>
                                       );
                                     })}
                                   <span className="set-exams-page-questions-section-header-subtitle">
@@ -1237,6 +1277,17 @@ function SetExamPage() {
                                   Add question
                                 </button> */}
                               </div>
+                              {sections[2].questions.length > 0 && (
+                                <button
+                                  className="set-exams-page-change-section-buttons set-exams-final-submit-btn"
+                                  type="submit"
+                                  disabled={
+                                    !isFillInTheBlankSectionValid(sections[2])
+                                  }
+                                >
+                                  Submit
+                                </button>
+                              )}
                             </div>
                           )}
                         </div>
@@ -1259,27 +1310,9 @@ function SetExamPage() {
                             >
                               Next Section
                             </button>
-                            <button
-                              className="set-exams-page-change-section-buttons"
-                              type="submit"
-                            >
-                              Submit
-                            </button>
-                            <button
-                              className="set-exams-page-change-section-buttons"
-                              type="button"
-                              onClick={prevSectionToggle}
-                            >
-                              Previous Section
-                            </button>
                           </div>
-                        ) : section === "blank-section" ? null : (
-                          <button
-                            className="set-exams-page-change-section-buttons"
-                            type="submit"
-                          >
-                            Submit
-                          </button>
+                        ) : (
+                          ""
                         )}
                       </div>
                     </div>
