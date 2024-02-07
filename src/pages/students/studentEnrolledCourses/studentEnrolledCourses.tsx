@@ -170,7 +170,7 @@ function StudentEnrolledCourses() {
                     {exams.length === 0 && (
   
                         <tr>
-                        <td colSpan={5}>No exams found</td>
+                        <td colSpan={5}>No exams available</td>
                       </tr>
                     
                       

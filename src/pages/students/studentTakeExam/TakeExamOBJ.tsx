@@ -337,7 +337,7 @@ const TakeExamOBJ = () => {
                     return question.questionType === "Objective";
                   })[0]
                   .sectionAlphabet?.toString()}{" "} */}
-                  {examsDetail?.firstSection.split("|")[1]}
+                  {examsDetail?.firstSection.split("|")[1] + " "}
                   Marks
                 </p>
                 {/* <div className="section-score">
@@ -484,7 +484,7 @@ const TakeExamOBJ = () => {
                     return question.questionType === "Objective";
                   })[0]
                   .sectionAlphabet?.toString()}{" "} */}
-                          {examsDetail?.secondSection.split("|")[1]}
+                          {examsDetail?.secondSection.split("|")[1] + " "}
                           Marks
                         </p>
 
@@ -505,7 +505,7 @@ const TakeExamOBJ = () => {
                                       );
                                     }).length +
                                       index +
-                                      1}
+                                      1}.
                                   </div>
                                   <div>{question.questionText}</div>
                                 </div>
@@ -514,7 +514,7 @@ const TakeExamOBJ = () => {
                                   <textarea
                                     rows={4}
                                     name={question.questionId}
-                                    placeholder="Enter your answer"
+                                    placeholder="Type answer"
                                     className="theory-options"
                                     value={
                                       selectedOptions.find(
@@ -565,7 +565,7 @@ const TakeExamOBJ = () => {
                     return question.questionType === "Objective";
                   })[0]
                   .sectionAlphabet?.toString()}{" "} */}
-                          {examsDetail?.thirdSection.split("|")[1]}
+                          {examsDetail?.thirdSection.split("|")[1] + " "}
                           Marks
                         </p>
 
@@ -590,7 +590,7 @@ const TakeExamOBJ = () => {
                                       );
                                     }).length +
                                     index +
-                                    1}
+                                    1}.
                                 </div>
                                 <div>{question.questionText}</div>
                               </div>
@@ -601,7 +601,7 @@ const TakeExamOBJ = () => {
                                     name={question.questionId}
                                     id="option1"
                                     className="theory-options"
-                                    placeholder="Your Answer"
+                                    placeholder="Type answer"
                                     value={
                                       selectedOptions.find(
                                         (option) =>
@@ -627,11 +627,15 @@ const TakeExamOBJ = () => {
                   ) : null;
                 })}
               </div>
-
-              <button id="submit-btn" type="submit">
-                Submit
+              <div className="take-exam-submit-container">
+              <button className="submit-btn" type="submit">
+                Submit exam
               </button>
-              <div className="anchor-div">
+
+              </div>
+
+              
+              {/* <div className="anchor-div">
                 <a href="./take-exam-obj" id="first-anchor">
                   &larr; Previous Section
                 </a>
@@ -646,12 +650,12 @@ const TakeExamOBJ = () => {
                 <a href="./take-exam-theory" id="second-anchor">
                   Next Section &rarr;
                 </a>
-              </div>
+              </div> */}
             </form>
           </div>
         ) : (
           <div className="take-exams-main-container">
-            <p>No Question available for this course yet</p>
+            <p>No questions available for this exam</p>
           </div>
         )}
       </div>

@@ -107,9 +107,10 @@ function LecturerGrades() {
       <div className="grades-right-body-wrapper">
         {lecturerData && (
           <Header
-            newUser={`${lecturerData.title}, ${lecturerData.firstName}}`}
+            newUser={`${lecturerData.title}, ${lecturerData.firstName}`}
           />
         )}
+
         {studentsResultsDetail.length > 0 ? (
           <>
             <div className="grades-first">
@@ -124,20 +125,29 @@ function LecturerGrades() {
               </div>
 
               <div className="grades-session-info">
-                <div className="session-semester-wrapper">
-                  <h3 className="grades-sess-info">2022/2023</h3>
-                  <select
-                    name="semester"
-                    id="semester"
-                    onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-                      setSelectedSemester(e.currentTarget.value)
-                    }
-                  >
-                    <option value="first semester" selected>
-                      First Semester
-                    </option>
-                    <option value="second semester">Second Semester</option>
-                  </select>
+
+                <div className="semester-session-container">
+                  <div className="semester-div-container">
+                    <div>Semester:</div>
+                    <div className="session-dropdown">
+                      <select
+                        className="session-button-default"
+                        value={selectedSemester}
+                        onChange={(e) => setSelectedSemester(e.target.value)}
+                      >
+                        <option value="first semester">First</option>
+                        <option value="second semester">Second</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="session-div-container">
+                    <div>Session:</div>
+                    <div className="session-dropdown">
+                      <select className="session-button-default">
+                        <option>2023/2024</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
 
                 <h4 className="grades-sess-sub">
@@ -188,20 +198,36 @@ function LecturerGrades() {
           </>
         ) : (
           <>
-            <p>You have not set any exam question for this semster, select another semester below</p>
-            <select
-              name="semester"
-              id="semester"
-              onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-                setSelectedSemester(e.currentTarget.value)
-              }
-            >
-              <option value="select semester" selected>
-                select semester
-              </option>
-              <option value="first semester">First Semester</option>
-              <option value="second semester">Second Semester</option>
-            </select>
+
+<div style={{ marginTop: "1rem", marginLeft: "1rem"}} className="semester-session-container">
+                  <div  className="semester-div-container">
+                    <div>Semester:</div>
+                    <div className="session-dropdown">
+                      <select
+                        className="session-button-default"
+                        value={selectedSemester}
+                        onChange={(e) => setSelectedSemester(e.target.value)}
+                      >
+                        <option value="first semester">First</option>
+                        <option value="second semester">Second</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="session-div-container">
+                    <div>Session:</div>
+                    <div className="session-dropdown">
+                      <select className="session-button-default">
+                        <option>2023/2024</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+            
+
+            <h3 style={{ marginLeft: "1rem", marginTop: "1rem"}}>
+              No exams have been set for this semester
+            </h3>
+
           </>
         )}
       </div>
