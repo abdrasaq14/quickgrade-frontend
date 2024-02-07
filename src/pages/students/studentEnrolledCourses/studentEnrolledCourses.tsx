@@ -168,20 +168,15 @@ function StudentEnrolledCourses() {
                   </thead>
                   <tbody className="enrolled-courses-table-body">
                     {exams.length === 0 && (
-  
-                        <tr>
+                      <tr>
                         <td colSpan={5}>No exams available</td>
                       </tr>
-                    
-                      
                     )}
                     {exams.map((exam) => (
                       <tr key={exam.examId}>
                         <td>{exam.courseCode}</td>
                         <td>{exam.courseTitle}</td>
-                        <td>
-                          {format(exam.examDate, "d MMM, yyyy / h:mmaa")}
-                        </td>
+                        <td>{format(exam.examDate, "d MMM, yyyy / h:mmaa")}</td>
                         <td>Campus E-center</td>
                         <td style={calculateStatus(exam.examDate).style}>
                           {calculateStatus(exam.examDate).status}

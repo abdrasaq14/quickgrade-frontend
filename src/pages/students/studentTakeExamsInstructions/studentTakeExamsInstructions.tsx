@@ -50,7 +50,10 @@ function StudentTakeExamsInstructions() {
                     className="img-2"
                     src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-sort.svg"
                   />
-                  <Link to="/" className="text-wrapper-6">
+                  <Link
+                    to="/students/dashboard/results"
+                    className="text-wrapper-6"
+                  >
                     Results
                   </Link>
                 </div>

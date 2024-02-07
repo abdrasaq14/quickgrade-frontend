@@ -458,7 +458,6 @@ const TakeExamOBJ = () => {
                     </>
                   ))}
 
-
                 {/* fill in the blanks questions */}
 
                 {questions.map((question) => {
@@ -505,7 +504,8 @@ const TakeExamOBJ = () => {
                                       );
                                     }).length +
                                       index +
-                                      1}.
+                                      1}
+                                    .
                                   </div>
                                   <div>{question.questionText}</div>
                                 </div>
@@ -576,24 +576,25 @@ const TakeExamOBJ = () => {
                           .map((question, index) => (
                             <>
                               <div className="second-form" key={index}>
-                              <div className="question-container-theory">
-                                <div>
-                                  {questions.filter((question) => {
-                                    return (
-                                      question.questionType === "Objective"
-                                    );
-                                  }).length +
-                                    questions.filter((question) => {
+                                <div className="question-container-theory">
+                                  <div>
+                                    {questions.filter((question) => {
                                       return (
-                                        question.questionType ===
-                                        "fill-in-the-blank"
+                                        question.questionType === "Objective"
                                       );
                                     }).length +
-                                    index +
-                                    1}.
+                                      questions.filter((question) => {
+                                        return (
+                                          question.questionType ===
+                                          "fill-in-the-blank"
+                                        );
+                                      }).length +
+                                      index +
+                                      1}
+                                    .
+                                  </div>
+                                  <div>{question.questionText}</div>
                                 </div>
-                                <div>{question.questionText}</div>
-                              </div>
 
                                 <label htmlFor="your Answer">
                                   <textarea
@@ -616,7 +617,6 @@ const TakeExamOBJ = () => {
                                         question.questionText
                                       )
                                     }
-                                    
                                   ></textarea>
                                 </label>
                               </div>
@@ -628,13 +628,11 @@ const TakeExamOBJ = () => {
                 })}
               </div>
               <div className="take-exam-submit-container">
-              <button className="submit-btn" type="submit">
-                Submit exam
-              </button>
-
+                <button className="submit-btn" type="submit">
+                  Submit exam
+                </button>
               </div>
 
-              
               {/* <div className="anchor-div">
                 <a href="./take-exam-obj" id="first-anchor">
                   &larr; Previous Section
