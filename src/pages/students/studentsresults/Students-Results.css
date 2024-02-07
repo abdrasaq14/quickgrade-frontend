@@ -1,387 +1,353 @@
- 
 .students-Results-main-body-wrapper {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    min-height: 100vh;
-    background-color: #f9fafb;
-    /* overflow-y: visible!important; */
-  }
-  
-  .students-Results-right-body-wrapper {
-    width: 80%;
-    min-height: 100%;
-    margin-left: 20%;
-    
-  }
-  
-  
- 
-  
-  .student-results-header {
-    width: 90%;
-    margin: 1rem auto 1rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    justify-content: flex-start;
-    padding-left: 1rem;
-    align-items: center;
- 
-  }
-  .results-info {
-    width: 119px;
-    height: 45px;
-    font-weight: 700px;
-    size-adjust: 32px;
-    line-height: 44.8px;
-  }
-  
-  .results {
-    font-size: 25px;
-    width: 119px;
-    height: 45px;
-    font-weight: 600;
-    size-adjust: 32px;
-    line-height: 44.8px;
-    letter-spacing: 0.25px;
-  }
-
-  .top-selection-labels{
-    font-size: 16px;
-    font-weight: 600;
-
-
+  margin: 0;
+  padding: 0;
+  display: flex;
+  min-height: 100vh;
+  background-color: #f9fafb;
+  /* overflow-y: visible!important; */
 }
-  .top-selection-options{
-    border: none;
-    background-color: rgba(249, 250, 251, 1);
-    font-size: 16px;
-    font-weight: 400;
-    
 
-  }
-  
-  .student-results-search-section {
-    width: 90%;
-    border-radius: 4px;
-    display: flex;
-    color: rgba(189, 189, 189, 1);
-    margin: 0rem auto 1rem;
-    padding: 1rem 0rem;
-    
-  }
+.students-Results-right-body-wrapper {
+  width: 80%;
+  min-height: 100%;
+  margin-left: 20%;
+}
 
-  .search-button{
-    position: relative;
-    left: 1.6rem;
-    top: 1rem;
-    width:1rem;
-    height:1rem
-  }
-  
-  .search-by-course-input {
-    width: 25%;
-    padding-left: 2rem;
-    height: 6vh;
-    border-radius: 4px;
-    border: 1px solid rgba(189, 189, 189, 1);
-    font-size: 17px;
-    
-  }
-  .search-by-course-input::placeholder {
+.student-results-header {
+  width: 90%;
+  margin: 1rem auto 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: flex-start;
+  padding-left: 1rem;
+  align-items: center;
+}
+.results-info {
+  width: 119px;
+  height: 45px;
+  font-weight: 700px;
+  size-adjust: 32px;
+  line-height: 44.8px;
+}
 
-    font-family: 'Heebo';
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0px;
-    text-align: left;
+.results {
+  font-size: 25px;
+  width: 119px;
+  height: 45px;
+  font-weight: 600;
+  size-adjust: 32px;
+  line-height: 44.8px;
+  letter-spacing: 0.25px;
+}
 
-  }
+.top-selection-labels {
+  font-size: 16px;
+  font-weight: 600;
+}
+.top-selection-options {
+  border: none;
+  background-color: rgba(249, 250, 251, 1);
+  font-size: 16px;
+  font-weight: 400;
+}
 
-  .student-results-grid-container {
-    border-radius: 1rem;
-    flex-wrap: wrap;
-    background-color: rgba(255, 255, 255, 1);
-    width: 90%;
-    margin: 1rem auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 5rem; 
-    padding: 1.5rem;
-  
-  }
+.student-results-search-section {
+  width: 90%;
+  border-radius: 4px;
+  display: flex;
+  color: rgba(189, 189, 189, 1);
+  margin: 0rem auto 1rem;
+  padding: 1rem 0rem;
+}
 
-  
-  .students-results-course-card,
-  .course-card {
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 0.8rem 1rem;
-    border-radius: 16px;
-    background-color: rgba(234, 236, 240, 1);
-    width: 100%;
-  }
-  
-  .card-header {
-    font-size: 24px;
-    color: rgba(45, 0, 247, 1);
-    font-weight: 700;
-    size-adjust: 24px;
-    font-size: 20px;
-    line-height: 33.6px;
-    width: 90%;
-    margin: 0rem auto;
+.search-button {
+  position: relative;
+  left: 1.6rem;
+  top: 1rem;
+  width: 1rem;
+  height: 1rem;
+}
 
-  }
-  
-  .middle-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    display: flex;
-    margin: 1rem auto;
-    width: 90%;
-    gap: 0.5rem;
-    
-  }
-  
-  .middle-left,
-  .middle-right {
-    display: flex;
-    flex-direction: column;
-    width: 40%;
-    gap: 0.5rem;
-  
-  }
-  
-  .middle-left p {
-    font-size: 20px;
-    margin: 0;
-  }
-  
-  .middle-right h5 {
-    margin: 0;
-    font-size: 0.8rem;
-  }
-  
-  .course-info {
-    display: flex;
-    align-items: center;
-    width: 90%;
-    justify-content: flex-end;
-    color: rgba(0, 79, 255, 1);
-    margin: 0rem auto;
-    gap: 0.5rem;
-    
-  }
-  
-  .arrowdown {
-    width: 20px;
-  }
-  
-  
-  .text-wrapper {
-    display: flex;
-    color: rgba(16, 24, 40, 1);
-    justify-content: flex-end;
-    margin: 1.7rem 3rem 0.3rem 1rem;
-  }
-  
-  .students-Results-header-img {
-    margin-right: 0.7rem;
-  }
-  
-  /* Grid Container Styles */
+.search-by-course-input {
+  width: 25%;
+  padding-left: 2rem;
+  height: 6vh;
+  border-radius: 4px;
+  border: 1px solid rgba(189, 189, 189, 1);
+  font-size: 17px;
+}
+.search-by-course-input::placeholder {
+  font-family: "Heebo";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0px;
+  text-align: left;
+}
 
-  
-  .totalscore {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 22.4px;
-    text-align: center;
-  }
+.student-results-grid-container {
+  border-radius: 1rem;
+  flex-wrap: wrap;
+  background-color: rgba(255, 255, 255, 1);
+  width: 90%;
+  margin: 1rem auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5rem;
+  padding: 1.5rem;
+}
 
-  
-  .grade-sections {
-    height: 22px;
-    line-height: 24.4px;
-    size-adjust: 16px;
-    font-weight: 600;
-    font-size: small;
-  }
-  
-  .not-ready {
-    width: 70px;
-    height: 66px;
-    gap: 8px;
-    font-weight: 400;
-    line-height: 22.4px;
-    size-adjust: 16px;
-    font-weight: 600;
-    font-size: 16px;
-    background-color: 000;
-    align-self: center;
-    text-align: center;
-    color: rgba(102, 112, 133, 1);
-  }
+.students-results-course-card,
+.course-card {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0.8rem 1rem;
+  border-radius: 16px;
+  background-color: rgba(234, 236, 240, 1);
+  width: 100%;
+}
 
-  
-  
+.card-header {
+  font-size: 24px;
+  color: rgba(45, 0, 247, 1);
+  font-weight: 700;
+  size-adjust: 24px;
+  font-size: 20px;
+  line-height: 33.6px;
+  width: 90%;
+  margin: 0rem auto;
+}
 
-  
-  .middle-right {
-    width: 58%;
-    height: 98px;
-    padding: 0.2rem 0.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+.middle-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  margin: 1rem auto;
+  width: 100%;
+}
 
-  }
-  
+.middle-left,
+.middle-right {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 50%;
+  gap: 0.5rem;
+}
 
-  
-  .info {
-    font-size: small;
-  }
-  
-  .arrowdown {
-    margin-top: -0.2rem;
-    font-size: 1.5rem;
-    color: rgba(0, 79, 255, 1);
-  }
-  
-  .number {
-    width: 80px;
-    height: 80px;
-    background-color: rgba(18, 183, 106, 1);
-    color: white;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 50px;
-    font-weight: bold;
-    padding-top: 1rem;
-    font-size: 25px;
-  }
-  
-  .middle-left .noresults {
-    background-color: rgba(208, 213, 221, 1);
-    color: rgba(255, 255, 255, 1);
-    border-radius: 50%;
-    text-align: center;
-    line-height: normal;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    font-weight: bold;
-    padding: 1.5rem;
-    font-weight: 400px;
-  }
+.middle-left p {
+  font-size: 20px;
+  margin: 0;
+}
 
+.middle-right p {
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+.course-info {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  justify-content: flex-end;
+  color: rgba(0, 79, 255, 1);
+  margin: 0rem auto;
+  gap: 0.5rem;
+}
+
+.arrowdown {
+  width: 20px;
+}
+
+.text-wrapper {
+  display: flex;
+  color: rgba(16, 24, 40, 1);
+  justify-content: flex-end;
+  margin: 1.7rem 3rem 0.3rem 1rem;
+}
+
+.students-Results-header-img {
+  margin-right: 0.7rem;
+}
+
+/* Grid Container Styles */
+
+.totalscore {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22.4px;
+  text-align: center;
+}
+
+.grade-sections {
+  height: 22px;
+  line-height: 24.4px;
+  size-adjust: 16px;
+  font-weight: 600;
+  font-size: small;
+}
+
+.not-ready {
+  width: 70px;
+  height: 66px;
+  gap: 8px;
+  font-weight: 400;
+  line-height: 22.4px;
+  size-adjust: 16px;
+  font-weight: 600;
+  font-size: 16px;
+  background-color: 000;
+  align-self: center;
+  text-align: center;
+  color: rgba(102, 112, 133, 1);
+}
+
+.middle-right {
+  width: 58%;
+  height: 98px;
+  padding: 0.2rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.info {
+  font-size: small;
+}
+
+.arrowdown {
+  margin-top: -0.2rem;
+  font-size: 1.5rem;
+  color: rgba(0, 79, 255, 1);
+}
+
+.number {
+  width: 80px;
+  height: 80px;
+  background-color: rgba(18, 183, 106, 1);
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 50px;
+  font-weight: bold;
+  padding-top: 1rem;
+  font-size: 25px;
+}
+
+.middle-left .noresults {
+  background-color: rgba(208, 213, 221, 1);
+  color: rgba(255, 255, 255, 1);
+  border-radius: 50%;
+  text-align: center;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 1.5rem;
+  font-weight: 400px;
+}
 
 /* Media Query for Tablets */
 @media only screen and (max-width: 768px) {
-    .main-body-wrapper {
-      flex-direction: column;
-    }
-  
-    .right-body-wrapper {
-      width: 100%;
-      margin-left: 0;
-    }
-  
-    .header-wrapper {
-      width: 100%;
-    }
-  
-    .first {
-      width: 100%;
-      grid-template-columns: 1fr;
-      padding-left: 16px;
-    }
-  
-    .search-section {
-      width: 100%;
-      padding-left: 16px;
-    }
-  
-  
-    .grid-container {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-  
-    .students-results-course-card {
-      width: 100%;
-      margin: 0 0 1.5rem 0;
-    }
-  
-    .middle-card {
-      margin: 1rem 0;
-    }
-  
-    .middle-left {
-      margin-right: 0;
-    }
-  
-    .course-info {
-      margin-left: 0;
-    }
+  .main-body-wrapper {
+    flex-direction: column;
   }
-  
-  /* Media Query for Mobile */
-  @media only screen and (max-width: 480px) {
-    .main-body-wrapper {
-      flex-direction: column;
-    }
-  
-    .right-body-wrapper {
-      width: 100%;
-      margin-left: 0;
-    }
-  
-    .header-wrapper {
-      width: 100%;
-    }
-  
-    .first {
-      width: 100%;
-      grid-template-columns: 1fr;
-      padding-left: 16px;
-    }
-  
-    .search-section {
-      width: 100%;
-      padding-left: 16px;
-    }
-  
-    .inner-body-wrapper {
-      padding: 16px;
-    }
-  
-    .grid-container {
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-  
-    .students-results-course-card {
-      width: 100%;
-      margin: 0 0 1.5rem 0;
-    }
-  
-    .middle-card {
-      margin: 1rem 0;
-    }
-  
-    .middle-left {
-      margin-right: 0;
-    }
-  
-    .course-info {
-      margin-left: 0;
-    }
+
+  .right-body-wrapper {
+    width: 100%;
+    margin-left: 0;
   }
-  
+
+  .header-wrapper {
+    width: 100%;
+  }
+
+  .first {
+    width: 100%;
+    grid-template-columns: 1fr;
+    padding-left: 16px;
+  }
+
+  .search-section {
+    width: 100%;
+    padding-left: 16px;
+  }
+
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .students-results-course-card {
+    width: 100%;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .middle-card {
+    margin: 1rem 0;
+  }
+
+  .middle-left {
+    margin-right: 0;
+  }
+
+  .course-info {
+    margin-left: 0;
+  }
+}
+
+/* Media Query for Mobile */
+@media only screen and (max-width: 480px) {
+  .main-body-wrapper {
+    flex-direction: column;
+  }
+
+  .right-body-wrapper {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .header-wrapper {
+    width: 100%;
+  }
+
+  .first {
+    width: 100%;
+    grid-template-columns: 1fr;
+    padding-left: 16px;
+  }
+
+  .search-section {
+    width: 100%;
+    padding-left: 16px;
+  }
+
+  .inner-body-wrapper {
+    padding: 16px;
+  }
+
+  .grid-container {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .students-results-course-card {
+    width: 100%;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .middle-card {
+    margin: 1rem 0;
+  }
+
+  .middle-left {
+    margin-right: 0;
+  }
+
+  .course-info {
+    margin-left: 0;
+  }
+}

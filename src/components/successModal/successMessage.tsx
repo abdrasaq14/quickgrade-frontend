@@ -74,7 +74,7 @@ function SuccessMessage({
       </SideBar>
 
       {/* Main content */}
-      <main className="set-exams-page-main-section">
+      <main className="success-modal-main-wrapper">
         {/* set exams heading wrapper */}
 
         <div className="add-section-pop-up">

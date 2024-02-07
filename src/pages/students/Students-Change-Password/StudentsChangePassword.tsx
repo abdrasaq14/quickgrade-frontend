@@ -34,7 +34,6 @@ function StudentsChangePassword() {
 
     // API call to update password
     try {
-      
       const res = await axios.put(
         "http://localhost:3000/students/dashboard/change-password",
         {
@@ -105,10 +104,10 @@ function StudentsChangePassword() {
           }}
         </SideBar>
         <div className="change-password-body">
-        <Header newUser={studentData?.studentData?.firstName || ""} />
+          <Header newUser={studentData?.studentData?.firstName || ""} />
           <div className="change-password-form">
             <h3>Change Password</h3>
-            
+
             <form onSubmit={handleFormSubmit}>
               {error && <div className="error-message">{error}</div>}
               {successMessage && (

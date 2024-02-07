@@ -8,47 +8,45 @@ import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
 import searchButton from "../../../assets/searchButton.png";
 import Header from "../../../components/header/header";
 
-interface StudentResult {
-  courseCode: number;
-  sectionMark: number;
-}
-
 interface EnrolledExam {
   courseId: string;
   studentId: string;
   semester: string;
   session: string;
   courseCode: string;
-  
+}
+interface StudentResult {
+  courseCode: string;
+  totalScore: number;
+  sectionMark: number;
+  semester: string;
 }
 
-
-
 function StudentsResults() {
-
-  const {studentData} = useAuth();
+  const { studentData } = useAuth();
+  console.log("student", studentData);
   const navigate = useNavigate();
   const [studentResults, setStudentResults] = useState<StudentResult[]>([]);
-  const [selectedSemester, setSelectedSemester] = useState<string>("first semester");
+  const [selectedSemester, setSelectedSemester] =
+    useState<string>("first semester");
   const [enrolledExam, setEnrolledExam] = useState<EnrolledExam[]>([]);
-
-
-
 
   // const handleSearchByCourseCode = (event) => {};
 
   // const handleViewScript = (courseCode) => {};
 
   useEffect(() => {
-    
-  console.log("studentData", studentData?.studentId);
+    console.log("studentData", studentData?.studentId);
     const fetchData = async () => {
       try {
         const res = await axios.get(
           `http://localhost:3000/students/dashboard/get-results`,
           {
             withCredentials: true,
-            params: { semester: selectedSemester, studentId: studentData?.studentId},
+            params: {
+              semester: selectedSemester,
+              studentId: studentData?.studentId,
+            },
           }
         );
 
@@ -63,9 +61,12 @@ function StudentsResults() {
         ) {
           navigate("/students/signin");
         } else if (
-          res.status === 200 && res.data.enrolledExam
+          res.status === 200 &&
+          res.data.enrolledExam &&
+          res.data.StudentResult
         ) {
           setEnrolledExam(res.data.enrolledExam);
+          setStudentResults(res.data.StudentResult);
         }
       } catch (error) {
         console.log("Error fetching dashboard data:", error);
@@ -74,7 +75,7 @@ function StudentsResults() {
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedSemester]);
+  }, [selectedSemester, studentData]);
 
   return (
     <div className="students-Results-main-body-wrapper">
@@ -119,7 +120,6 @@ function StudentsResults() {
           ),
         }}
       </SideBar>
-
       <div className="students-Results-right-body-wrapper">
         <Header newUser={studentData?.firstName || ""} />
 
@@ -132,9 +132,11 @@ function StudentsResults() {
             <label htmlFor="semester" className="top-selection-labels">
               Semester :
             </label>
-            <select id="semester" className="top-selection-options"
-            value={selectedSemester}
-            onChange={(e) => setSelectedSemester(e.target.value)} 
+            <select
+              id="semester"
+              className="top-selection-options"
+              value={selectedSemester}
+              onChange={(e) => setSelectedSemester(e.target.value)}
             >
               <option value="first semester">First</option>
               <option value="second semester">Second</option>
@@ -180,31 +182,45 @@ function StudentsResults() {
             </div>
           </div> */}
 
-<div className="student-results-grid-container">
-  {enrolledExam && enrolledExam.length > 0 ? (
-    Array.from(new Set(enrolledExam.map((exam) => exam.courseCode))).map((courseCode) => {
-      const exam = enrolledExam.find((exam) => exam.courseCode === courseCode);
-      return (
-        <div className="course-card" key={exam?.courseId}>
-          <h1 className="card-header">{exam?.courseCode}</h1>
-          <div className="middle-card">
-            <div className="middle-left">
-              <p className="noresults">
-                No <br /> Results
-              </p>
-              <h4 className="totalscore">Total Score</h4>
-            </div>
-            <div className="middle-right">
-              <h6 className="not-ready">Result Not Ready</h6>
-            </div>
-          </div>
+        <div className="student-results-grid-container">
+          {enrolledExam && enrolledExam.length > 0 ? (
+            Array.from(
+              new Set(enrolledExam.map((exam) => exam.courseCode))
+            ).map((courseCode) => {
+              const exam = enrolledExam.find(
+                (exam) => exam.courseCode === courseCode
+              );
+              return (
+                <div className="course-card" key={exam?.courseId}>
+                  <h1 className="card-header">{exam?.courseCode}</h1>
+                  {studentResults.length ? (
+                    <>
+                      {studentResults.map((result, index) => {
+                        return (
+                          <>
+                            <div key={index} className="middle-card">
+                              <div className="middle-left">
+                                <p className="noresults">{result.totalScore}</p>
+                                <h4 className="totalscore">Total Score</h4>
+                              </div>
+                              <div className="middle-right">
+                                <p className="not-ready">Section A<span>{result.totalScore}/{ result.sectionMark}</span></p>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      })}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              );
+            })
+          ) : (
+            <p>No exams taken this semester</p>
+          )}
         </div>
-      );
-    })
-  ) : (
-    <p>No exams taken this semester</p>
-  )}
-</div>
       </div>
     </div>
   );
