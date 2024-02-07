@@ -118,7 +118,9 @@ export function LoginPage(props: Props) {
         </LeftImageWrapper>
 
         <div className="login-form-wrapper">
+        
           <form className="login-form" onSubmit={handleSubmit}>
+          <Link to="/"><i className="fa-solid fa-house home-btn "></i></Link>
             <h1 className="login-form-title">{props.form_title}</h1>
 
             {error && <div className="error-message">{error} </div>}
