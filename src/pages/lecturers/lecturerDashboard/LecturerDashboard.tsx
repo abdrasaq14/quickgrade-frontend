@@ -107,7 +107,7 @@ function LecturerDashboard() {
       </SideBar>
 
       <div className="lecturer-dashboard-body">
-        {lecturerData && <Header newUser={lecturerData.firstName} />}
+        {lecturerData && <Header newUser={lecturerData.title + " " + lecturerData.firstName} />}
         <div className="heading-dashboard">Dashboard</div>
         
 
@@ -118,7 +118,7 @@ function LecturerDashboard() {
                 Lecturer ({lecturerData.title} {lecturerData.firstName}), Department of{" "}
                 {lecturerData?.department},
               </p>
-              <p>Faculty of {lecturerData?.department}</p>
+              <p>Faculty of {lecturerData?.faculty}</p>
               <p>Camouflage University</p>
               <p>Atlanta, Nigeria</p>
             </div>

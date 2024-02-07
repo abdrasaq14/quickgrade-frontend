@@ -1,7 +1,7 @@
 .take-exams-instructions-wrapper{
     background-color: #f9fafb; 
     display: flex;
-    height: 100vh;
+    width: 100%;
     
 }
 
@@ -12,6 +12,7 @@
 
 .exam-instructions-body{
     background-color: #F9FAFB;
+    margin-top: 1rem;
 }
 
 .exam-instructions-body-section1{

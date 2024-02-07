@@ -728,7 +728,7 @@ function SetExamPage() {
                           {section === "blank-section" && (
                             <>
                               <h1 className="set-exams-page-questions-section-title">
-                                Click on the add section button above above to
+                                Click on the add section button above to
                                 get started{" "}
                               </h1>
                             </>

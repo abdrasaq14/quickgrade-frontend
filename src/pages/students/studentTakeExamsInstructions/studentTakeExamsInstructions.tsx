@@ -2,13 +2,17 @@ import SideBar from "../../../components/sidebar/sideBar";
 import MainButton from "../../../components/buttons/mainButton";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import "./studentTakeExamsInstructions.css";
+import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
+import Header from "../../../components/header/header";
 
 function StudentTakeExamsInstructions() {
+  const studentData = useAuth();
   const { courseCode } = useParams();
   const path = location.pathname;
   console.log("path", path);
   console.log("course-code", courseCode);
   const navigate = useNavigate();
+  
   const handleSubmit = () => {
     navigate(`/students/dashboard/take-exams/${courseCode}`);
   };
@@ -55,15 +59,7 @@ function StudentTakeExamsInstructions() {
           }}
         </SideBar>
         <div className="exam-instructions-container">
-          <div className="enrolled-courses-dashboard-header">
-            <img
-              className="img"
-              src="https://c.animaapp.com/IX1zE9E9/img/notification.svg"
-            />
-            <div className="enrolled-courses-dashboard-header-text-wrapper">
-              Welcome, Nkachukwu
-            </div>
-          </div>
+          <Header newUser={studentData?.studentData?.firstName || ""} />
           <div className="exam-instructions-body">
             <section className="exam-instructions-body-section1">
               <div className="exam-instructions-body-title">Take Exams</div>
