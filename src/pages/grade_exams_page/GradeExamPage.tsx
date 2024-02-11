@@ -3,9 +3,7 @@ import SideBar from "../../components/sidebar/sideBar";
 import Header from "../../components/header/header";
 import { Link } from "react-router-dom";
 import "./GradeExamPageStyle.css"
-import TableHeadings from "./GradeTableHeadings";
 import TableTitle from "./GradeTableTitle";
-import TableRow from "./GradeTableRow";
 import GradeTable from "./GradeTable";
 
 
