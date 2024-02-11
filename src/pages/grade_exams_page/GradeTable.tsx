@@ -80,7 +80,7 @@ const GradeTable = () => {
                         <td className="grade-exams-page-table-cell-submissions" key="submissions">{course.submissions}</td>
                         <td className="grade-exams-page-table-cell-graded" key="graded" >{course.graded}</td>
                         <td className="grade-exams-page-table-cell-not-graded" key="notGraded" >{course.notGraded}</td>
-                        <td className="grade-exams-page-table-cell-exam-status" key="examStatus" style={{color:determineColour(course.examStatus)}} onChange={()=>handleExamStatus(course.examStatus)}>{course.examStatus}</td>
+                        <td className="grade-exams-page-table-cell-exam-status" key="examStatus" style={{color:determineColour(course.examStatus), backgroundColor: examStatusColour}} onChange={()=>handleExamStatus(course.examStatus)}>{course.examStatus}</td>
                         <td className="grade-exams-page-table-button-cell" key="gradeButton">
                                 <button className="grade-exams-page-table-grade-button">Grade</button>
                             
