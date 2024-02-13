@@ -41,7 +41,7 @@ const GradeTable = () => {
     
 
     
-    const determineColour = (content:any)=>{
+    const determineColour = (content:unknown)=>{
        let colour;
         if (content=="Not Started") colour = "grey";
         if (content=="Ongoing")colour = "orange";

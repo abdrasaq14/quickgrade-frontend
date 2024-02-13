@@ -2,7 +2,7 @@ import "./StudentsChangePassword.css";
 import SideBar from "../../../components/sidebar/sideBar";
 import { Link } from "react-router-dom";
 import { FormEvent } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useState } from "react";
 import MainButton from "../../../components/buttons/mainButton";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
@@ -34,22 +34,22 @@ function StudentsChangePassword() {
 
     // API call to update password
     try {
-      const res = await axios.put(
-        "http://localhost:3000/students/dashboard/change-password",
+      const res = await axiosInstance.put(
+        "/students/dashboard/change-password",
         {
           newPassword: newPassword,
-        },
-        {
-          withCredentials: true,
         }
       );
-      console.log(res.data);
 
       if (res.status === 200) {
-        setSuccessMessage("Password updated successfully");
-        setOldPassword("");
-        setNewPassword("");
-        setConfirmNewPassword("");
+        if (res.data.passwordChangedSuccessfully) {
+          setSuccessMessage("Password updated successfully");
+          setOldPassword("");
+          setNewPassword("");
+          setConfirmNewPassword("");
+        } else if (res.data.unknownStudent) {
+          setError("Student not Found");
+        }
       } else {
         setError("Failed to update password");
       }

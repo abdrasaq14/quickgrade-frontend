@@ -3,7 +3,7 @@ import SideBar from "../../../components/sidebar/sideBar";
 import Header from "../../../components/header/header";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useState, useEffect } from "react";
 
 interface StudentsResultsDetail {
@@ -30,8 +30,8 @@ function LecturerGrades() {
       try {
         const lecturerId = lecturerData?.lecturerId;
         console.log("lecturerId", lecturerId);
-        const res = await axios.get(
-          `http://localhost:3000/lecturers/get-graded-exam-objectives/`,
+        const res = await axiosInstance.get(
+          "/lecturers/get-graded-exam-objectives/",
           {
             params: { lecturerId, semester: selectedSemester },
           }

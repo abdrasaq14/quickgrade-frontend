@@ -2,16 +2,14 @@ import { useState, FormEvent, ChangeEvent } from "react";
 import "./LandingPage.css";
 import quickgradelogo from "../../assets/quick_grade_logo_with_text.png";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 import { Link } from "react-router-dom";
 import Footer from "../../components/footer/footer";
 import MainButton from "../../components/buttons/mainButton";
 
 function LandingPage() {
-  
   const [userRole, setUserRole] = useState(""); // State to manage user type selection
   const navigate = useNavigate();
-  console.log("Navigate function:", navigate);
 
   const handleUserRoleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setUserRole((event.currentTarget as HTMLSelectElement).value);
@@ -21,7 +19,7 @@ function LandingPage() {
     event.preventDefault();
 
     try {
-      const res = await axios.get(`http://localhost:3000/${userRole}`);
+      const res = await axiosInstance.get(`/${userRole}`);
 
       if (res.status === 200 && res.data.role === "lecturer") {
         navigate("/lecturers/signin");

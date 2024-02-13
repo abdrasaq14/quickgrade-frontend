@@ -2,7 +2,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import SideBar from "../../../components/sidebar/sideBar";
 import "./TakeExamOBJ.css";
 import { FormEvent, useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
 import Header from "../../../components/header/header";
 
@@ -49,11 +49,8 @@ const TakeExamOBJ = () => {
   const navigate = useNavigate();
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get(
-        `http://localhost:3000/students/dashboard/take-exams/${courseCode}`,
-        {
-          withCredentials: true,
-        }
+      const res = await axiosInstance.get(
+        `students/dashboard/take-exams/${courseCode}`
       );
 
       // checking the response
@@ -122,7 +119,7 @@ const TakeExamOBJ = () => {
     const courseCode = examsDetail?.courseCode;
     const studentId = studentData?.studentId;
     const examId = examsDetail?.examId;
-    const sendStudentResponse = await axios.post(
+    const sendStudentResponse = await axiosInstance.post(
       `http://localhost:3000/lecturers/grade-exam-objectives/${courseCode}`,
       {
         examId,
@@ -135,13 +132,12 @@ const TakeExamOBJ = () => {
       sendStudentResponse.status === 200 &&
       sendStudentResponse.data.objectivesAutoGradedSuccessfully
     ) {
-      console.log("Student response sent successfully");
       navigate(`/students/dashboard/take-exams/success/${courseCode}`);
     } else if (
       sendStudentResponse.status === 200 &&
       sendStudentResponse.data.error
     ) {
-      console.log("Student response not sent successfully");
+      window.location.reload();
     }
 
     // You can send assembledQuestions to the backend server here

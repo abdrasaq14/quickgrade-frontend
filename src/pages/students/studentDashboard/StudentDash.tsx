@@ -1,6 +1,6 @@
 import "./StudentDash.css";
 import { useState, useEffect, MouseEvent } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import SideBar from "../../../components/sidebar/sideBar";
 import Header from "../../../components/header/header";
@@ -29,13 +29,9 @@ export const StudentDash = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const studentRes = await axios.get(
-          `http://localhost:3000/students/dashboard`,
-          {
-            withCredentials: true,
-            params: { semester: selectedSemester },
-          }
-        );
+        const studentRes = await axiosInstance.get("/students/dashboard", {
+          params: { semester: selectedSemester },
+        });
 
         if (
           studentRes.status === 200 &&
@@ -116,7 +112,6 @@ export const StudentDash = () => {
         {courses && (
           <div>
             <div>
-
               <div className="semester-session-container">
                 <div className="semester-div-container">
                   <div>Semester:</div>
@@ -159,7 +154,9 @@ export const StudentDash = () => {
                 <tbody>
                   {courses.length === 0 && (
                     <tr className="table-row">
-                      <td className="table-row-data" colSpan={5}>No courses available this semester</td>
+                      <td className="table-row-data" colSpan={5}>
+                        No courses available this semester
+                      </td>
                     </tr>
                   )}
 
@@ -182,7 +179,6 @@ export const StudentDash = () => {
                   ))}
                 </tbody>
               </table>
-              
             </div>
           </div>
         )}

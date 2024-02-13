@@ -3,7 +3,7 @@ import SideBar from "../../../components/sidebar/sideBar";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
 import searchButton from "../../../assets/searchButton.png";
 import Header from "../../../components/header/header";
@@ -31,26 +31,16 @@ function StudentsResults() {
     useState<string>("first semester");
   const [enrolledExam, setEnrolledExam] = useState<EnrolledExam[]>([]);
 
-  // const handleSearchByCourseCode = (event) => {};
-
-  // const handleViewScript = (courseCode) => {};
-
   useEffect(() => {
     console.log("studentData", studentData?.studentId);
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:3000/students/dashboard/get-results`,
-          {
-            withCredentials: true,
-            params: {
-              semester: selectedSemester,
-              studentId: studentData?.studentId,
-            },
-          }
-        );
-
-        console.log(res.data.enrolledExam);
+        const res = await axiosInstance.get("/students/dashboard/get-results", {
+          params: {
+            semester: selectedSemester,
+            studentId: studentData?.studentId,
+          },
+        });
 
         if (
           res.status === 200 &&
@@ -161,26 +151,6 @@ function StudentsResults() {
             placeholder="Search by course code"
           />
         </div>
-        {/* </div className="grid-form"> */}
-
-        {/* <div className="students-results-course-card">
-            <h1 className="card-header">{exam.courseCode}</h1>
-            <div className="middle-card">
-              <div className="middle-left">
-                <p className="number">exam.</p>
-                <h4 className="totalscore">Total Score</h4>
-              </div>
-              <div className="middle-right">
-                <h5 className="grade-sections">Section A: 20/30</h5>
-                <h5 className="grade-sections">Section B: 19/20</h5>
-                <h5 className="grade-sections">Section C: 18/20</h5>
-              </div>
-            </div>
-            <div className="course-info">
-              <p className="info">View Script</p>
-              <img className="arrowdown" src={arrowdown} />
-            </div>
-          </div> */}
 
         <div className="student-results-grid-container">
           {enrolledExam && enrolledExam.length > 0 ? (
@@ -204,7 +174,12 @@ function StudentsResults() {
                                 <h4 className="totalscore">Total Score</h4>
                               </div>
                               <div className="middle-right">
-                                <p className="not-ready">Section A<span>{result.totalScore}/{ result.sectionMark}</span></p>
+                                <p className="not-ready">
+                                  Section A
+                                  <span>
+                                    {result.totalScore}/{result.sectionMark}
+                                  </span>
+                                </p>
                               </div>
                             </div>
                           </>

@@ -9,7 +9,7 @@ import ResetEnterNewPasswordPage from "../reset-enter-new-password/Reset_enter_n
 import LecturerDashboard from "../lecturers/lecturerDashboard/LecturerDashboard";
 import VerifyEmail from "../verify-email/VerifyEmailPage";
 import StudentEnrolledCourses from "../students/studentEnrolledCourses/studentEnrolledCourses";
-import LecturerSignup from "../../pages/lecturerSignUp/lecturerSignup";
+import LecturerSignup from "../lecturers/lecturerSignUp/lecturerSignup";
 import StudentSignup from "../students/studentSignup/studentSignup";
 import { CheckYourEmail } from "../check-you-email/check_your_email";
 import { ForgotPassword } from "../forgotPassword/forget_password";

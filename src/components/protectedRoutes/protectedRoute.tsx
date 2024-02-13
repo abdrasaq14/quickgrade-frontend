@@ -7,7 +7,7 @@ import {
   createContext,
 } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 interface ProtectedRouteProps {
   children: ReactNode;
 }
@@ -48,12 +48,7 @@ export function StudentProtectedRoute({ children }: ProtectedRouteProps) {
 
   useEffect(() => {
     async function checkToken() {
-      const auth = await axios.get(
-        "http://localhost:3000/protected-routes/students",
-        {
-          withCredentials: true,
-        }
-      );
+      const auth = await axiosInstance.get("/protected-routes/students");
       if (
         auth.status === 200 &&
         (auth.data.noTokenError ||
@@ -87,12 +82,7 @@ export function LecturerProtectedRoute({ children }: ProtectedRouteProps) {
 
   useEffect(() => {
     async function checkToken() {
-      const auth = await axios.get(
-        "http://localhost:3000/protected-routes/lecturers",
-        {
-          withCredentials: true,
-        }
-      );
+      const auth = await axiosInstance.get("/protected-routes/lecturers");
       if (
         auth.status === 200 &&
         (auth.data.noTokenError ||

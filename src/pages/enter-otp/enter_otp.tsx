@@ -2,7 +2,7 @@ import "./enter_otp.css";
 import quickgradelogo from "../../assets/quick_grade_logo_with_text_blue.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, ChangeEvent, FormEvent } from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 import MainButton from "../../components/buttons/mainButton";
 
 interface EnterOtpProps {
@@ -22,32 +22,32 @@ function EnterOtp(props: EnterOtpProps) {
     console.log("otp: ", otp);
     try {
       const currentRoute = location.pathname;
-      const baseUrl = currentRoute.startsWith("/students")
-        ? "http://localhost:3000/students"
+      const baseURL = currentRoute.startsWith("/students")
+        ? "/students"
         : currentRoute.startsWith("/lecturers")
-        ? "http://localhost:3000/lecturers"
+        ? "/lecturers"
         : "";
+      const res = currentRoute.startsWith("/students")
+        ? await axiosInstance.post("/students/verify-otp", { otp })
+        : currentRoute.startsWith("/lecturers")
+        ? await axiosInstance.post("/lecturers/verify-otp", { otp })
+        : null;
 
       console.log("currentRoute: ", currentRoute);
 
-      const res = await axios.post(`${baseUrl}/verify-otp`, {
-        otp: otp,
-      });
       // checking the response
-      if (
-        res.status === 200 &&
-        (res.data.invalidOtp ||
+      if (res && res.status === 200) {
+        if (
+          res.data.invalidOtp ||
           res.data.expiredOtpError ||
-          res.data.internalServerError)
-      ) {
-        navigate(`${baseUrl}/confirm-email`);
-      } else if (res.status === 200 && res.data.OtpVerificationSuccess) {
-        const redirectURL = currentRoute.startsWith("/students")
-          ? "/students"
-          : currentRoute.startsWith("/lecturers")
-          ? "/lecturers"
-          : "";
-        navigate(`${redirectURL}/check-your-email`);
+          res.data.internalServerError
+        ) {
+          navigate(`${baseURL}/confirm-email`);
+        } else if (res.data.OtpVerificationSuccess) {
+          navigate(`${baseURL}/check-your-email`);
+        }
+      } else {
+        window.location.reload();
       }
     } catch (error) {
       console.log("error", error);

@@ -1,12 +1,11 @@
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useState, ChangeEvent, FormEvent } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import SignUpPage from "../../components/signup/signUpPage";
-import lecturerPic from "../../assets/lecturer_signin_bg.png"
+import { useNavigate } from "react-router-dom";
+import SignUpPage from "../../../components/signup/signUpPage";
+import lecturerPic from "../../../assets/lecturer_signin_bg.png";
 
 export default function LecturerSignup() {
   const navigate = useNavigate();
-  const location = useLocation();
   const [title, setTitle] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -41,16 +40,21 @@ export default function LecturerSignup() {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    if (!title ||!firstName || !lastName || !email || !password || !department || !faculty) {
+    if (
+      !title ||
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !department ||
+      !faculty
+    ) {
       setError("All fields are required, try again");
       return;
     }
 
     try {
-      const currentRoute = location.pathname;
-      console.log("currentRoute: ", currentRoute);
-
-      const res = await axios.post(`http://localhost:3000/lecturers/signup`, {
+      const res = await axiosInstance.post("/lecturers/signup", {
         title,
         firstName,
         lastName,
@@ -61,20 +65,18 @@ export default function LecturerSignup() {
       });
       // checking the response
       if (res.status === 200 && res.data.existingLecturerError) {
-        setError("Account already exists, try another email")
+        setError("Account already exists, try another email");
         setEmail("");
-        
       } else if (res.status === 200 && res.data.failedSignup) {
-        setError("signup failed, try again")
+        setError("signup failed, try again");
         setTitle("");
         setFirstName("");
         setLastName("");
         setEmail("");
         setFaculty("");
-        setDepartment(""); 
+        setDepartment("");
         setPassword("");
-      }
-       else if (res.status === 200 && res.data.successfulSignup) {
+      } else if (res.status === 200 && res.data.successfulSignup) {
         navigate("/lecturers/confirm-email");
       }
     } catch (error) {
@@ -85,25 +87,34 @@ export default function LecturerSignup() {
   };
 
   return (
-    <SignUpPage signin_link="/lecturers/signin" onsubmit={handleSubmit} pagepic={lecturerPic}>
+    <SignUpPage
+      signin_link="/lecturers/signin"
+      onsubmit={handleSubmit}
+      pagepic={lecturerPic}
+    >
       {{
         signupFormElement: (
           <>
-          {error && <div className="error-message">{error} </div>}
-          
+            {error && <div className="error-message">{error} </div>}
+
             <label className="signup-form-labels" htmlFor="titleInput">
               Title
             </label>
             <br></br>
-            <select className="signup-form-selects" onChange={handleTitle} value={title} name="title" id="titleInput">
+            <select
+              className="signup-form-selects"
+              onChange={handleTitle}
+              value={title}
+              name="title"
+              id="titleInput"
+            >
               <option value="">Select Title</option>
               <option value="Mr">Mr</option>
               <option value="Mrs">Mrs</option>
               <option value="Dr">Dr</option>
               <option value="Prof">Prof</option>
             </select>
-            
-            
+
             <label className="signup-form-labels" htmlFor="firstNameInput">
               First Name
             </label>
@@ -146,18 +157,29 @@ export default function LecturerSignup() {
             <label className="signup-form-labels" htmlFor="facultyInput">
               Faculty
             </label>
-            <select value={faculty} className="signup-form-selects" onChange={handleUserFaculty} name="faculty" id="facultyInput">
+            <select
+              value={faculty}
+              className="signup-form-selects"
+              onChange={handleUserFaculty}
+              name="faculty"
+              id="facultyInput"
+            >
               <option value="">Select Faculty</option>
               <option value="Engineering">Engineering</option>
             </select>
-          
 
             <label className="signup-form-labels" htmlFor="departmentInput">
               Department
             </label>
-            <select value={department} className="signup-form-selects" onChange={handleUserDepartment} name="department" id="departmentInput">
+            <select
+              value={department}
+              className="signup-form-selects"
+              onChange={handleUserDepartment}
+              name="department"
+              id="departmentInput"
+            >
               <option value="">Select Department</option>
-              <option value="Chemical Engineering" >Chemical Engineering</option>
+              <option value="Chemical Engineering">Chemical Engineering</option>
             </select>
 
             <label className="signup-form-labels" htmlFor="passwordInput">

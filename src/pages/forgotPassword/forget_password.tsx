@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, ChangeEvent, FormEvent } from "react";
 import MainButton from "../../components/buttons/mainButton";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 
 interface ForgotPasswordProps {
   location: string;
@@ -18,23 +18,27 @@ export function ForgotPassword(props: ForgotPasswordProps) {
   };
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const baseURL = location.pathname.startsWith("/students")
-      ? "http://localhost:3000/students"
-      : location.pathname.startsWith("/lecturers")
-      ? "http://localhost:3000/lecturers"
+    const currentRoute = location.pathname;
+    const baseURL = currentRoute.startsWith("/students")
+      ? "/students"
+      : currentRoute.startsWith("/lecturers")
+      ? "/lecturers"
       : "";
     try {
-      const res = await axios.post(`${baseURL}/reset-password`, {
-        email: email,
-      });
+      const res = location.pathname.startsWith("/students")
+        ? await axiosInstance.post("/students/reset-password", { email })
+        : location.pathname.startsWith("/lecturers")
+        ? await axiosInstance.post("/lecturers/reset-password", { email })
+        : null;
 
       // checking the response
-      if (res.status === 200 && res.data.userNotFoundError) {
-        navigate(`${baseURL}/forgot-password`);
-      } else if (res.status === 200 && res.data.linkSentSuccessfully) {
-        baseURL.includes("/students")
-          ? navigate("/students/reset-password/check-your-email")
-          : navigate("/lecturers/reset-password/check-your-email");
+      if (res && res.status === 200) {
+        if (res.data.userNotFoundError) {
+          navigate(`${baseURL}/forgot-password`);
+        }
+        else if (res.data.linkSentSuccessfully) {
+          navigate(`${baseURL}/reset-password/check-your-email`);
+        }
       }
     } catch (error) {
       console.log("error", error);

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 import { LeftImageWrapper } from "./Login_background";
 import "./Login_style.css";
 import Footer from "../../components/footer/footer";
@@ -20,7 +20,6 @@ export function LoginPage(props: Props) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-
   const handleUserID = (event: ChangeEvent<HTMLInputElement>) => {
     setUserId((event.currentTarget as HTMLInputElement).value);
   };
@@ -30,7 +29,6 @@ export function LoginPage(props: Props) {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.log("userRole: ", userId);
 
     if (!userId || !password) {
       setError("All fields are required, try again");
@@ -39,76 +37,51 @@ export function LoginPage(props: Props) {
 
     try {
       const currentRoute = location.pathname;
-      console.log("currentRoute: ", currentRoute);
-
-      if (currentRoute === "/students/signin") {
-        const res = await axios.post(
-          `http://localhost:3000/students/login`,
-          {
+      const baseURL = currentRoute.startsWith("/students")
+        ? "/students"
+        : currentRoute.startsWith("/lecturers")
+        ? "/lecturers"
+        : "";
+      const res = currentRoute.startsWith("/students")
+        ? await axiosInstance.post("/students/login", {
             matricNo: userId,
             password: password,
-          },
-          { withCredentials: true }
-        );
-        
-        // checking the response
-        if (res.status === 200 && res.data.successfulLogin) {
-          navigate("/students/dashboard");
-        } 
-        else if (res.status === 200 && res.data.inValidPassword) {
-
-          setError("Invalid password")
-          setPassword("")
-        
-        }
-        else if(res.status === 200 && res.data.studentNotFoundError){
-          setError("Student not found, invalid registration number")
-          
-          setUserId("")
-          setPassword("")
-          
-        }
-      
-      } 
-  
-      else if (currentRoute === "/lecturers/signin") {
-        const res = await axios.post(
-          `http://localhost:3000/lecturers/login`,
-          {
+          })
+        : currentRoute.startsWith("/lecturers")
+        ? await axiosInstance.post("/lecturers/login", {
             employeeID: userId,
             password: password,
-          },
-          { withCredentials: true }
-        );
-        // checking the response
-        if (res.status === 200 && res.data.successfulLogin) {
-          navigate("/lecturers/dashboard");
+          })
+        : null;
+      if (res && res.status === 200) {
+        if (res.data.successfulLogin) {
+          navigate(`${baseURL}/dashboard`);
         }
-        else if (res.status === 200 && res.data.inValidPassword) {
-
-          setError("Invalid password")
-          setUserId("")
-          setPassword("")
-        
+        else if (res.data.inValidPassword) {
+          setError("Invalid password");
+          setUserId("");
+          setPassword("");
+        } else if (res.data.studentNotFoundError) {
+          setError("Student not found, invalid registration number");
+          setUserId("");
+          setPassword("");
+        } else if (res.data.lecturerNotFoundError) {
+          setError("Lecturer not found, invalid employee id");
+          setUserId("");
+          setPassword("");
         }
-        else if(res.status === 200 && res.data.lecturerNotFoundError){
-          setError("Lecturer not found, invalid employee id")
-          setUserId("")
-          setPassword("")
-          
-        }
-
       }
-    } 
-    catch (error) {
+      else {
+        setError("Internal Server Error");
+      }
+    } catch (error) {
       console.log("error", error);
       setError("Internal Server Error");
-      
     }
 
     // redirect to a different page based on user type
   };
-  
+
   return (
     <div className="login-page-main-body-wrapper">
       <div className="login-form-inner-body-wrapper">
@@ -118,9 +91,10 @@ export function LoginPage(props: Props) {
         </LeftImageWrapper>
 
         <div className="login-form-wrapper">
-        
           <form className="login-form" onSubmit={handleSubmit}>
-          <Link to="/"><i className="fa-solid fa-house home-btn "></i></Link>
+            <Link to="/">
+              <i className="fa-solid fa-house home-btn "></i>
+            </Link>
             <h1 className="login-form-title">{props.form_title}</h1>
 
             {error && <div className="error-message">{error} </div>}

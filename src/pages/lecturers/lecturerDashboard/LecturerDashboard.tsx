@@ -4,7 +4,7 @@ import SideBar from "../../../components/sidebar/sideBar";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import Header from "../../../components/header/header";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
 
@@ -15,29 +15,22 @@ interface Exam {
   examDuration: string;
   venue: string;
   registered: string;
-  noOfStudents: number
+  noOfStudents: number;
 }
-
 
 function LecturerDashboard() {
   const { lecturerData } = useAuth();
 
   const [examData, setExamData] = useState<Exam[]>([]);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:3000/lecturers/dashboard`,
-          {
-            withCredentials: true,
-          }
-        );
+        const res = await axiosInstance.get("/lecturers/dashboard");
 
         if (res.status === 200 && res.data.examsTotal) {
           setExamData(res.data.examsTotal);
-          
+
           console.log(res.data);
         }
       } catch (error) {
@@ -63,7 +56,7 @@ function LecturerDashboard() {
                   Dashboard
                 </Link>
               </div>
-             
+
               <div className="feature-2">
                 <img
                   className="img-2"
@@ -107,16 +100,17 @@ function LecturerDashboard() {
       </SideBar>
 
       <div className="lecturer-dashboard-body">
-        {lecturerData && <Header newUser={lecturerData.title + " " + lecturerData.firstName} />}
+        {lecturerData && (
+          <Header newUser={lecturerData.title + " " + lecturerData.firstName} />
+        )}
         <div className="heading-dashboard">Dashboard</div>
-        
 
         <div className="lecturer-blue-header">
           {lecturerData && (
             <div className="lecturer-blue-header-content">
               <p>
-                Lecturer ({lecturerData.title} {lecturerData.firstName}), Department of{" "}
-                {lecturerData?.department},
+                Lecturer ({lecturerData.title} {lecturerData.firstName}),
+                Department of {lecturerData?.department},
               </p>
               <p>Faculty of {lecturerData?.faculty}</p>
               <p>Camouflage University</p>
@@ -128,15 +122,15 @@ function LecturerDashboard() {
         {/* Main content */}
         <main className="lecturer-dashboard-exam-timetable-container">
           <div className="lecturer-dashboard-semester-session-container">
-          2022/2023 : First Semester 
-           </div>
+            2022/2023 : First Semester
+          </div>
 
-          
-          <div className="lecturer-dashboard-exam-timetable-header">Course Examination TimeTable</div>
+          <div className="lecturer-dashboard-exam-timetable-header">
+            Course Examination TimeTable
+          </div>
 
           {examData && examData.length > 0 && (
-
-            <table className="lecturer-exam-timetable" >
+            <table className="lecturer-exam-timetable">
               <thead>
                 <tr>
                   <th>Course Code</th>
@@ -148,22 +142,24 @@ function LecturerDashboard() {
                 </tr>
               </thead>
               <tbody>
-                
                 {examData.map((exam, index) => (
                   <tr className="lecturer-exam-timetable-row" key={index}>
                     <td>{exam.courseCode}</td>
                     <td>{exam.department}</td>
-                    <td className="date-column">{format(exam.examDate, "d MMM,yyyy / h:mmaa")}</td>
+                    <td className="date-column">
+                      {format(exam.examDate, "d MMM,yyyy / h:mmaa")}
+                    </td>
                     <td>Campus E-center</td>
                     <td>{exam.noOfStudents}</td>
-                    <td><button><p>Set Exam</p></button>
+                    <td>
+                      <button>
+                        <p>Set Exam</p>
+                      </button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            
-
           )}
         </main>
       </div>

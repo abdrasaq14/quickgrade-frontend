@@ -1,6 +1,6 @@
 import "./studentEnrolledCourses.css";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import { format, isBefore, isAfter } from "date-fns";
 import SideBar from "../../../components/sidebar/sideBar";
@@ -26,10 +26,9 @@ function StudentEnrolledCourses() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const studentRes = await axios.get(
-          `http://localhost:3000/students/dashboard/enrolled-courses`,
+        const studentRes = await axiosInstance.get(
+          "/students/dashboard/enrolled-courses",
           {
-            withCredentials: true,
             params: { semester: selectedSemester },
           }
         );

@@ -2,7 +2,7 @@ import "./Reset_enter_new_pw.css";
 import quickgradelogo from "../../assets/quick_grade_logo_with_text_blue.png";
 import MainButton from "../../components/buttons/mainButton";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 const ResetEnterNewPasswordPage = () => {
@@ -14,32 +14,34 @@ const ResetEnterNewPasswordPage = () => {
     setPassword((event.currentTarget as HTMLInputElement).value);
   };
   const currentRoute = location.pathname;
-  console.log("currentroute", currentRoute);
-  console.log(currentRoute === "/students/reset-password/token");
+  const baseURL = currentRoute.startsWith("/students")
+    ? "/students"
+    : currentRoute.startsWith("/lecturers")
+    ? "/lecturers"
+    : "";
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     try {
-      const baseURL = currentRoute.startsWith("/students")
-        ? "http://localhost:3000/students"
+      const res = currentRoute.startsWith("/students")
+        ? await axiosInstance.post(`/students/reset-password/${token}`, {
+            password,
+            token,
+          })
         : currentRoute.startsWith("/lecturers")
-        ? "http://localhost:3000/lecturers"
-        : "";
-
-      const res = await axios.post(`${baseURL}/reset-password/${token}`, {
-        password: password,
-        token: token,
-      });
-
-      // checking the response
-      if (
-        res.status === 200 &&
-        (res.data.invalidPasswordResetToken || res.data.tokenExpired)
-      ) {
-        navigate(`${baseURL}/forgot-password`);
-      } else if (res.status === 200 && res.data.passwordResetSuccessful) {
-        baseURL.includes("/students") ? navigate("/students/signin") : navigate("/lecturers/signin");
-
+        ? await axiosInstance.post(`/lecturers/reset-password/${token}`, {
+            password,
+            token,
+          })
+        : null;
+      if (res && res.status === 200) {
+        if (res.data.invalidPasswordResetToken || res.data.tokenExpired) {
+          navigate(`${baseURL}/forgot-password`);
+        } else if (res.data.passwordResetSuccessful) {
+          navigate(`/${baseURL}/signin`);
+        }
+      } else {
+        window.location.reload();
       }
     } catch (error) {
       console.log("error", error);

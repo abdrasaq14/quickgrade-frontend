@@ -1,8 +1,8 @@
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import SignUpPage from "../../../components/signup/signUpPage";
-import studentPic from "../../../assets/sign_up_page_bg_pic copy.png"
+import studentPic from "../../../assets/sign_up_page_bg_pic copy.png";
 
 export default function StudentSignup() {
   const navigate = useNavigate();
@@ -14,7 +14,6 @@ export default function StudentSignup() {
   const [faculty, setFaculty] = useState("");
   const [department, setDepartment] = useState("");
   const [error, setError] = useState("");
-
 
   const handleFirstName = (event: ChangeEvent<HTMLInputElement>) => {
     setFirstName((event.currentTarget as HTMLInputElement).value);
@@ -39,7 +38,14 @@ export default function StudentSignup() {
     event.preventDefault();
     console.log("userRole: ", email);
 
-    if (!firstName || !lastName || !email || !password || !department || !faculty) {
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !department ||
+      !faculty
+    ) {
       setError("All fields are required, try again");
       return;
     }
@@ -48,7 +54,7 @@ export default function StudentSignup() {
       const currentRoute = location.pathname;
       console.log("currentRoute: ", currentRoute);
 
-      const res = await axios.post(`http://localhost:3000/students/signup`, {
+      const res = await axiosInstance.post(`/students/signup`, {
         firstName,
         lastName,
         email,
@@ -57,24 +63,29 @@ export default function StudentSignup() {
         faculty,
       });
       // checking the response
-      if (res.status === 200 && res.data.existingStudentError) {
-        
-        setError("Account already exists, try another email")
-        setEmail("");
-
-      }else if (res.status === 200 && res.data.failedSignup) {
-        setError("signup failed, try again")
+      if (res.status === 200) {
+        if (res.data.existingStudentError) {
+          setError("Account already exists, try another email");
+          setEmail("");
+        } else if (res.data.failedSignup) {
+          setError("Internal server error, try again");
+          setFirstName("");
+          setLastName("");
+          setEmail("");
+          setFaculty("");
+          setDepartment("");
+          setPassword("");
+        } else if (res.data.successfulSignup) {
+          navigate("/students/confirm-email");
+        }
+      } else {
+        setError("signup failed, try again");
         setFirstName("");
         setLastName("");
         setEmail("");
         setFaculty("");
-        setDepartment(""); 
+        setDepartment("");
         setPassword("");
-      }
-      
-      
-      else if (res.status === 200 && res.data.successfulSignup) {
-        navigate("/students/confirm-email");
       }
     } catch (error) {
       console.log("error", error);
@@ -84,12 +95,15 @@ export default function StudentSignup() {
   };
 
   return (
-    <SignUpPage signin_link="/lecturers/signin" onsubmit={handleSubmit} pagepic={studentPic}>
+    <SignUpPage
+      signin_link="/lecturers/signin"
+      onsubmit={handleSubmit}
+      pagepic={studentPic}
+    >
       {{
         signupFormElement: (
           <>
-
-          {error && <div className="error-message">{error} </div>}
+            {error && <div className="error-message">{error} </div>}
             <label className="signup-form-labels" htmlFor="emailInput">
               First Name
             </label>
@@ -132,7 +146,13 @@ export default function StudentSignup() {
             <label className="signup-form-labels" htmlFor="facultyInput">
               Faculty
             </label>
-            <select value={faculty} className="signup-form-selects" onChange={handleUserFaculty} name="faculty" id="facultyInput">
+            <select
+              value={faculty}
+              className="signup-form-selects"
+              onChange={handleUserFaculty}
+              name="faculty"
+              id="facultyInput"
+            >
               <option value="">Select Faculty</option>
               <option value="Engineering">Engineering</option>
             </select>
@@ -140,9 +160,15 @@ export default function StudentSignup() {
             <label className="signup-form-labels" htmlFor="departmentInput">
               Department
             </label>
-            <select value={department} className="signup-form-selects" onChange={handleUserDepartment} name="department" id="departmentInput">
+            <select
+              value={department}
+              className="signup-form-selects"
+              onChange={handleUserDepartment}
+              name="department"
+              id="departmentInput"
+            >
               <option value="">Select Department</option>
-              <option value="Chemical Engineering" >Chemical Engineering</option>
+              <option value="Chemical Engineering">Chemical Engineering</option>
             </select>
 
             <label className="signup-form-labels" htmlFor="passwordInput">

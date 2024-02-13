@@ -4,7 +4,7 @@ import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
 import SideBar from "../../../components/sidebar/sideBar";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState, FormEvent } from "react";
-import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
 import Header from "../../../components/header/header";
 
 interface Question {
@@ -105,7 +105,7 @@ function SetExamPage() {
   }, []);
 
   const fetchCourseDetails = async () => {
-    const res = await axios.get("http://localhost:3000/get-courses");
+    const res = await axiosInstance.get("/get-courses");
     setCourseDetails(res.data.coureDetailFromServer);
   };
 
@@ -282,7 +282,7 @@ function SetExamPage() {
     );
     console.log("assemble questions", assembledQuestions);
     try {
-      const res = await axios.post("http://localhost:3000/lecturers/set-exam", {
+      const res = await axiosInstance.post("/lecturers/set-exam", {
         examDuration,
         courseCode,
         semester,
