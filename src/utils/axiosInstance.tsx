@@ -2,7 +2,7 @@ import axios from "axios";
 
 // backend url
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://quickgrade-backend-kg24.onrender.com",
   withCredentials: true,
 });
 
@@ -18,6 +18,5 @@ const axiosInstance = axios.create({
 //         return Promise.reject(error);
 //     }
 // )
-
 
 export default axiosInstance;

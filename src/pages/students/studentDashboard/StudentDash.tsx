@@ -38,6 +38,7 @@ export const StudentDash = () => {
           (studentRes.data.noSemesterSelected ||
             studentRes.data.internalServeError)
         ) {
+          console.log("No semester selected or internal server error")
           navigate("/students/signin");
         } else if (studentRes.status === 200 && studentRes.data.courses) {
           setCourses(studentRes.data.courses);
