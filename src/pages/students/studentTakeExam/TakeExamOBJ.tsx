@@ -1,5 +1,6 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
 import SideBar from "../../../components/sidebar/sideBar";
+import MainButton from "../../../components/buttons/mainButton";
 import "./TakeExamOBJ.css";
 import { FormEvent, useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
@@ -50,7 +51,7 @@ const TakeExamOBJ = () => {
   useEffect(() => {
     async function fetchData() {
       const res = await axiosInstance.get(
-        `students/dashboard/take-exams/${courseCode}`
+        `/students/dashboard/take-exams/${courseCode}`
       );
 
       // checking the response
@@ -118,7 +119,7 @@ const TakeExamOBJ = () => {
     const studentId = studentData?.studentId;
     const examId = examsDetail?.examId;
     const sendStudentResponse = await axiosInstance.post(
-      `http://localhost:3000/lecturers/grade-exam-objectives/${courseCode}`,
+      `/lecturers/grade-exam-objectives/${courseCode}`,
       {
         examId,
         studentId,
@@ -622,9 +623,7 @@ const TakeExamOBJ = () => {
                 })}
               </div>
               <div className="take-exam-submit-container">
-                <button className="submit-btn" type="submit">
-                  Submit exam
-                </button>
+                <MainButton button_text="Submit Exam" />
               </div>
 
               {/* <div className="anchor-div">
