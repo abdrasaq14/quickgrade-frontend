@@ -19,7 +19,6 @@ function EnterOtp(props: EnterOtpProps) {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.log("otp: ", otp);
     try {
       const currentRoute = location.pathname;
       const baseURL = currentRoute.startsWith("/students")
@@ -33,7 +32,6 @@ function EnterOtp(props: EnterOtpProps) {
         ? await axiosInstance.post("/lecturers/verify-otp", { otp })
         : null;
 
-      console.log("currentRoute: ", currentRoute);
 
       // checking the response
       if (res && res.status === 200) {

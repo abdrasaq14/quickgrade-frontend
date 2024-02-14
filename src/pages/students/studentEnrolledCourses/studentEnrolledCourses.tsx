@@ -53,7 +53,6 @@ function StudentEnrolledCourses() {
   const calculateStatus = (
     examDate: Date
   ): { status: string; style: React.CSSProperties } => {
-    console.log(typeof examDate);
     const currentDate = new Date();
 
     // const threeHoursAfterExam = new Date(examDate.setHours(examDate.getHours() + 3));

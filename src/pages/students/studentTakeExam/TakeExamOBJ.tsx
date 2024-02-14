@@ -106,7 +106,6 @@ const TakeExamOBJ = () => {
       const selectedOption = selectedOptions.find(
         (item) => item.questionId === question.questionId
       );
-      console.log("Selected Option:", selectedOption);
       return {
         questionId: question.questionId,
         questionType: question.questionType,
@@ -115,7 +114,6 @@ const TakeExamOBJ = () => {
       };
     });
 
-    console.log("Assembled Questions:", assembledQuestions);
     const courseCode = examsDetail?.courseCode;
     const studentId = studentData?.studentId;
     const examId = examsDetail?.examId;

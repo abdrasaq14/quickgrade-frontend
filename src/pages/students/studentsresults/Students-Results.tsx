@@ -24,7 +24,6 @@ interface StudentResult {
 
 function StudentsResults() {
   const { studentData } = useAuth();
-  console.log("student", studentData);
   const navigate = useNavigate();
   const [studentResults, setStudentResults] = useState<StudentResult[]>([]);
   const [selectedSemester, setSelectedSemester] =
@@ -32,7 +31,6 @@ function StudentsResults() {
   const [enrolledExam, setEnrolledExam] = useState<EnrolledExam[]>([]);
 
   useEffect(() => {
-    console.log("studentData", studentData?.studentId);
     const fetchData = async () => {
       try {
         const res = await axiosInstance.get("/students/dashboard/get-results", {

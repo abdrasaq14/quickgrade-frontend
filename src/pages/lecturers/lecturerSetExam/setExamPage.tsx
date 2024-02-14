@@ -280,7 +280,6 @@ function SetExamPage() {
       (allQuestions, section) => allQuestions.concat(section.questions),
       [] as Question[]
     );
-    console.log("assemble questions", assembledQuestions);
     try {
       const res = await axiosInstance.post("/lecturers/set-exam", {
         examDuration,
@@ -299,10 +298,7 @@ function SetExamPage() {
       });
 
       if (res.status === 200 && res.data.examQuestionCreated) {
-        console.log("Exam created successfully");
         navigate(`/lecturers/dashboard/set-exams/success/${courseCode}`);
-      } else {
-        console.log("res", res);
       }
     } catch (error) {
       console.error("Error submitting questions:", error);

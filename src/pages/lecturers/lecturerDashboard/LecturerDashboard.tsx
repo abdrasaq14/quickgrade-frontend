@@ -30,8 +30,6 @@ function LecturerDashboard() {
 
         if (res.status === 200 && res.data.examsTotal) {
           setExamData(res.data.examsTotal);
-
-          console.log(res.data);
         }
       } catch (error) {
         console.log("Error fetching dashboard data:", error);

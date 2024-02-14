@@ -76,7 +76,6 @@ export function LoginPage(props: Props) {
         setError("Internal Server Error");
       }
     } catch (error) {
-      console.log("error", error);
       setError("Internal Server Error");
     }
 

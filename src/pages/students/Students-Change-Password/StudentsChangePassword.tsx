@@ -54,7 +54,6 @@ function StudentsChangePassword() {
         setError("Failed to update password");
       }
     } catch (error) {
-      console.error("Error updating password:", error);
       setError("Internal Server Error");
     }
   };

@@ -8,9 +8,6 @@ import Header from "../../../components/header/header";
 function StudentTakeExamsInstructions() {
   const studentData = useAuth();
   const { courseCode } = useParams();
-  const path = location.pathname;
-  console.log("path", path);
-  console.log("course-code", courseCode);
   const navigate = useNavigate();
 
   const handleSubmit = () => {

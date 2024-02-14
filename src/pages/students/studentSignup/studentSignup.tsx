@@ -36,7 +36,6 @@ export default function StudentSignup() {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.log("userRole: ", email);
 
     if (
       !firstName ||

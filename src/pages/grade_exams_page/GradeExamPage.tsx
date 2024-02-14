@@ -6,10 +6,6 @@ import "./GradeExamPageStyle.css"
 import TableTitle from "./GradeTableTitle";
 import GradeTable from "./GradeTable";
 
-
-
-
-
 function GradeExamPage() {
  const years = ["2022/2023", "2021/2022", "2020/2021", "2019/2020", "2018/2019"]
  const [sessionYear, setSessionYear] = useState("")

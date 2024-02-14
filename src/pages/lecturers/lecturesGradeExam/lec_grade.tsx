@@ -19,7 +19,6 @@ interface StudentsResultsDetail {
 }
 function LecturerGrades() {
   const { lecturerData } = useAuth();
-  console.log("lecturer", lecturerData?.lecturerId);
   const [studentsResultsDetail, setStudentsResultsDetail] = useState<
     StudentsResultsDetail[]
   >([]);
@@ -29,7 +28,6 @@ function LecturerGrades() {
     const fetchData = async () => {
       try {
         const lecturerId = lecturerData?.lecturerId;
-        console.log("lecturerId", lecturerId);
         const res = await axiosInstance.get(
           "/lecturers/get-graded-exam-objectives/",
           {
