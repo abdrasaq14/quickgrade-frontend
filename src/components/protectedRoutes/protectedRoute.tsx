@@ -55,7 +55,7 @@ export function StudentProtectedRoute({ children }: ProtectedRouteProps) {
           auth.data.tokenExpiredError ||
           auth.data.verificationError)
       ) {
-        console.log("I found not tken", auth.data);
+        console.log("I found no token", auth.data);
         navigate("/students/signin");
       } else if (auth.status === 200 && auth.data.student) {
         console.log("auth.data.student: ", auth.data.student);
