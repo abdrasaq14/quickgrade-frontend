@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import "./sideBar.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 interface SideBarChildren {
   children: {
@@ -11,14 +11,15 @@ function SideBar({ children }: SideBarChildren) {
   const { sidebarElement } = children;
 
   const navigate = useNavigate();
-
+  const location = useLocation();
   const handleLogout = async () => {
     try {
       // Make a GET request to your logout route
+      const redirectURL = location.pathname.startsWith("/students") ? "/students" : "/lecturers";
       window.localStorage.removeItem("token");
       // await axios.get("http://localhost:3000/students/dashboard/logout", { withCredentials: true });
 
-      navigate("/students/signin");
+      navigate(`${redirectURL}/signin`);
     } catch (error) {
       console.error("Logout error:", error);
     }

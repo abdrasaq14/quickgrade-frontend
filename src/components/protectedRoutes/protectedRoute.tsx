@@ -55,10 +55,8 @@ export function StudentProtectedRoute({ children }: ProtectedRouteProps) {
           auth.data.tokenExpiredError ||
           auth.data.verificationError)
       ) {
-        console.log("I found no tken", auth.data);
         navigate("/students/signin");
       } else if (auth.status === 200 && auth.data.student) {
-        console.log("auth.data.student: ", auth.data.student);
         setStudentData(auth.data.student);
       }
     }
@@ -92,7 +90,6 @@ export function LecturerProtectedRoute({ children }: ProtectedRouteProps) {
       ) {
         navigate("/lecturers/signin");
       } else if (auth.status === 200 && auth.data.lecturer) {
-        console.log("auth.data.student: ", auth.data.lecturer);
         setLecturerData(auth.data.lecturer);
       }
     }
