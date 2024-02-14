@@ -17,7 +17,7 @@ import LecturerResults from "../lecturers/LecturerResultsPage/LecturerResults";
 import { StudentDash } from "../students/studentDashboard/StudentDash";
 import StudentTakeExamsInstructions from "../students/studentTakeExamsInstructions/studentTakeExamsInstructions";
 import TakeExamOBJ from "../students/studentTakeExam/TakeExamOBJ";
-import StudentsChangePassword from "../students/Students-Change-Password/StudentsChangePassword";
+import ChangePasswordPage from "../change-password-page/changePasswordPage";
 import SetExamPage from "../lecturers/lecturerSetExam/setExamPage";
 import { StudentProtectedRoute } from "../../components/protectedRoutes/protectedRoute";
 import { LecturerProtectedRoute } from "../../components/protectedRoutes/protectedRoute";
@@ -52,6 +52,10 @@ function App() {
                   path="set-exams/success/:courseCode"
                   element={<SetExamPageSuccessMessage />}
                 />
+                <Route
+                  path="change-password"
+                  element={<ChangePasswordPage />}
+                />
               </Routes>
             </LecturerProtectedRoute>
           }
@@ -81,7 +85,7 @@ function App() {
                 />
                 <Route
                   path="change-password"
-                  element={<StudentsChangePassword />}
+                  element={<ChangePasswordPage />}
                 />
                 <Route
                   path="grade-exams-dashboard"
