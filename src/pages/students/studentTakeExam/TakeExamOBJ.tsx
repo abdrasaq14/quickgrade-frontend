@@ -280,7 +280,7 @@ const TakeExamOBJ = () => {
                     <br />
                     <input
                       type="text"
-                      value={examsDetail?.totalScore}
+                      value={examsDetail?.secondSection.length ? examsDetail?.totalScore : examsDetail?.firstSection.split("|")[1]}
                       className="input-form-1"
                     />
                   </div>
@@ -308,7 +308,7 @@ const TakeExamOBJ = () => {
                 </p>
                 <div className="sub-div">
                   <p>Total score</p>
-                  <div className="green-circle">{examsDetail?.totalScore}</div>
+                  <div className="green-circle">{examsDetail?.secondSection.length ? examsDetail?.totalScore : examsDetail?.firstSection.split("|")[1]}</div>
                 </div>
               </div>
 
