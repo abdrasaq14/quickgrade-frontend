@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import "./sideBar.css";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 interface SideBarChildren {
   children: {
@@ -13,19 +12,17 @@ function SideBar({ children }: SideBarChildren) {
 
   const navigate = useNavigate();
 
-
-
   const handleLogout = async () => {
     try {
       // Make a GET request to your logout route
-      await axios.get("http://localhost:3000/students/dashboard/logout", { withCredentials: true });
+      window.localStorage.removeItem("token");
+      // await axios.get("http://localhost:3000/students/dashboard/logout", { withCredentials: true });
 
       navigate("/students/signin");
     } catch (error) {
       console.error("Logout error:", error);
     }
   };
-
 
   return (
     <section className="side-bar-default">
@@ -73,9 +70,8 @@ function SideBar({ children }: SideBarChildren) {
                 src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-logout.svg"
               />
               <div onClick={handleLogout} className="text-wrapper-6">
-              Logout
+                Logout
               </div>
-
             </div>
           </div>
         </div>
