@@ -59,7 +59,11 @@ function SideBar({ children }: SideBarChildren) {
               />
 
               <Link
-                to="/students/dashboard/change-password"
+                to={
+                  location.pathname.startsWith("/students")
+                    ? "/students/dashboard/change-password"
+                    : "/lecturers/dashboard/change-password"
+                }
                 className="text-wrapper-6"
               >
                 Settings
