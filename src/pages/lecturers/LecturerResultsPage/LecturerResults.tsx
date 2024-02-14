@@ -49,7 +49,7 @@ const LecturerResults = () => {
                   Grade Exams
                 </Link>
               </div>
-              <div className="feature-2">
+              {/* <div className="feature-2">
                 <img
                   className="img-2"
                   src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-refresh-square-2.svg"
@@ -60,7 +60,7 @@ const LecturerResults = () => {
                 >
                   Results
                 </Link>
-              </div>
+              </div> */}
             </>
           ),
         }}
