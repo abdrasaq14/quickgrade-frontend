@@ -114,8 +114,8 @@ function LecturerGrades() {
                               }
                             >
                               {student.theoryGrade
-                                ? student.theoryGrade + student.objectiveGrade
-                                : student.objectiveGrade}
+                                ? parseFloat((student.theoryGrade + student.objectiveGrade).toFixed(2))
+                                : parseFloat((student.objectiveGrade).toFixed(2))}
                             </p>
                             <h4 className="grades-totalscore">
                               {student.theoryGrade

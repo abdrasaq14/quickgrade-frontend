@@ -134,7 +134,8 @@ function StudentsResults() {
                                 <p className="not-ready">
                                   Section A
                                   <span>
-                                    {result.totalScore}/{result.sectionMark}
+                                    {parseFloat(result.totalScore.toFixed(2))}/
+                                    {parseFloat(result.sectionMark.toFixed(2))}
                                   </span>
                                 </p>
                               </div>
