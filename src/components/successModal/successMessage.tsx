@@ -1,8 +1,10 @@
 import "./successMessage.css";
-import SideBar from "../sidebar/sideBar";
-import { Link } from "react-router-dom";
+
+import { useLocation } from "react-router-dom";
 import MainButton from "../buttons/mainButton";
 import { FormEvent } from "react";
+import LecturerSideBar from "../../pages/lecturers/lecturerSideBar/lecturerSideBar";
+import StudentSideBar from "../../pages/students/studentsSideBar/studentsSideBar";
 
 interface SetExamPageSuccessMessageProps {
   successMessage: string;
@@ -14,64 +16,15 @@ function SuccessMessage({
   successMessageText,
   onsubmit,
 }: SetExamPageSuccessMessageProps) {
+  const location = useLocation();
   return (
     <div className="set-exams-page-whole-container">
       {/* Sidebar */}
-      <SideBar>
-        {{
-          sidebarElement: (
-            <>
-              <div className="feature-2">
-                <img
-                  className="img-feat"
-                  src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-menu.svg"
-                />
-                <Link to="/lecturers/dashboard" className="text-wrapper-6">
-                  Dashboard
-                </Link>
-              </div>
-
-              <div className="feature-2">
-                <img
-                  className="img-2"
-                  src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-sort.svg"
-                />
-
-                <Link
-                  to="/lecturers/dashboard/set-exams"
-                  className="text-wrapper-6"
-                >
-                  Set Exams
-                </Link>
-              </div>
-              <div className="feature-2">
-                <img
-                  className="img-2"
-                  src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-sort.svg"
-                />
-                <Link
-                  to="/lecturers/dashboard/grade-exams"
-                  className="text-wrapper-6"
-                >
-                  Grade Exams
-                </Link>
-              </div>
-              <div className="feature-2">
-                <img
-                  className="img-2"
-                  src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-refresh-square-2.svg"
-                />
-                <Link
-                  to="/lecturers/dashboard/results"
-                  className="text-wrapper-6"
-                >
-                  Results
-                </Link>
-              </div>
-            </>
-          ),
-        }}
-      </SideBar>
+      {location.pathname.startsWith("/lecturers") ? (
+        <LecturerSideBar />
+      ) : (
+        <StudentSideBar />
+      )}
 
       {/* Main content */}
       <main className="success-modal-main-wrapper">
