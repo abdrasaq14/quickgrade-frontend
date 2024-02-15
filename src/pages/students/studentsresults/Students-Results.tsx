@@ -127,7 +127,9 @@ function StudentsResults() {
                           <>
                             <div key={index} className="middle-card">
                               <div className="middle-left">
-                                <p className="noresults">{result.totalScore}</p>
+                                <p className="noresults">
+                                  {parseFloat(result.totalScore.toFixed(2))}
+                                </p>
                                 <h4 className="totalscore">Total Score</h4>
                               </div>
                               <div className="middle-right">
