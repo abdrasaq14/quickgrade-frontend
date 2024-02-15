@@ -1,12 +1,13 @@
 import "./changePasswordPage.css";
-import SideBar from "../../components/sidebar/sideBar";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { FormEvent } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { useState } from "react";
 import MainButton from "../../components/buttons/mainButton";
 import { useAuth } from "../../components/protectedRoutes/protectedRoute";
 import Header from "../../components/header/header";
+import StudentSideBar from "../students/studentsSideBar/studentsSideBar";
+import LecturerSideBar from "../lecturers/lecturerSideBar/lecturerSideBar";
 
 function ChangePasswordPage() {
   const location = useLocation();
@@ -70,103 +71,9 @@ function ChangePasswordPage() {
     <>
       <div className="change-password-container">
         {location.pathname.startsWith("/students") ? (
-          <SideBar>
-            {{
-              sidebarElement: (
-                <>
-                  <div className="feature-2">
-                    <img
-                      className="img-feat"
-                      src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-menu.svg"
-                    />
-                    <Link to="/students/dashboard" className="text-wrapper-6">
-                      Dashboard
-                    </Link>
-                  </div>
-                  <div className="feature-2">
-                    <img
-                      className="img-2"
-                      src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-book-square.svg"
-                    />
-                    <Link
-                      to="/students/dashboard/enrolled-courses"
-                      className="text-wrapper-6"
-                    >
-                      Enrolled Courses
-                    </Link>
-                  </div>
-                  <div className="feature-2">
-                    <img
-                      className="img-2"
-                      src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-sort.svg"
-                    />
-                    <Link
-                      to="/students/dashboard/results"
-                      className="text-wrapper-6"
-                    >
-                      Results
-                    </Link>
-                  </div>
-                </>
-              ),
-            }}
-          </SideBar>
+          <StudentSideBar />
         ) : location.pathname.startsWith("/lecturers") ? (
-          <SideBar>
-            {{
-              sidebarElement: (
-                <>
-                  <div className="feature-2">
-                    <img
-                      className="img-feat"
-                      src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-menu.svg"
-                    />
-                    <Link to="/lecturers/dashboard" className="text-wrapper-6">
-                      Dashboard
-                    </Link>
-                  </div>
-
-                  <div className="feature-2">
-                    <img
-                      className="img-2"
-                      src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-sort.svg"
-                    />
-
-                    <Link
-                      to="/lecturers/dashboard/set-exams"
-                      className="text-wrapper-6"
-                    >
-                      Set Exams
-                    </Link>
-                  </div>
-                  <div className="feature-2">
-                    <img
-                      className="img-2"
-                      src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-sort.svg"
-                    />
-                    <Link
-                      to="/lecturers/dashboard/grade-exams"
-                      className="text-wrapper-6"
-                    >
-                      Grade Exams
-                    </Link>
-                  </div>
-                  <div className="feature-2">
-                    <img
-                      className="img-2"
-                      src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-refresh-square-2.svg"
-                    />
-                    <Link
-                      to="/lecturers/dashboard/results"
-                      className="text-wrapper-6"
-                    >
-                      Results
-                    </Link>
-                  </div>
-                </>
-              ),
-            }}
-          </SideBar>
+          <LecturerSideBar />
         ) : null}
         <div className="change-password-body">
           <Header
