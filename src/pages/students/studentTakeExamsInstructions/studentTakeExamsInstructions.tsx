@@ -1,9 +1,9 @@
-import SideBar from "../../../components/sidebar/sideBar";
 import MainButton from "../../../components/buttons/mainButton";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./studentTakeExamsInstructions.css";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
 import Header from "../../../components/header/header";
+import StudentSideBar from "../studentsSideBar/studentsSideBar";
 
 function StudentTakeExamsInstructions() {
   const studentData = useAuth();
@@ -17,47 +17,7 @@ function StudentTakeExamsInstructions() {
   return (
     <>
       <div className="take-exams-instructions-wrapper">
-        <SideBar>
-          {{
-            sidebarElement: (
-              <>
-                <div className="feature-2">
-                  <img
-                    className="img-feat"
-                    src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-menu.svg"
-                  />
-                  <Link to="/students/dashboard" className="text-wrapper-6">
-                    Dashboard
-                  </Link>
-                </div>
-                <div className="feature-2">
-                  <img
-                    className="img-2"
-                    src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-book-square.svg"
-                  />
-                  <Link
-                    to="/students/dashboard/enrolled-courses"
-                    className="text-wrapper-6"
-                  >
-                    Enrolled Courses
-                  </Link>
-                </div>
-                <div className="feature-2">
-                  <img
-                    className="img-2"
-                    src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-sort.svg"
-                  />
-                  <Link
-                    to="/students/dashboard/results"
-                    className="text-wrapper-6"
-                  >
-                    Results
-                  </Link>
-                </div>
-              </>
-            ),
-          }}
-        </SideBar>
+        <StudentSideBar />
         <div className="exam-instructions-container">
           <Header newUser={studentData?.studentData?.firstName || ""} />
           <div className="exam-instructions-body">

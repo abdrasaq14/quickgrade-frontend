@@ -1,8 +1,8 @@
 import "./setExamStyle.css";
 import addButton from "../../../assets/add_button_logo copy.png";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
-import SideBar from "../../../components/sidebar/sideBar";
-import { Link, useNavigate } from "react-router-dom";
+import LecturerSideBar from "../lecturerSideBar/lecturerSideBar";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState, FormEvent } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import Header from "../../../components/header/header";
@@ -29,7 +29,7 @@ interface SectionValue {
 
 function SetExamPage() {
   const { lecturerData } = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // section handling state
   const [sectionValue, setSectionValue] = useState<SectionValue[]>([]);
 
@@ -307,61 +307,7 @@ function SetExamPage() {
   return (
     <div className="set-exams-page-whole-container">
       {/* Sidebar */}
-      <SideBar>
-        {{
-          sidebarElement: (
-            <>
-              <div className="feature-2">
-                <img
-                  className="img-feat"
-                  src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-menu.svg"
-                />
-                <Link to="/lecturers/dashboard" className="text-wrapper-6">
-                  Dashboard
-                </Link>
-              </div>
-
-              <div className="feature-2">
-                <img
-                  className="img-2"
-                  src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-sort.svg"
-                />
-
-                <Link
-                  to="/lecturers/dashboard/set-exams"
-                  className="text-wrapper-6"
-                >
-                  Set Exams
-                </Link>
-              </div>
-              <div className="feature-2">
-                <img
-                  className="img-2"
-                  src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-sort.svg"
-                />
-                <Link
-                  to="/lecturers/dashboard/grade-exams"
-                  className="text-wrapper-6"
-                >
-                  Grade Exams
-                </Link>
-              </div>
-              {/* <div className="feature-2">
-                <img
-                  className="img-2"
-                  src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-refresh-square-2.svg"
-                />
-                <Link
-                  to="/lecturers/dashboard/results"
-                  className="text-wrapper-6"
-                >
-                  Results
-                </Link>
-              </div> */}
-            </>
-          ),
-        }}
-      </SideBar>
+      <LecturerSideBar />
 
       {/* Main content */}
       <main className="set-exams-page-main-section">
