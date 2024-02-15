@@ -12,7 +12,7 @@ const LecturerResults = () => {
   return (
     <div>
      <LecturerSideBar />
-      <Header newUser={(lecturerData?.firstName) as string} />
+      <Header newUser={`${lecturerData?.title} ${lecturerData?.firstName}`} />
       <ResultsContents />
       <ResultsTable />
     </div>

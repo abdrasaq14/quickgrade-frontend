@@ -80,7 +80,7 @@ function ChangePasswordPage() {
             newUser={
               (location.pathname.startsWith("/students")
                 ? studentData?.firstName
-                : lecturerData?.firstName) as string
+                : `${lecturerData?.title} ${lecturerData?.firstName}`) as string
             }
           />
           <div className="change-password-form">
