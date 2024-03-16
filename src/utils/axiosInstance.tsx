@@ -1,8 +1,9 @@
 import axios from "axios";
 
 // backend url
+const BACKEND_URL = import.meta.env.VITE_APP_BASE_URL;
 const axiosInstance = axios.create({
-  baseURL: "https://api-quickgrade.onrender.com",
+  baseURL: BACKEND_URL,
   withCredentials: true,
 });
 

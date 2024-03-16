@@ -1,36 +1,34 @@
-import { LoginPage } from "../loginPage/Login";
-import "./App.css";
-import student_login_page_bg from "../../assets/loginBackground.png";
-import lecturer_login_page_bg from "../../assets/lecturer_signin_bg.png";
+import StudentLoginPage from "./pages/students/studentLoginPage/StudentLoginPage";
+import LecturerLoginPage from "./pages/lecturers/lecturerLoginPage/LecturerLoginPage";
 import { Routes, Route } from "react-router-dom";
-import LandingPage from "../landingPage/LandingPage";
-import EnterOtp from "../enter-otp/enter_otp";
-import ResetEnterNewPasswordPage from "../reset-enter-new-password/Reset_enter_new_pw";
-import LecturerDashboard from "../lecturers/lecturerDashboard/LecturerDashboard";
-import VerifyEmail from "../verify-email/VerifyEmailPage";
-import StudentEnrolledCourses from "../students/studentEnrolledCourses/studentEnrolledCourses";
-import LecturerSignup from "../lecturers/lecturerSignUp/lecturerSignup";
-import StudentSignup from "../students/studentSignup/studentSignup";
-import { CheckYourEmail } from "../check-you-email/check_your_email";
-import { ForgotPassword } from "../forgotPassword/forget_password";
-import LecturerResults from "../lecturers/LecturerResultsPage/LecturerResults";
-import { StudentDash } from "../students/studentDashboard/StudentDash";
-import StudentTakeExamsInstructions from "../students/studentTakeExamsInstructions/studentTakeExamsInstructions";
-import TakeExamOBJ from "../students/studentTakeExam/TakeExamOBJ";
-import ChangePasswordPage from "../change-password-page/changePasswordPage";
-import SetExamPage from "../lecturers/lecturerSetExam/setExamPage";
-import { StudentProtectedRoute } from "../../components/protectedRoutes/protectedRoute";
-import { LecturerProtectedRoute } from "../../components/protectedRoutes/protectedRoute";
-import SetExamPageSuccessMessage from "../lecturers/lecturerSetExamSuccess/setExamSuccessMessage";
-import TakeExamSuccessMessage from "../students/studentTakeExamSuccess/takeExamSuccessMessage";
+import LandingPage from "./pages/landingPage/LandingPage";
+import EnterOtp from "./pages/enter-otp/enter_otp";
+import ResetEnterNewPasswordPage from "./pages/reset-enter-new-password/Reset_enter_new_pw";
+import LecturerDashboard from "./pages/lecturers/lecturerDashboard/LecturerDashboard";
+import VerifyEmail from "./pages/verify-email/VerifyEmailPage";
+import StudentEnrolledCourses from "./pages/students/studentEnrolledCourses/studentEnrolledCourses";
+import LecturerSignup from "./pages/lecturers/lecturerSignUp/lecturerSignup";
+import StudentSignup from "./pages/students/studentSignup/studentSignup";
+import { CheckYourEmail } from "./pages/check-you-email/check_your_email";
+import { ForgotPassword } from "./pages/forgotPassword/forget_password";
+import LecturerResults from "./pages/lecturers/LecturerResultsPage/LecturerResults";
+import { StudentDash } from "./pages/students/studentDashboard/StudentDash";
+import StudentTakeExamsInstructions from "./pages/students/studentTakeExamsInstructions/studentTakeExamsInstructions";
+import TakeExamOBJ from "./pages/students/studentTakeExam/TakeExamOBJ";
+import ChangePasswordPage from "./pages/change-password-page/changePasswordPage";
+import SetExamPage from "./pages/lecturers/lecturerSetExam/setExamPage";
+import { StudentProtectedRoute } from "./components/protectedRoutes/protectedRoute";
+import { LecturerProtectedRoute } from "./components/protectedRoutes/protectedRoute";
+import SetExamPageSuccessMessage from "./pages/lecturers/lecturerSetExamSuccess/setExamSuccessMessage";
+import TakeExamSuccessMessage from "./pages/students/studentTakeExamSuccess/takeExamSuccessMessage";
 // import CompletedExamOBJ from "../completed exam/completedExamObj";
 
-import StudentsResults from "../students/studentsresults/Students-Results";
+import StudentsResults from "./pages/students/studentsresults/Students-Results";
 
-import LecturerGrades from "../lecturers/lecturesGradeExam/lec_grade";
+import LecturerGrades from "./pages/lecturers/lecturesGradeExam/lec_grade";
 
-import GradeExamPage from "../grade_exams_page/GradeExamPage";
-import GradeExamTheory from "../gradeExamTheory/GradeExamTheory";
+import GradeExamPage from "./pages/grade_exams_page/GradeExamPage";
+import GradeExamTheory from "./pages/gradeExamTheory/GradeExamTheory";
 
 function App() {
   return (
@@ -100,31 +98,9 @@ function App() {
           }
         />
 
-        <Route
-          path="/students/signin"
-          element={
-            <LoginPage
-              form_title="Sign into QuickGrade"
-              id_or_email="Student Registration Number"
-              placeholder="Enter your registration number"
-              backgroundimage={student_login_page_bg}
-              userType="/students/forgot-password"
-            />
-          }
-        />
+        <Route path="/students/signin" element={<StudentLoginPage />} />
 
-        <Route
-          path="/lecturers/signin"
-          element={
-            <LoginPage
-              form_title="Sign into QuickGrade"
-              id_or_email="Employee ID"
-              placeholder="Enter employee id"
-              backgroundimage={lecturer_login_page_bg}
-              userType="/lecturers/forgot-password"
-            />
-          }
-        />
+        <Route path="/lecturers/signin" element={<LecturerLoginPage />} />
         <Route
           path="/students/confirm-email"
           element={<EnterOtp enter_otp_heading="Verify OTP" />}

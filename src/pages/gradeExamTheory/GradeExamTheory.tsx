@@ -1,75 +1,12 @@
 import "./GradeExamTheoryStyle.css";
-import SideBar from "../../components/sidebar/sideBar";
 import Header from "../../components/header/header";
-import { Link } from "react-router-dom";
 import previousArrow from "../../assets/previous_arrow copy.png";
+import LecturerSideBar from "../lecturers/lecturerSideBar/lecturerSideBar";
 
 const GradeExamTheory = () => {
   return (
     <div className="grade-theory-exams-page-whole-container">
-      <SideBar>
-        {{
-          sidebarElement: (
-            <>
-              <div className="feature-2">
-                <img
-                  className="img-feat"
-                  src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-menu.svg"
-                />
-                <Link to="/lecturers/dashboard" className="text-wrapper-6">
-                  Dashboard
-                </Link>
-              </div>
-              <div className="feature-2">
-                <img
-                  className="img-2"
-                  src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-book-square.svg"
-                />
-                <Link to="/" className="text-wrapper-6">
-                  Courses
-                </Link>
-              </div>
-              <div className="feature-2">
-                <img
-                  className="img-2"
-                  src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-sort.svg"
-                />
-
-                <Link
-                  to="/lecturers/dashboard/set-exams"
-                  className="text-wrapper-6"
-                >
-                  Set Exams
-                </Link>
-              </div>
-              <div className="feature-2">
-                <img
-                  className="img-2"
-                  src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-sort.svg"
-                />
-                <Link
-                  to="/lecturers/dashboard/grade-exams"
-                  className="text-wrapper-6"
-                >
-                  Grade Exams
-                </Link>
-              </div>
-              <div className="feature-2">
-                <img
-                  className="img-2"
-                  src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-refresh-square-2.svg"
-                />
-                <Link
-                  to="/lecturers/dashboard/results"
-                  className="text-wrapper-6"
-                >
-                  Results
-                </Link>
-              </div>
-            </>
-          ),
-        }}
-      </SideBar>
+      <LecturerSideBar />
       <div className="grade-theory-exams-page-main-section-and-header">
         <Header newUser="Matthew the Traitor" />
         <main className="grade-theory-exams-page-main-section">
@@ -356,18 +293,18 @@ const GradeExamTheory = () => {
                 </button>
 
                 <div className="grade-theory-exams-page-previous-section-container">
-                <a
-                  href="#"
-                  className="grade-theory-exams-page-previous-section-link"
-                >
-                  <img
-                    src={previousArrow}
-                    className="set-exams-page-previous-section-arrow"
-                  />
-                  <span className="grade-theory-exams-page-previous-section-text">
-                    Previous Section
-                  </span>
-                </a>
+                  <a
+                    href="#"
+                    className="grade-theory-exams-page-previous-section-link"
+                  >
+                    <img
+                      src={previousArrow}
+                      className="set-exams-page-previous-section-arrow"
+                    />
+                    <span className="grade-theory-exams-page-previous-section-text">
+                      Previous Section
+                    </span>
+                  </a>
                 </div>
               </div>
             </div>

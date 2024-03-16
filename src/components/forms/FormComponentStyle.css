@@ -1,14 +1,3 @@
-:root {
-  --main-font: "Inter", sans-serif;
-  --label-font: "Heebo", sans-serif;
-  --label-color: rgba(33, 33, 33, 1);
-  --placeholder-color: rgba(117, 117, 117, 1);
-  --placeholder-font: "Heebo", sans-serif;
-  --input-border: rgba(189, 189, 189, 1);
-  --button-color: rgba(45, 0, 247, 1);
-  --forget-password-color: rgba(21, 112, 239, 1);
-}
-
 .login-page-main-body-wrapper {
   display: flex;
   flex-direction: column;
@@ -23,11 +12,15 @@
 .login-form-inner-body-wrapper {
   height: 90%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  @media all and (min-width: 1200px) {
+    flex-direction: row;
+  }
 }
-.inner-div {
-  background-color: green;
-}
+
 .university-title {
   font-size: 2rem;
   font-weight: 700;
@@ -44,18 +37,20 @@
   line-height: normal;
 }
 .login-form-wrapper {
-  height: 100%;
-  width: 50%;
-  min-width: 50%;
-  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media all and (min-width: 1200px) {
+    width: 50%;
+    min-width: 50%;
+    height: 100%;
+    position: relative;
+  }
 }
 
 .login-form {
-  top: 50%;
-  left: 50%;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  height: 80%;
+  min-height: 80%;
   width: 70%;
   background-color: rgba(249, 250, 251, 1);
   padding: 5rem 3rem;

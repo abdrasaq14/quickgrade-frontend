@@ -1,13 +1,14 @@
 import axiosInstance from "../../utils/axiosInstance";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, ReactNode, useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import FormComponent from "../../components/forms/FormComponent";
 interface LoginFormProps {
-  id_or_email: string;
-  placeholder: string;
-  form_title: string;
-  backgroundimage: string;
-  userType: string;
+  signin_link: string;
+  pagepic: string;
+  children: {
+    signupFormElement: ReactNode;
+  };
+  onsubmit: (event: FormEvent) => Promise<void>;
 }
 
 export function LoginPage({
