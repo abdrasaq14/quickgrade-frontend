@@ -1,8 +1,9 @@
 import lecturer_login_page_bg from "../../../assets/lecturer_signin_bg.png";
-import { LoginPage } from "../../loginPage/Login";
+import LoginFormComponent from "../../../components/forms/loginPageForm/FormComponent";
+
 function LecturerLoginPage() {
   return (
-    <LoginPage
+    <LoginFormComponent
       form_title="Sign into QuickGrade"
       id_or_email="Employee ID"
       placeholder="Enter employee id"

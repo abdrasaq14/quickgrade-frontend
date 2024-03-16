@@ -13,10 +13,12 @@ export const LeftImageWrapper = styled.div<LeftImageWrapperProps>`
     background-repeat: no-repeat;
     background-blend-mode: multiply;
     background-size: cover;
-    background-position: 100% 10%;
+    background-position: center;
     height: 100%;
     width: 50%;
+    min-width: 50%;
     max-width: 50%;
+    height: 100%;
     padding: 3.5rem;
     text-align: left;
     font-family: var(--main-font);

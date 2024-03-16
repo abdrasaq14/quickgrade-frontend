@@ -50,18 +50,24 @@
 }
 
 .login-form {
-  min-height: 80%;
-  width: 70%;
+  height: 100%;
+  width: 80%;
+
   background-color: rgba(249, 250, 251, 1);
-  padding: 5rem 3rem;
+  padding: 4rem 3rem;
   text-align: left;
+  @media all and (min-width: 1200px) {
+    height: 90%;
+    max-height: 95%;
+    width: 70%;
+  }
 }
 .login-form-title {
   font-size: 2rem;
   font-weight: 400;
   line-height: normal;
   font-family: var(--main-font);
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 .field {
   margin-bottom: 1rem;
@@ -96,7 +102,7 @@
   font-weight: 800;
 }
 
-.password-icon-wrapper {
+.input-icon-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -109,22 +115,28 @@
   border: 1px solid var(--input-border);
 }
 
-.login-form-password-icon {
+.input-icon {
   font-size: 1rem;
   margin-left: 0;
   margin-right: 0.5rem;
 }
 
-.password_input {
+.input-that-has-icon {
   border: none !important;
   width: 98% !important;
 }
-.password_input:focus {
+.input-that-has-icon:focus {
   outline: none !important;
 }
 .login-form-forgot-password {
   color: var(--forget-password-color);
   font-size: 0.9rem;
   line-height: normal;
+  margin: 2rem 0;
+}
+
+.login-home-btn,
+.login-home-btn:visited {
+  color: var(--button-color) !important;
   margin: 2rem 0;
 }
