@@ -100,7 +100,7 @@ export default function LoginFormComponent({
               <i className="fa-solid fa-house login-home-btn"></i>
             </Link>
             <h1 className="login-form-title">{form_title}</h1>
-            {error && <div className="error-message">{error} </div>}
+            {error && <p className="error-message">{error} </p>}
             <div className="field">
               <label className="login-form-label">{id_or_email}</label>
               <div className="input-icon-wrapper">

@@ -11,3 +11,11 @@
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
+
+.main-btn-component:hover {
+  background-color: #2002a3;
+}
+.main-btn-component:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}

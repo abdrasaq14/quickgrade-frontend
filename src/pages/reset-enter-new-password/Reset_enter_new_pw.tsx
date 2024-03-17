@@ -1,15 +1,16 @@
 import "./Reset_enter_new_pw.css";
-import quickgradelogo from "../../assets/quick_grade_logo_with_text_blue.png";
-import MainButton from "../../components/buttons/mainButton";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import OtherForms from "../../components/forms/OtherForms/OtherForms";
+
 const ResetEnterNewPasswordPage = () => {
   const { token } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const handleUserPassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword((event.currentTarget as HTMLInputElement).value);
   };
@@ -48,16 +49,15 @@ const ResetEnterNewPasswordPage = () => {
     }
   };
   return (
-    <div className="re-enter-password-wrapper">
-      <div className="re-enter-password-header">
-        <img src={quickgradelogo} alt="logo png" />
-      </div>
-      <div className="re-enter-password-container">
-        <div className="form-container">
-          <h1 className="form-title">Reset Password</h1>
-
-          <form className="form" onSubmit={handleSubmit}>
-            <div className="form-inner-container">
+    <>
+      <OtherForms
+        formHeading="Reset Password"
+        buttonText="Reset Password"
+        handleSubmit={handleSubmit}
+        disabled={password.length < 6 || password !== confirmPassword}
+        children={{
+          formElement: (
+            <>
               <label className="re-enter-password-label" htmlFor="password">
                 New Password
               </label>
@@ -69,29 +69,23 @@ const ResetEnterNewPasswordPage = () => {
                 required
                 value={password}
                 onChange={handleUserPassword}
-                className="re-enter-password-input"
               />
 
-              <label
-                className="re-enter-password-label"
-                htmlFor="confirm-password"
-              >
-                Confirm Password
-              </label>
+              <label htmlFor="confirm-password">Confirm Password</label>
               <input
                 type="password"
                 placeholder="Confirm password"
                 name="confirm-password"
                 id="confirm-password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 required
-                className="re-enter-password-input"
               />
-              <MainButton button_text="Reset Password" />
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+            </>
+          ),
+        }}
+      />
+    </>
   );
 };
 export default ResetEnterNewPasswordPage;

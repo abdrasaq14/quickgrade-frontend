@@ -1,25 +1,30 @@
-import "./enter_otp.css";
-import quickgradelogo from "../../assets/quick_grade_logo_with_text_blue.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, ChangeEvent, FormEvent } from "react";
 import axiosInstance from "../../utils/axiosInstance";
-import MainButton from "../../components/buttons/mainButton";
+import PopUp from "../../components/pop/PopUp";
+import Modal from "../../components/modal/Modal";
+import OtherForms from "../../components/forms/OtherForms/OtherForms";
 
-interface EnterOtpProps {
-  enter_otp_heading: string;
-}
-
-function EnterOtp(props: EnterOtpProps) {
+function EnterOtp() {
   const navigate = useNavigate();
   const location = useLocation();
   const [otp, setOtp] = useState("");
+  const [error, setError] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [success, setSuccess] = useState(false);
   const handleUserOtp = (event: ChangeEvent<HTMLInputElement>) => {
     setOtp((event.currentTarget as HTMLInputElement).value);
   };
-
+  const isValid = () => {
+    if (!otp) {
+      return false;
+    }
+    return true;
+  };
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
+      setShowPopup(true);
       const currentRoute = location.pathname;
       const baseURL = currentRoute.startsWith("/students")
         ? "/students"
@@ -32,7 +37,6 @@ function EnterOtp(props: EnterOtpProps) {
         ? await axiosInstance.post("/lecturers/verify-otp", { otp })
         : null;
 
-
       // checking the response
       if (res && res.status === 200) {
         if (
@@ -40,46 +44,52 @@ function EnterOtp(props: EnterOtpProps) {
           res.data.expiredOtpError ||
           res.data.internalServerError
         ) {
-          navigate(`${baseURL}/confirm-email`);
+          setShowPopup(false);
+          setError(res.data.invalidOtp || res.data.expiredOtpError);
         } else if (res.data.OtpVerificationSuccess) {
-          navigate(`${baseURL}/check-your-email`);
+          setSuccess(true);
+          setTimeout(() => {
+            setShowPopup(false);
+            navigate(`${baseURL}/check-your-email`);
+          }, 1200);
         }
       } else {
-        window.location.reload();
+        setShowPopup(false);
+        setError("An error occured, try again");
       }
     } catch (error) {
-      console.log("error", error);
+      setShowPopup(false);
+      setError("An error occured, try again");
     }
-
-    // redirect to a different page based on user type
   };
   return (
-    <div className="reset-otp-page-body-wrapper">
-      <header className="reset-otp-header">
-        <img src={quickgradelogo} alt="Quickgrade Logo" />
-      </header>
-
-      <div className="reset-otp-page-app">
-        <h1 className="reset-otp-heading">{props.enter_otp_heading}</h1>
-        <label className="reset-otp-label">
-          Enter the OTP sent to your email:
-        </label>
-
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            id="otp"
-            name="otp"
-            placeholder="Enter OTP"
-            required
-            value={otp}
-            onChange={handleUserOtp}
-            className="reset-otp-input"
-          />
-          <MainButton button_text="Submit" />
-        </form>
-      </div>
-    </div>
+    <>
+      {success && <PopUp message="Email successfully verified" />}
+      {showPopup && <Modal modalText="verifying OTP..." />}
+      <OtherForms
+        buttonText="Verify OTP"
+        formHeading="Verify OTP"
+        error={error}
+        handleSubmit={handleSubmit}
+        disabled={!isValid()}
+        children={{
+          formElement: (
+            <>
+              <label>Enter OTP sent to your email:</label>
+              <input
+                type="text"
+                id="otp"
+                name="otp"
+                placeholder="Enter OTP"
+                required
+                value={otp}
+                onChange={handleUserOtp}
+              />
+            </>
+          ),
+        }}
+      />
+    </>
   );
 }
 

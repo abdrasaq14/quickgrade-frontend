@@ -136,6 +136,10 @@
   }
 }
 
+.error-message {
+  font-weight: 700;
+}
+
 .title-select {
   padding: 0.2rem !important;
   flex-basis: 25%;

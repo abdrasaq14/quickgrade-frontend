@@ -101,24 +101,18 @@ function App() {
         <Route path="/students/signin" element={<StudentLoginPage />} />
 
         <Route path="/lecturers/signin" element={<LecturerLoginPage />} />
-        <Route
-          path="/students/confirm-email"
-          element={<EnterOtp enter_otp_heading="Verify OTP" />}
-        />
-        <Route
-          path="/lecturers/confirm-email"
-          element={<EnterOtp enter_otp_heading="Verify OTP" />}
-        />
+        <Route path="/students/confirm-email" element={<EnterOtp />} />
+        <Route path="/lecturers/confirm-email" element={<EnterOtp />} />
         {/* forgot password page
         where you enter your email
         */}
         <Route
           path="/lecturers/forgot-password"
-          element={<ForgotPassword location="/lecturers/signin" />}
+          element={<ForgotPassword extraTextLink="/lecturers/signin" />}
         />
         <Route
           path="/students/forgot-password"
-          element={<ForgotPassword location="/students/signin" />}
+          element={<ForgotPassword extraTextLink="/students/signin" />}
         />
 
         <Route path="/verify-email" element={<VerifyEmail />} />
@@ -127,8 +121,6 @@ function App() {
           path="/students/reset-password/check-your-email"
           element={
             <CheckYourEmail
-              information="We sent a password reset link to your email. Please click the link to
-              reset your password."
               location="/students/forgot-password"
               location_text="Click here to resend"
             />
@@ -138,8 +130,6 @@ function App() {
           path="/lecturers/reset-password/check-your-email"
           element={
             <CheckYourEmail
-              information="We sent a password reset link to your email. Please click the link to
-              reset your password."
               location="/lecturers/forgot-password"
               location_text="Click here to resend"
             />

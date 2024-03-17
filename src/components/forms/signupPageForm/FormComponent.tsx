@@ -5,6 +5,8 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import MainButton from "../../buttons/mainButton";
 import axiosInstance from "../../../utils/axiosInstance";
+import Modal from "../../modal/Modal";
+import PopUp from "../../pop/PopUp";
 interface FormComponentProps {
   backgroundimage: string;
   userType: string;
@@ -19,7 +21,8 @@ export default function SignUpFormComponent({
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState("");
-
+  const [showPopup, setShowPopup] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [signupFormInputs, setSignupFormInputs] = useState({
     title: "Mr",
     firstName: "",
@@ -35,9 +38,7 @@ export default function SignUpFormComponent({
     const { name, value } = event.target;
     setSignupFormInputs({ ...signupFormInputs, [name]: value });
   };
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-
+  const isValid = () => {
     if (lecturerTitle) {
       if (
         !signupFormInputs.firstName ||
@@ -47,8 +48,7 @@ export default function SignUpFormComponent({
         !signupFormInputs.department ||
         !signupFormInputs.faculty
       ) {
-        setError("All fields are required, try again");
-        return;
+        return false;
       }
       // setError("All fields are required, try again");
       // return;
@@ -61,12 +61,16 @@ export default function SignUpFormComponent({
         !signupFormInputs.department ||
         !signupFormInputs.faculty
       ) {
-        setError("All fields are required, try again");
-        return;
+        return false;
       }
     }
+    return true;
+  };
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
 
     try {
+      setShowPopup(true);
       const currentRoute = location.pathname;
       const baseURL = currentRoute.startsWith("/students")
         ? "/students"
@@ -75,17 +79,18 @@ export default function SignUpFormComponent({
         : "";
       const res = currentRoute.startsWith("/students")
         ? await axiosInstance.post("/students/signup", {
-            signupFormInputs,
+            ...signupFormInputs,
           })
         : currentRoute.startsWith("/lecturers")
         ? await axiosInstance.post("/lecturers/signup", {
-            signupFormInputs,
+            ...signupFormInputs,
           })
         : null;
 
       // checking the response
       if (res && res.status === 200) {
-        if (res.data.token) {
+        if (res.data.successfulSignup) {
+          setSuccess(true);
           setSignupFormInputs({
             title: "",
             firstName: "",
@@ -95,116 +100,124 @@ export default function SignUpFormComponent({
             faculty: "",
             department: "",
           });
-          localStorage.setItem("token", res.data.token);
-          navigate(`${baseURL}/dashboard`);
-        } else if (res.data.inValidPassword) {
-          setError("Invalid password");
+
+          setTimeout(() => {
+            setShowPopup(false);
+            navigate(`${baseURL}/confirm-email`);
+          }, 1200);
+        } else if (
+          res.data.existingLecturerError ||
+          res.data.existingStudentError
+        ) {
+          setShowPopup(false);
+          setError(res.data.existingLecturerError);
           setSignupFormInputs({
-            title: "",
-            firstName: "",
-            lastName: "",
-            email: "",
+            ...signupFormInputs,
             password: "",
-            faculty: "",
-            department: "",
           });
-        } else if (res.data.studentNotFoundError) {
-          setError("Student not found, invalid registration number");
+        } else if (res.data.failedSignup) {
+          setShowPopup(false);
+          setError(res.data.failedSignup);
           setSignupFormInputs({
-            title: "",
-            firstName: "",
-            lastName: "",
-            email: "",
+            ...signupFormInputs,
             password: "",
-            faculty: "",
-            department: "",
           });
-        } else if (res.data.lecturerNotFoundError) {
-          setError("Lecturer not found, invalid employee id");
+        } else if (res.data.internalServerError) {
+          setShowPopup(false);
+          setError(res.data.internalServerError);
           setSignupFormInputs({
-            title: "",
-            firstName: "",
-            lastName: "",
-            email: "",
+            ...signupFormInputs,
             password: "",
-            faculty: "",
-            department: "",
           });
         }
       } else {
-        setError("Internal Server Error");
+        setShowPopup(false);
+        setError("Network Error, try again later");
         setSignupFormInputs({
-          title: "",
-          firstName: "",
-          lastName: "",
-          email: "",
+          ...signupFormInputs,
           password: "",
-          faculty: "",
-          department: "",
         });
       }
     } catch (error) {
-      console.log("error", error);
+      setShowPopup(false);
+      setError("Internal Server Error");
       setSignupFormInputs({
-        title: "",
-        firstName: "",
-        lastName: "",
-        email: "",
+        ...signupFormInputs,
         password: "",
-        faculty: "",
-        department: "",
       });
     }
 
     // redirect to a different page based on user type
   };
   return (
-    <div className="signup-page-main-body-wrapper">
-      <div className="signup-form-inner-body-wrapper">
-        <LeftImageWrapper backgroundpic={backgroundimage}>
-          <h1 className="university-title">Camouflage University</h1>
-          <p className="moto-wrapper">Inspiring greatness through education</p>
-        </LeftImageWrapper>
+    <>
+      {success && <PopUp message="Account created successfully" />}
+      {showPopup && (
+        <Modal modalText="Please wait while we create your account" />
+      )}
+      <div className="signup-page-main-body-wrapper">
+        <div className="signup-form-inner-body-wrapper">
+          <LeftImageWrapper backgroundpic={backgroundimage}>
+            <h1 className="university-title">Camouflage University</h1>
+            <p className="moto-wrapper">
+              Inspiring greatness through education
+            </p>
+          </LeftImageWrapper>
 
-        <div className="signup-form-wrapper">
-          <form className="signup-form" onSubmit={handleSubmit}>
-            <div className="signup-form-top-link-wrapper">
-              <Link to="/">
-                <i className="fa-solid fa-house home-btn"></i>
-              </Link>
-              <p>
-                Already created account?
-                <Link className="signup-form-forgot-password" to={userType}>
-                  {" "}
-                  Sign in
+          <div className="signup-form-wrapper">
+            <form className="signup-form" onSubmit={handleSubmit}>
+              <div className="signup-form-top-link-wrapper">
+                <Link to="/">
+                  <i className="fa-solid fa-house home-btn"></i>
                 </Link>
-              </p>
-            </div>
-            <div className="sign-up-form-inner-wrapper">
-              <h1 className="signup-form-title">Create a QuickGrade Account</h1>
-              {error && <div className="error-message">{error} </div>}
+                <p>
+                  Already created account?
+                  <Link className="signup-form-forgot-password" to={userType}>
+                    {" "}
+                    Sign in
+                  </Link>
+                </p>
+              </div>
+              <div className="sign-up-form-inner-wrapper">
+                <h1 className="signup-form-title">
+                  Create a QuickGrade Account
+                </h1>
+                {error && <p className="error-message">{error} </p>}
 
-              <div className="form-field-group-wrapper">
-                {lecturerTitle ? (
-                  <div className="signup-field first-name-title-wrapper">
-                    <label className="signup-form-label first-name-label">
-                      First Name
-                    </label>
-                    <div className="title-first-name-wrapper">
-                      <select
-                        className="signup-form-input title-select"
-                        onChange={handleSignUpFormInputs}
-                        value={signupFormInputs.title}
-                        name="title"
-                      >
-                        <option value="Mr.">Mr.</option>
-                        <option value="Mrs.">Mrs.</option>
-                        <option value="Dr.">Dr.</option>
-                        <option value="Prof.">Prof.</option>
-                      </select>
+                <div className="form-field-group-wrapper">
+                  {lecturerTitle ? (
+                    <div className="signup-field first-name-title-wrapper">
+                      <label className="signup-form-label first-name-label">
+                        First Name
+                      </label>
+                      <div className="title-first-name-wrapper">
+                        <select
+                          className="signup-form-input title-select"
+                          onChange={handleSignUpFormInputs}
+                          value={signupFormInputs.title}
+                          name="title"
+                        >
+                          <option value="Mr.">Mr.</option>
+                          <option value="Mrs.">Mrs.</option>
+                          <option value="Dr.">Dr.</option>
+                          <option value="Prof.">Prof.</option>
+                        </select>
 
+                        <input
+                          className="signup-form-input first-name-input"
+                          type="text"
+                          value={signupFormInputs.firstName}
+                          name="firstName"
+                          onChange={handleSignUpFormInputs}
+                          placeholder="Enter first name"
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="signup-field">
+                      <label className="signup-form-label">First Name:</label>
                       <input
-                        className="signup-form-input first-name-input"
+                        className="signup-form-input"
                         type="text"
                         value={signupFormInputs.firstName}
                         name="firstName"
@@ -212,95 +225,83 @@ export default function SignUpFormComponent({
                         placeholder="Enter first name"
                       />
                     </div>
-                  </div>
-                ) : (
+                  )}
                   <div className="signup-field">
-                    <label className="signup-form-label">First Name:</label>
+                    <label className="signup-form-label">Last Name:</label>
                     <input
                       className="signup-form-input"
                       type="text"
-                      value={signupFormInputs.firstName}
-                      name="firstName"
+                      value={signupFormInputs.lastName}
+                      name="lastName"
                       onChange={handleSignUpFormInputs}
-                      placeholder="Enter first name"
+                      placeholder="Enter last name"
                     />
                   </div>
-                )}
-                <div className="signup-field">
-                  <label className="signup-form-label">Last Name:</label>
-                  <input
-                    className="signup-form-input"
-                    type="text"
-                    value={signupFormInputs.lastName}
-                    name="lastName"
-                    onChange={handleSignUpFormInputs}
-                    placeholder="Enter last name"
-                  />
                 </div>
-              </div>
-              <div className="form-field-group-wrapper">
-                <div className="signup-field">
-                  <label className="signup-form-label">Email:</label>
-                  <input
-                    className="signup-form-input"
-                    type="email"
-                    value={signupFormInputs.email}
-                    name="email"
-                    onChange={handleSignUpFormInputs}
-                    placeholder="Enter email"
-                  />
-                </div>
-                <div className="signup-field">
-                  <label className="signup-form-label">Password:</label>
-                  <div className="input-icon-wrapper">
-                    <i className="fa-solid fa-lock input-icon"></i>
+                <div className="form-field-group-wrapper">
+                  <div className="signup-field">
+                    <label className="signup-form-label">Email:</label>
                     <input
-                      className="input-that-has-icon"
-                      type="password"
-                      value={signupFormInputs.password}
-                      name="password"
+                      className="signup-form-input"
+                      type="email"
+                      value={signupFormInputs.email}
+                      name="email"
                       onChange={handleSignUpFormInputs}
-                      placeholder="Enter password"
+                      placeholder="Enter email"
                     />
+                  </div>
+                  <div className="signup-field">
+                    <label className="signup-form-label">Password:</label>
+                    <div className="input-icon-wrapper">
+                      <i className="fa-solid fa-lock input-icon"></i>
+                      <input
+                        className="input-that-has-icon"
+                        type="password"
+                        value={signupFormInputs.password}
+                        name="password"
+                        onChange={handleSignUpFormInputs}
+                        placeholder="Enter password"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="form-field-group-wrapper">
+                  <div className="signup-field">
+                    <label className="signup-form-label">Faculty</label>
+                    <select
+                      className="signup-form-input"
+                      onChange={handleSignUpFormInputs}
+                      value={signupFormInputs.faculty}
+                      name="faculty"
+                    >
+                      <option value="">Select Faculty</option>
+                      <option value="Engineering">Engineering</option>
+                    </select>
+                  </div>
+                  <div className="signup-field">
+                    <label className="signup-form-label">Department</label>
+                    <select
+                      className="signup-form-input"
+                      onChange={handleSignUpFormInputs}
+                      value={signupFormInputs.department}
+                      name="department"
+                    >
+                      <option value="">Select Department</option>
+                      <option value="Chemical Engineering">
+                        Chemical Engineering
+                      </option>
+                    </select>
                   </div>
                 </div>
               </div>
 
-              <div className="form-field-group-wrapper">
-                <div className="signup-field">
-                  <label className="signup-form-label">Faculty</label>
-                  <select
-                    className="signup-form-input"
-                    onChange={handleSignUpFormInputs}
-                    value={signupFormInputs.faculty}
-                    name="faculty"
-                  >
-                    <option value="">Select Faculty</option>
-                    <option value="Engineering">Engineering</option>
-                  </select>
-                </div>
-                <div className="signup-field">
-                  <label className="signup-form-label">Department</label>
-                  <select
-                    className="signup-form-input"
-                    onChange={handleSignUpFormInputs}
-                    value={signupFormInputs.department}
-                    name="department"
-                  >
-                    <option value="">Select Department</option>
-                    <option value="Chemical Engineering">
-                      Chemical Engineering
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <MainButton button_text="Sign up" />
-          </form>
+              <MainButton button_text="Sign up" disabled={!isValid()} />
+            </form>
+          </div>
         </div>
+        <Footer footer_text="blue-text" />
       </div>
-      <Footer footer_text="blue-text" />
-    </div>
+    </>
   );
 }

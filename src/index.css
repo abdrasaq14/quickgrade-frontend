@@ -1,11 +1,11 @@
 :root {
   --main-font: "Inter", sans-serif;
   --label-font: "Heebo", sans-serif;
-  --label-color: rgba(33, 33, 33, 1);
+  --label-color: #101828;
   --placeholder-color: rgba(117, 117, 117, 1);
   --placeholder-font: "Heebo", sans-serif;
   --input-border: rgba(189, 189, 189, 1);
-  --button-color: rgba(45, 0, 247, 1);
+  --button-color: #2d00f7;
   --forget-password-color: rgba(21, 112, 239, 1);
 }
 *,

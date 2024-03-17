@@ -77,6 +77,10 @@
   margin-bottom: 2rem;
 }
 
+.error-message {
+  font-weight: 700;
+}
+
 .login-form-input {
   height: 3rem;
   width: 100%;
@@ -106,7 +110,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background-color: #fff;
+  background-color: #027b51ed;
   height: 3rem;
   width: 100%;
   border-radius: 4px;
