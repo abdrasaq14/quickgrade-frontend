@@ -1,4 +1,3 @@
-import "./Reset_enter_new_pw.css";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import { useState, ChangeEvent, FormEvent } from "react";
