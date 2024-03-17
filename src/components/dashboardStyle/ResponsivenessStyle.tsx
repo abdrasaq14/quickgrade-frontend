@@ -30,4 +30,8 @@ export const InnerWrapper = styled.div`
     margin-left: 20%;
     max-width: 2000px;
   }
+  .forgot-password-form {
+    width: 100%;
+    overflow-x: hidden !important;
+  }
 `;

@@ -1,4 +1,3 @@
-import "./changePassword.css";
 import { useLocation } from "react-router-dom";
 import { FormEvent } from "react";
 import axiosInstance from "../../utils/axiosInstance";
