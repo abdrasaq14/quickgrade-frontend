@@ -63,7 +63,6 @@ const ResetEnterNewPasswordPage = () => {
               <input
                 type="password"
                 placeholder="Enter your new password"
-                name="Enter your new password"
                 id="password"
                 required
                 value={password}
@@ -74,7 +73,6 @@ const ResetEnterNewPasswordPage = () => {
               <input
                 type="password"
                 placeholder="Confirm password"
-                name="confirm-password"
                 id="confirm-password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}

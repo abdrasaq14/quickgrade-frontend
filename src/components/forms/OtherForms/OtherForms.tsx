@@ -1,7 +1,7 @@
 import quickgradelogo from "../../../assets/quick_grade_logo_with_text_blue.png";
 import { Link } from "react-router-dom";
 import { FormEvent, ReactNode } from "react";
-import OtherFormsStyleWrapper from "./otherFormsStyle";
+import OtherFormsStyleWrapper from "./OtherFormsStyle";
 import MainButton from "../../../components/buttons/mainButton";
 
 interface OtherFormsProps {
