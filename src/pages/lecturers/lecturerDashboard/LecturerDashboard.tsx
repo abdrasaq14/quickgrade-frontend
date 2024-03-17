@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import axiosInstance from "../../../utils/axiosInstance";
 import Header from "../../../components/header/header";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
+import { InnerWrapper, OuterWrapper } from "../../../components/dashboardStyle/ResponsivenessStyle";
 
 interface Exam {
   courseCode: string;
@@ -39,10 +40,10 @@ function LecturerDashboard() {
   }, []);
 
   return (
-    <div className="lecturer-dashboard-container">
+    <OuterWrapper>
       <LecturerSideBar />
 
-      <div className="lecturer-dashboard-body">
+      <InnerWrapper>
         {lecturerData && (
           <Header newUser={lecturerData.title + " " + lecturerData.firstName} />
         )}
@@ -105,8 +106,8 @@ function LecturerDashboard() {
             </table>
           )}
         </main>
-      </div>
-    </div>
+      </InnerWrapper>
+    </OuterWrapper>
   );
 }
 

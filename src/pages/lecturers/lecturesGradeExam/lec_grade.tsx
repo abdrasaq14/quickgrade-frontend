@@ -4,6 +4,7 @@ import LecturerSideBar from "../lecturerSideBar/lecturerSideBar";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useState, useEffect } from "react";
+import { InnerWrapper, OuterWrapper } from "../../../components/dashboardStyle/ResponsivenessStyle";
 
 interface StudentsResultsDetail {
   studentId: string;
@@ -45,9 +46,9 @@ function LecturerGrades() {
     fetchData();
   }, [lecturerData?.lecturerId, selectedSemester]);
   return (
-    <div className="grades-main-body-wrapper">
+    <OuterWrapper>
       <LecturerSideBar />
-      <div className="grades-right-body-wrapper">
+      <InnerWrapper>
         {lecturerData && (
           <Header
             newUser={`${lecturerData.title}, ${lecturerData.firstName}`}
@@ -114,8 +115,13 @@ function LecturerGrades() {
                               }
                             >
                               {student.theoryGrade
-                                ? parseFloat((student.theoryGrade + student.objectiveGrade).toFixed(2))
-                                : parseFloat((student.objectiveGrade).toFixed(2))}
+                                ? parseFloat(
+                                    (
+                                      student.theoryGrade +
+                                      student.objectiveGrade
+                                    ).toFixed(2)
+                                  )
+                                : parseFloat(student.objectiveGrade.toFixed(2))}
                             </p>
                             <h4 className="grades-totalscore">
                               {student.theoryGrade
@@ -172,8 +178,8 @@ function LecturerGrades() {
             </h3>
           </>
         )}
-      </div>
-    </div>
+      </InnerWrapper>
+    </OuterWrapper>
   );
 }
 

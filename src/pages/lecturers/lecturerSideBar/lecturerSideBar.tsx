@@ -7,41 +7,29 @@ function LecturerSideBar() {
       {{
         sidebarElement: (
           <>
-            <div className="feature-2">
+            <Link to="/lecturers/dashboard" className="feature-2">
               <img
                 className="img-feat"
                 src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-menu.svg"
               />
-              <Link to="/lecturers/dashboard" className="text-wrapper-6">
-                Dashboard
-              </Link>
-            </div>
+              <span className="text-wrapper-6">Dashboard</span>
+            </Link>
 
-            <div className="feature-2">
+            <Link className="feature-2" to="/lecturers/dashboard/set-exams">
               <img
                 className="img-2"
                 src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-sort.svg"
               />
 
-              <Link
-                to="/lecturers/dashboard/set-exams"
-                className="text-wrapper-6"
-              >
-                Set Exams
-              </Link>
-            </div>
-            <div className="feature-2">
+              <span className="text-wrapper-6">Set Exams</span>
+            </Link>
+            <Link to="/lecturers/dashboard/grade-exams" className="feature-2">
               <img
                 className="img-2"
                 src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-sort.svg"
               />
-              <Link
-                to="/lecturers/dashboard/grade-exams"
-                className="text-wrapper-6"
-              >
-                Grade Exams
-              </Link>
-            </div>
+              <span className="text-wrapper-6">Grade Exams</span>
+            </Link>
             {/* <div className="feature-2">
                 <img
                   className="img-2"

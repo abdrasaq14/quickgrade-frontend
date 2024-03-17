@@ -5,7 +5,6 @@ import LandingPage from "./pages/landingPage/LandingPage";
 import EnterOtp from "./pages/enter-otp/enter_otp";
 import ResetEnterNewPasswordPage from "./pages/reset-enter-new-password/Reset_enter_new_pw";
 import LecturerDashboard from "./pages/lecturers/lecturerDashboard/LecturerDashboard";
-import VerifyEmail from "./pages/verify-email/VerifyEmailPage";
 import StudentEnrolledCourses from "./pages/students/studentEnrolledCourses/studentEnrolledCourses";
 import LecturerSignup from "./pages/lecturers/lecturerSignUp/lecturerSignup";
 import StudentSignup from "./pages/students/studentSignup/studentSignup";
@@ -114,8 +113,6 @@ function App() {
           path="/students/forgot-password"
           element={<ForgotPassword extraTextLink="/students/signin" />}
         />
-
-        <Route path="/verify-email" element={<VerifyEmail />} />
 
         <Route
           path="/students/reset-password/check-your-email"

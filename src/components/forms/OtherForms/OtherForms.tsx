@@ -27,37 +27,35 @@ function OtherForms({
 }: OtherFormsProps) {
   const { formElement } = children;
   return (
-    <>
-      <OtherFormsStyleWrapper>
-        <header className="other-forms-header">
-          <Link to={"/"}>
-            {" "}
-            <img src={quickgradelogo} alt="Quickgrade Logo" />
-          </Link>
-        </header>
+    <OtherFormsStyleWrapper className="forgot-password-form">
+      <header className="other-forms-header">
+        <Link to={"/"}>
+          {" "}
+          <img src={quickgradelogo} alt="Quickgrade Logo" />
+        </Link>
+      </header>
 
-        <div className="other-forms-page-app">
-          <h1 className="other-forms-heading">{formHeading}</h1>
+      <div className="other-forms-page-app">
+        <h1 className="other-forms-heading">{formHeading}</h1>
 
-          {error && <div className="error-message">{error} </div>}
+        {error && <div className="error-message">{error} </div>}
 
-          <form onSubmit={handleSubmit}>
-            {formElement}
-            {buttonText && (
-              <MainButton
-                button_text={buttonText as string}
-                disabled={disabled}
-              />
-            )}
-            {extraTextLink && (
-              <Link to={extraTextLink} className="extra-text-link">
-                Back to Login
-              </Link>
-            )}
-          </form>
-        </div>
-      </OtherFormsStyleWrapper>
-    </>
+        <form onSubmit={handleSubmit}>
+          {formElement}
+          {buttonText && (
+            <MainButton
+              button_text={buttonText as string}
+              disabled={disabled}
+            />
+          )}
+          {extraTextLink && (
+            <Link to={extraTextLink} className="extra-text-link">
+              Back to Login
+            </Link>
+          )}
+        </form>
+      </div>
+    </OtherFormsStyleWrapper>
   );
 }
 

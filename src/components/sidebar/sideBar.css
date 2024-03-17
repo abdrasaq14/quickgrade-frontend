@@ -69,20 +69,17 @@
   flex-direction: column;
   height: 100vh;
   width: 20%;
+  max-width: 450px;
   align-items: flex-start;
   gap: 24px;
   padding: 24px;
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #2d00f7;
+  background-color: var(--button-color);
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1000px) {
     display: none;
-    transition: ease-in-out 0.5s;
-    width: fit-content;
-    height: 100vh;
-    padding: 16px;
   }
 }
 
@@ -96,11 +93,17 @@
 
 .logo {
   display: inline-flex;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: space-between;
   gap: 8px;
+  width: 100%;
+  max-width: 150px;
+  height: 4rem;
   position: relative;
   flex: 0 0 auto;
-
+  text-decoration: none;
+  overflow-y: visible;
+  margin-bottom: 2rem;
   /* @media screen and (max-width: 768px) {
        display: inline-block;
     } */
@@ -110,15 +113,28 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 8px;
-  position: relative;
-  flex: 0 0 auto;
   background-color: #ffffff;
-  border-radius: 100px;
+  border-radius: 50%;
+  width: 2rem;
+  min-height: 2rem;
+  height: 2rem;
+  max-height: 2rem;
+  min-width: 2rem;
+  max-width: 2rem;
+  overflow-x: hidden;
 
   @media screen and (max-width: 768px) {
   }
+}
+.vuesax-bulk-award-wrapper img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.logo h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  text-align: center;
 }
 
 .img-feat {
@@ -128,9 +144,12 @@
   height: 24px;
 }
 .img-2 {
+  background-color: var(--button-color);
+  border-radius: 6px;
   position: relative;
   width: 24px;
   height: 24px;
+  border: none;
 
   @media screen and (max-width: 768px) {
     width: 16px;
@@ -213,6 +232,8 @@
   flex: 0 0 auto;
   border-radius: 8px;
   color: #ffffff;
+  text-decoration: none;
+  transition: 0.3s ease-in-out;
   @media screen and (max-width: 768px) {
     width: fit-content;
   }
@@ -222,11 +243,12 @@
   background-color: var(--white);
   border-radius: 6px;
   margin-left: 1rem;
-  color: rgba(0, 79, 255, 1);
+  color: var(--button-color);
   gap: 10px;
   padding: 10px;
   position: relative;
   flex: 0 0 auto;
+  transition: 0.5s ease-in-out;
 }
 .clicked {
   display: flex;
@@ -234,12 +256,12 @@
   background-color: var(--white);
   border-radius: 6px;
   margin-left: 1rem;
-  color: rgba(0, 79, 255, 1);
+  color: var(--button-color);
   gap: 10px;
   padding: 10px;
   position: relative;
   flex: 0 0 auto;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 .text-wrapper-6 {
   font-weight: var(--body-text-normal-16-font-weight);
@@ -252,11 +274,9 @@
   line-height: var(--body-text-normal-16-line-height);
   white-space: nowrap;
   font-style: var(--body-text-normal-16-font-style);
-
-  
 }
 
-.text-wrapper-6{
+.text-wrapper-6 {
   text-decoration: none;
   cursor: pointer;
 }

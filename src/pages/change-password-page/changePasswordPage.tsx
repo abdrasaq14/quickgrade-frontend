@@ -1,3 +1,4 @@
+import "./changePassword.css";
 import { useLocation } from "react-router-dom";
 import { FormEvent } from "react";
 import axiosInstance from "../../utils/axiosInstance";
@@ -9,6 +10,8 @@ import LecturerSideBar from "../lecturers/lecturerSideBar/lecturerSideBar";
 import OtherForms from "../../components/forms/OtherForms/OtherForms";
 import Modal from "../../components/modal/Modal";
 import PopUp from "../../components/pop/PopUp";
+import { OuterWrapper } from "../../components/dashboardStyle/ResponsivenessStyle";
+import { InnerWrapper } from "../../components/dashboardStyle/ResponsivenessStyle";
 function ChangePasswordPage() {
   const location = useLocation();
   const { studentData, lecturerData } = useAuth();
@@ -69,75 +72,73 @@ function ChangePasswordPage() {
   };
 
   return (
-    <>
+    <OuterWrapper>
       {success && <PopUp message="Password changed successfuly" />}
       {showPopup && (
         <Modal modalText="Please wait while we process your request" />
       )}
 
-      <div className="change-password-container">
-        {location.pathname.startsWith("/students") ? (
-          <StudentSideBar />
-        ) : location.pathname.startsWith("/lecturers") ? (
-          <LecturerSideBar />
-        ) : null}
-        <div className="change-password-body">
-          <Header
-            newUser={
-              (location.pathname.startsWith("/students")
-                ? studentData?.firstName
-                : `${lecturerData?.title} ${lecturerData?.firstName}`) as string
-            }
-          />
-          <OtherForms
-            formHeading="Change Password"
-            buttonText="Change Password"
-            error={error}
-            handleSubmit={handleFormSubmit}
-            disabled={!oldPassword || !newPassword || !confirmNewPassword}
-            children={{
-              formElement: (
-                <>
-                  <div>
-                    <label htmlFor="old-password">Old Password</label>
-                    <input
-                      name="old-password"
-                      type="password"
-                      placeholder="Enter your old password"
-                      value={oldPassword}
-                      onChange={(e) => setOldPassword(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="new-password">New Password</label>
-                    <input
-                      name="new-password"
-                      type="password"
-                      placeholder="Enter your new password"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                    />
-                  </div>
+      {location.pathname.startsWith("/students") ? (
+        <StudentSideBar />
+      ) : location.pathname.startsWith("/lecturers") ? (
+        <LecturerSideBar />
+      ) : null}
+      <InnerWrapper>
+        <Header
+          newUser={
+            (location.pathname.startsWith("/students")
+              ? studentData?.firstName
+              : `${lecturerData?.title} ${lecturerData?.firstName}`) as string
+          }
+        />
+        <OtherForms
+          formHeading="Change Password"
+          buttonText="Change Password"
+          error={error}
+          handleSubmit={handleFormSubmit}
+          disabled={!oldPassword || !newPassword || !confirmNewPassword}
+          children={{
+            formElement: (
+              <>
+                <div className="other-form-field">
+                  <label htmlFor="old-password">Old Password</label>
+                  <input
+                    name="old-password"
+                    type="password"
+                    placeholder="Enter your old password"
+                    value={oldPassword}
+                    onChange={(e) => setOldPassword(e.target.value)}
+                  />
+                </div>
+                <div className="other-form-field">
+                  <label htmlFor="new-password">New Password</label>
+                  <input
+                    name="new-password"
+                    type="password"
+                    placeholder="Enter your new password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                  />
+                </div>
 
-                  <div>
-                    <label htmlFor="confirm-new-password">
-                      Confirm New Password
-                    </label>
-                    <input
-                      name="confirm-new-password"
-                      type="password"
-                      placeholder="Confirm your new password"
-                      value={confirmNewPassword}
-                      onChange={(e) => setConfirmNewPassword(e.target.value)}
-                    />
-                  </div>
-                </>
-              ),
-            }}
-          />
-        </div>
-      </div>
-    </>
+                <div className="other-form-field">
+                  <label htmlFor="confirm-new-password">
+                    Confirm New Password
+                  </label>
+                  <input
+                    name="confirm-new-password"
+                    type="password"
+                    placeholder="Confirm your new password"
+                    value={confirmNewPassword}
+                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                  />
+                </div>
+              </>
+            ),
+          }}
+        />
+      </InnerWrapper>
+    </OuterWrapper>
   );
 }
 

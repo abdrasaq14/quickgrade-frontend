@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState, FormEvent } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import Header from "../../../components/header/header";
+import {
+  InnerWrapper,
+  OuterWrapper,
+} from "../../../components/dashboardStyle/ResponsivenessStyle";
 
 interface Question {
   type: "objectives" | "theory" | "fill-in-the-blank";
@@ -305,12 +309,12 @@ function SetExamPage() {
     }
   };
   return (
-    <div className="set-exams-page-whole-container">
+    <OuterWrapper>
       {/* Sidebar */}
       <LecturerSideBar />
 
       {/* Main content */}
-      <main className="set-exams-page-main-section">
+      <InnerWrapper>
         {/* set exams heading wrapper */}
         {lecturerData && (
           <Header newUser={lecturerData.title + " " + lecturerData.firstName} />
@@ -1264,8 +1268,8 @@ function SetExamPage() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </InnerWrapper>
+    </OuterWrapper>
   );
 }
 

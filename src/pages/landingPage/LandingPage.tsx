@@ -34,61 +34,59 @@ function LandingPage() {
   };
 
   return (
-    <>
-      <div className="landing-container">
-        <div className="landing-page-container">
-          <div className="landing-page-sectionA">
-            <div className="landing-page-title1">
-              <img src={quickgradelogo} alt="logo png" />
-            </div>
-            <div>
-              <h4 className="unlock-your-potential">
-                Unlock your exam potential with our management system.
-              </h4>
-            </div>
+    <div className="landing-container">
+      <div className="landing-page-container">
+        <div className="landing-page-sectionA">
+          <div className="landing-page-title1">
+            <img src={quickgradelogo} alt="logo png" />
           </div>
-
-          <div className="landing-page-sectionB">
-            {/* Form */}
-            <form className="landing-page-form" onSubmit={handleSubmit}>
-              <div className="form-label">
-                <label className="landing-page-form-label" htmlFor="userRole">
-                  Sign in As:
-                </label>
-
-                <select
-                  id="userRole"
-                  name="userRole"
-                  value={userRole}
-                  onChange={handleUserRoleChange}
-                  required
-                >
-                  <option value="" disabled>
-                    Select an option
-                  </option>
-                  <option value="lecturer">Lecturer</option>
-                  <option value="student">Student</option>
-                </select>
-              </div>
-
-              {/* <button type="submit">Get Started</button> */}
-              <MainButton button_text="Get Started" />
-
-              <div className="landing-page-register-here">
-                <p className="no-account-register">
-                  No account? Register{" "}
-                  <Link to="/students/signup" className="login-here">
-                    here
-                  </Link>
-                </p>
-              </div>
-            </form>
+          <div>
+            <h4 className="unlock-your-potential">
+              Unlock your exam potential with our management system.
+            </h4>
           </div>
         </div>
 
-        <Footer footer_background="optional-footer-background" />
+        <div className="landing-page-sectionB">
+          {/* Form */}
+          <form className="landing-page-form" onSubmit={handleSubmit}>
+            <div className="form-label">
+              <label className="landing-page-form-label" htmlFor="userRole">
+                Sign in As:
+              </label>
+
+              <select
+                id="userRole"
+                name="userRole"
+                value={userRole}
+                onChange={handleUserRoleChange}
+                required
+              >
+                <option value="" disabled>
+                  Select an option
+                </option>
+                <option value="lecturer">Lecturer</option>
+                <option value="student">Student</option>
+              </select>
+            </div>
+
+            {/* <button type="submit">Get Started</button> */}
+            <MainButton button_text="Get Started" />
+
+            <div className="landing-page-register-here">
+              <p className="no-account-register">
+                No account? Register{" "}
+                <Link to="/students/signup" className="login-here">
+                  here
+                </Link>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
-    </>
+
+      <Footer footer_background="optional-footer-background" />
+    </div>
   );
 }
 

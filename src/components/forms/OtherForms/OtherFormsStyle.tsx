@@ -6,7 +6,7 @@ const OtherFormsStyleWrapper = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #f9fafb;
+  background-color: var(--form-background-color);
 
   .other-forms-page-app {
     min-height: 50%;
@@ -26,7 +26,6 @@ const OtherFormsStyleWrapper = styled.div`
       min-width: 30%;
       max-width: 450px;
       min-height: 55%;
-      max-height: 60%;
     }
   }
   .error-message {
@@ -103,6 +102,10 @@ const OtherFormsStyleWrapper = styled.div`
     font-weight: 700;
     line-height: normal;
     margin: 1rem 0;
+  }
+  .other-form-field {
+    display: flex;
+    flex-direction: column;
   }
 `;
 export default OtherFormsStyleWrapper;
