@@ -3,13 +3,18 @@ import axiosInstance from "../../utils/axiosInstance";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import OtherForms from "../../components/forms/OtherForms/OtherForms";
-
+import Modal from "../../components/modal/Modal";
+import PopUp from "../../components/pop/PopUp";
 const ResetEnterNewPasswordPage = () => {
   const { token } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [success, setSuccess] = useState(false);
+
   const handleUserPassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword((event.currentTarget as HTMLInputElement).value);
   };
@@ -21,7 +26,7 @@ const ResetEnterNewPasswordPage = () => {
     : "";
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-
+    setShowPopup(true);
     try {
       const res = currentRoute.startsWith("/students")
         ? await axiosInstance.post(`/students/reset-password/${token}`, {
@@ -36,9 +41,14 @@ const ResetEnterNewPasswordPage = () => {
         : null;
       if (res && res.status === 200) {
         if (res.data.invalidPasswordResetToken || res.data.tokenExpired) {
-          navigate(`${baseURL}/forgot-password`);
+          setShowPopup(false);
+          setError(res.data.invalidPasswordResetToken || res.data.tokenExpired);
         } else if (res.data.passwordResetSuccessful) {
-          navigate(`/${baseURL}/signin`);
+          setSuccess(true);
+          setTimeout(() => {
+            setShowPopup(false);
+            navigate(`${baseURL}/signin`);
+          }, 1200);
         }
       } else {
         window.location.reload();
@@ -49,11 +59,15 @@ const ResetEnterNewPasswordPage = () => {
   };
   return (
     <>
+      {success && <PopUp message="Email successfully verified" />}
+      {showPopup && <Modal modalText="verifying OTP..." />}
+
       <OtherForms
         formHeading="Reset Password"
         buttonText="Reset Password"
         handleSubmit={handleSubmit}
         disabled={password.length < 6 || password !== confirmPassword}
+        error={error}
         children={{
           formElement: (
             <>
