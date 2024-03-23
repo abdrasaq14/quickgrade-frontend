@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import "./setExamStyle.css";
-import addButton from "../../../assets/add_button_logo copy.png";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
 import LecturerSideBar from "../lecturerSideBar/lecturerSideBar";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,11 @@ import {
   InnerWrapper,
   OuterWrapper,
 } from "../../../components/dashboardStyle/ResponsivenessStyle";
-
+import { fetchDepartmentByFaculty } from "../../../api/department";
+import { Course } from "../../../interfaces/courses";
+import { fetchCoursesDetailBySemesterAndDepartment } from "../../../api/courses";
+import { FaPlus } from "react-icons/fa6";
+import { MdCancel } from "react-icons/md";
 interface Question {
   type: "objectives" | "theory" | "fill-in-the-blank";
   questionText: string;
@@ -35,10 +39,45 @@ function SetExamPage() {
   const { lecturerData } = useAuth();
   const navigate = useNavigate();
   // section handling state
+
+  const [departmentData, setDepartmentData] = useState<Course[]>();
+  const [courseData, setCourseData] = useState<Course[]>();
   const [sectionValue, setSectionValue] = useState<SectionValue[]>([]);
+  const [totalScore, setTotalScore] = useState("");
+  const [examDuration, setexamDuration] = useState("");
+  const [courseCode, setCourseCode] = useState("");
+  const [department, setDepartment] = useState("");
+  const [semester, setSemester] = useState("");
+  const [session, setSession] = useState("2023/2024");
+  const [faculty, setFaculty] = useState("");
+  const [examDate, setExamDate] = useState("");
+  const [courseTitle, setCourseTitle] = useState("");
+  const [courseDetails, setCourseDetails] = useState([]);
+  const [error, setError] = useState("");
+  const [isInside, setIsInside] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    fetchDepartmentByFaculty(faculty).then((data) => {
+      setDepartmentData(data);
+    });
+  }, [faculty]);
+
+  useEffect(() => {
+    fetchCoursesDetailBySemesterAndDepartment(semester, department).then(
+      (response) => {
+        setCourseData(response);
+      }
+    );
+  }, [department, semester]);
+
+  useEffect(() => {
+    fetchCourseDetails();
+    return;
+  }, []);
 
   const [popup, setPopup] = useState(false);
   const toggleAddSectionModal = () => {
+    setError("");
     setPopup(!popup);
   };
 
@@ -74,6 +113,14 @@ function SetExamPage() {
   });
   const handleAddSectionModalSubmitForm = (e: FormEvent) => {
     e.preventDefault();
+    if (
+      !sectionDetail.ScoreObtainable ||
+      !sectionDetail.sectionAlphabet ||
+      !sectionDetail.questionType
+    ) {
+      setError("All fields are required");
+      return;
+    }
     const updatedSectionDetail = JSON.parse(JSON.stringify(sectionDetail));
     setSectionDetailCopy((prev) => ({
       ...prev,
@@ -102,11 +149,6 @@ function SetExamPage() {
   }, [sectionDetailCopy]);
 
   // fetchting each course detail frm the backedn
-  const [courseDetails, setCourseDetails] = useState([]);
-  useEffect(() => {
-    fetchCourseDetails();
-    return;
-  }, []);
 
   const fetchCourseDetails = async () => {
     const res = await axiosInstance.get("/get-courses");
@@ -188,16 +230,6 @@ function SetExamPage() {
     updatedSections[sectionIndex].questions.splice(questionIndex, 1);
     setSections(updatedSections);
   };
-
-  const [totalScore, setTotalScore] = useState("");
-  const [examDuration, setexamDuration] = useState("");
-  const [courseCode, setCourseCode] = useState("");
-  const [department, setDepartment] = useState("");
-  const [semester, setSemester] = useState("");
-  const [session, setSession] = useState("");
-  const [faculty, setFaculty] = useState("");
-  const [examDate, setExamDate] = useState("");
-  const [courseTitle, setCourseTitle] = useState("");
 
   const isObjectivesSectionValid = (section: Section) => {
     return section.questions.every((question) => {
@@ -302,10 +334,11 @@ function SetExamPage() {
       });
 
       if (res.status === 200 && res.data.examQuestionCreated) {
+        localStorage.removeItem("totalScore");
         navigate(`/lecturers/dashboard/set-exams/success/${courseCode}`);
       }
     } catch (error) {
-      console.error("Error submitting questions:", error);
+      // {}
     }
   };
   return (
@@ -330,8 +363,30 @@ function SetExamPage() {
                 {/* add modal pop up fixed position */}
                 {popup && (
                   <div className="add-section-pop-up">
-                    <div className="inner-pop-up">
+                    <div className="set-exams-inner-pop-up">
+                      <div className="checking-total-score-wrapper">
+                        <p>Total Exam score: </p>
+                        {localStorage.getItem("totalScore") ? (
+                          <span className="total-score">
+                            {localStorage.getItem("totalScore")}
+                          </span>
+                        ) : (
+                          <span className="no-total-score">
+                            You have not entered the total exam score
+                          </span>
+                        )}
+                      </div>
                       <h1>Add Section</h1>
+                      {error && (
+                        <div className="error-wrapper">
+                          {" "}
+                          <p className="error-message">{error} </p>
+                          <MdCancel
+                            className="cancel-icon"
+                            onClick={() => setError("")}
+                          />
+                        </div>
+                      )}
                       <form onSubmit={handleAddSectionModalSubmitForm}>
                         <fieldset className="set-exam-page-modal-fieldset">
                           <label htmlFor=""> Section</label>
@@ -351,9 +406,9 @@ function SetExamPage() {
                         <fieldset className="set-exam-page-modal-fieldset">
                           <label htmlFor=""> Score obtainable</label>
                           <input
-                            type="text"
+                            type="number"
                             className="section-detail"
-                            placeholder="Enter total marks in section"
+                            placeholder="Enter total marks obtainable in this section"
                             value={sectionDetail.ScoreObtainable}
                             onChange={(e) =>
                               setSectionDetail({
@@ -481,7 +536,6 @@ function SetExamPage() {
                           value={session}
                           onChange={(e) => setSession(e.target.value)}
                         >
-                          <option value="Please select">Please Select</option>
                           <option defaultValue="2023/2024">2023/2024</option>
                         </select>
                       </div>
@@ -502,8 +556,8 @@ function SetExamPage() {
                           onChange={(e) => setSemester(e.target.value)}
                         >
                           <option value="">Select</option>
-                          <option value="first semester">First</option>
-                          <option value="second semester">Second</option>
+                          <option value="First">First</option>
+                          <option value="Second">Second</option>
                         </select>
                       </div>
 
@@ -517,8 +571,7 @@ function SetExamPage() {
                         <br />
                         <select
                           className="set-exams-page-session-form-input"
-                          name="semester"
-                          id="semesterInput"
+                          name="faculty"
                           value={faculty}
                           onChange={(e) => setFaculty(e.target.value)}
                         >
@@ -538,7 +591,9 @@ function SetExamPage() {
                               )
                             )
                           ) : (
-                            <option value="fetching">fetching..</option>
+                            <option value="no-data" disabled>
+                              No course available, contact admin to add course
+                            </option>
                           )}
                         </select>
                       </div>
@@ -553,28 +608,24 @@ function SetExamPage() {
                         <br />
                         <select
                           className="set-exams-page-session-form-input"
-                          name="semester"
-                          id="semesterInput"
+                          name="department"
                           value={department}
                           onChange={(e) => setDepartment(e.target.value)}
                         >
-                          <option value="Please select">Please Select</option>
-                          {courseDetails.length > 0 ? (
-                            courseDetails.map(
-                              (
-                                course: Record<string, unknown>,
-                                index: number
-                              ) => (
-                                <option
-                                  value={course.department as string}
-                                  key={index}
-                                >
-                                  {course.department as string}
-                                </option>
-                              )
-                            )
+                          <option>Please Select</option>
+                          {departmentData?.length ? (
+                            departmentData.map((department: Course) => (
+                              <option
+                                value={department.department}
+                                key={department.department}
+                              >
+                                {department.department}
+                              </option>
+                            ))
                           ) : (
-                            <option value="fetching">fetching..</option>
+                            <option className="no-data" disabled>
+                              Select a faculty
+                            </option>
                           )}
                         </select>
                       </div>
@@ -592,27 +643,22 @@ function SetExamPage() {
                         <select
                           className="set-exams-page-session-form-input"
                           name="semester"
-                          id="semesterInput"
                           value={courseCode}
                           onChange={(e) => setCourseCode(e.target.value)}
                         >
-                          <option value="Please select">Please Select</option>
-                          {courseDetails.length > 0 ? (
-                            courseDetails.map(
-                              (
-                                course: Record<string, unknown>,
-                                index: number
-                              ) => (
-                                <option
-                                  value={course.courseCode as string}
-                                  key={index}
-                                >
-                                  {course.courseCode as string}
-                                </option>
-                              )
-                            )
+                          {courseData && courseData?.length ? (
+                            courseData.map((course: Course) => (
+                              <option
+                                value={course.courseCode}
+                                key={course.courseCode}
+                              >
+                                {course.courseCode}
+                              </option>
+                            ))
                           ) : (
-                            <option value="fetching">fetching..</option>
+                            <option className="no-data" disabled>
+                              Select a department
+                            </option>
                           )}
                         </select>
                       </div>
@@ -627,48 +673,46 @@ function SetExamPage() {
                         <br />
                         <select
                           className="set-exams-page-session-form-input"
-                          name="semester"
-                          id="semesterInput"
+                          name="title"
                           value={courseTitle}
                           onChange={(e) => setCourseTitle(e.target.value)}
                         >
-                          <option value="Please select">Please Select</option>
-                          {courseDetails.length > 0 ? (
-                            courseDetails.map(
-                              (
-                                course: Record<string, unknown>,
-                                index: number
-                              ) => (
-                                <option
-                                  value={course.courseTitle as string}
-                                  key={index}
-                                >
-                                  {course.courseTitle as string}
-                                </option>
-                              )
-                            )
+                          {courseData && courseData?.length ? (
+                            courseData.map((course: Course) => (
+                              <option
+                                value={course.courseTitle}
+                                key={course.courseTitle}
+                              >
+                                {course.courseTitle}
+                              </option>
+                            ))
                           ) : (
-                            <option value="fetching">fetching..</option>
+                            <option className="no-data" disabled>
+                              Select a department
+                            </option>
                           )}
                         </select>
                       </div>
 
                       <div className="set-exams-page-form-label-and-inputs">
                         <label
-                          className="set-exams-page-session-form-label"
+                          className="set-exams-page-session-form-label total-score-label"
                           htmlFor="totalScoreInput"
                         >
-                          Total Score
+                          Total obtainable exam score
                         </label>
                         <br />
                         <input
                           className="set-exams-page-session-form-input"
-                          placeholder="Type Obtainable Score"
+                          placeholder="Type total obtainable exam score"
                           type="number"
                           id="totalScoreInput"
                           name="totalScore"
                           value={totalScore}
-                          onChange={(e) => setTotalScore(e.target.value)}
+                          onChange={(e) => {
+                            localStorage.setItem("totalScore", e.target.value);
+                            return setTotalScore(e.target.value);
+                          }}
                         />
                       </div>
 
@@ -725,14 +769,6 @@ function SetExamPage() {
                         />
                       </label>{" "}
                     </div>
-
-                    <button
-                      className="set-exam-page-session-form-button"
-                      type="button"
-                    >
-                      {" "}
-                      +{" "}
-                    </button>
                   </div>
 
                   <div className="set-exams-page-bottom-form">
@@ -742,9 +778,29 @@ function SetExamPage() {
                         onClick={toggleAddSectionModal}
                         className="set-exams-page-add-section-button"
                         type="button"
+                        id="addSectionButton"
+                        onMouseEnter={() =>
+                          setIsInside((prevState) => ({
+                            ...prevState,
+                            addSectionButton: true,
+                          }))
+                        }
+                        onMouseLeave={() =>
+                          setIsInside((prevState) => ({
+                            ...prevState,
+                            addSectionButton: false,
+                          }))
+                        }
                       >
-                        {" "}
-                        <img src={addButton} />
+                        {isInside.addSectionButton && (
+                          <div className="tooltip-wrapper">
+                            <span className="tooltip-message">
+                              Click to add section{" "}
+                            </span>
+                            <i className="fa-solid fa-caret-down tooltip-icon"></i>
+                          </div>
+                        )}
+                        <FaPlus />
                         <span className="set-exams-page-add-section-button-text">
                           {" "}
                           Add Section
@@ -806,7 +862,28 @@ function SetExamPage() {
                                   type="button"
                                   className="set-exams-page-questions-form-multiple-choice-add-question-button"
                                   onClick={() => addQuestion(0)}
+                                  id="addQuestionPlusIcon"
+                                  onMouseEnter={() =>
+                                    setIsInside((prevState) => ({
+                                      ...prevState,
+                                      addQuestionPlusIcon: true,
+                                    }))
+                                  }
+                                  onMouseLeave={() =>
+                                    setIsInside((prevState) => ({
+                                      ...prevState,
+                                      addQuestionPlusIcon: false,
+                                    }))
+                                  }
                                 >
+                                  {isInside.addQuestionPlusIcon && (
+                                    <div className="tooltip-wrapper2">
+                                      <span className="tooltip-message">
+                                        Click to add Question{" "}
+                                      </span>
+                                      <i className="fa-solid fa-caret-down tooltip-icon"></i>
+                                    </div>
+                                  )}
                                   +
                                 </button>
                               </div>

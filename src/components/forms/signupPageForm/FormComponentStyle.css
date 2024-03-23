@@ -139,8 +139,21 @@
   }
 }
 
+.error-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem auto;
+  min-width: 70%;
+  height: 2.5rem;
+  background-color: #fff;
+  border-left: 10px solid var(--error-color);
+  box-shadow: 5px 8px 15px 0 rgba(0, 0, 0, 0.1);
+}
+
 .error-message {
-  font-weight: 700;
+  font-weight: 600;
+  color: var(--error-color);
 }
 
 .title-select {

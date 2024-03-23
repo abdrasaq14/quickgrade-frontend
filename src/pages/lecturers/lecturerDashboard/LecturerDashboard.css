@@ -130,3 +130,7 @@
 .lecturer-exam-timetable-row td:last-child {
   padding: 0 0.2rem;
 }
+
+.no-exam-paragraph {
+  margin: 2rem 0;
+}

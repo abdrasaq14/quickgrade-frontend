@@ -19,6 +19,7 @@ export const InnerWrapper = styled.div`
   width: 100%;
   background-color: #f9fafb;
   display: flex;
+  min-height: 100vh;
   align-self: center;
   overflow-x: hidden !important;
   justify-content: center !important;

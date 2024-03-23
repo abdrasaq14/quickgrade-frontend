@@ -5,6 +5,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import MainButton from "../../buttons/mainButton";
 import axiosInstance from "../../../utils/axiosInstance";
+import { MdCancel } from "react-icons/md";
 interface FormComponentProps {
   id_or_email: string;
   placeholder: string;
@@ -100,7 +101,16 @@ export default function LoginFormComponent({
               <i className="fa-solid fa-house login-home-btn"></i>
             </Link>
             <h1 className="login-form-title">{form_title}</h1>
-            {error && <p className="error-message">{error} </p>}
+            {error && (
+              <div className="error-wrapper">
+                {" "}
+                <p className="error-message">{error} </p>
+                <MdCancel
+                  className="cancel-icon"
+                  onClick={() => setError("")}
+                />
+              </div>
+            )}
             <div className="field">
               <label className="login-form-label">{id_or_email}</label>
               <div className="input-icon-wrapper">

@@ -12,13 +12,18 @@ function SideBar({ children }: SideBarChildren) {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const baseURL = location.pathname.startsWith("/students")
+    ? "/students"
+    : "/lecturers";
   const handleLogout = async () => {
     try {
       // Make a GET request to your logout route
       const redirectURL = location.pathname.startsWith("/students")
         ? "/students"
         : "/lecturers";
-      window.localStorage.removeItem("token");
+      localStorage.removeItem("token");
+      localStorage.removeItem("totalScore");
+
       // await axios.get("http://localhost:3000/students/dashboard/logout", { withCredentials: true });
 
       navigate(`${redirectURL}/signin`);
@@ -29,7 +34,7 @@ function SideBar({ children }: SideBarChildren) {
 
   return (
     <section className="side-bar-default">
-      <Link to="/" className="logo">
+      <Link to={`${baseURL}/dashboard`} className="logo">
         <div className="vuesax-bulk-award-wrapper">
           <img src="https://c.animaapp.com/IX1zE9E9/img/vuesax-bulk-award.svg" />
         </div>

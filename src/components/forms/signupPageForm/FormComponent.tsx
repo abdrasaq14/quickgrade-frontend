@@ -7,6 +7,7 @@ import MainButton from "../../buttons/mainButton";
 import axiosInstance from "../../../utils/axiosInstance";
 import Modal from "../../modal/Modal";
 import PopUp from "../../pop/PopUp";
+import { MdCancel } from "react-icons/md";
 interface FormComponentProps {
   backgroundimage: string;
   userType: string;
@@ -110,7 +111,9 @@ export default function SignUpFormComponent({
           res.data.existingStudentError
         ) {
           setShowPopup(false);
-          setError(res.data.existingLecturerError);
+          setError(
+            res.data.existingLecturerError || res.data.existingStudentError
+          );
           setSignupFormInputs({
             ...signupFormInputs,
             password: "",
@@ -182,8 +185,16 @@ export default function SignUpFormComponent({
                 <h1 className="signup-form-title">
                   Create a QuickGrade Account
                 </h1>
-                {error && <p className="error-message">{error} </p>}
-
+                {error && (
+                  <div className="error-wrapper">
+                    {" "}
+                    <p className="error-message">{error} </p>
+                    <MdCancel
+                      className="cancel-icon"
+                      onClick={() => setError("")}
+                    />
+                  </div>
+                )}
                 <div className="form-field-group-wrapper">
                   {lecturerTitle ? (
                     <div className="signup-field first-name-title-wrapper">
