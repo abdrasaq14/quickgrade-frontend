@@ -7,3 +7,5 @@ export const fetchExamTimeTable = async () => {
           return res.data.examsTotal;
         }
     };
+
+

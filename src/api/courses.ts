@@ -10,8 +10,16 @@ export const fetchCoursesDetailBySemesterAndDepartment = async (semester: string
     }
 }
 
-export const fetchAllFaculty = async ():Promise<Course[]> => {
- const res = await axiosInstance.get("/get-courses");
-        return res.data.coureDetailFromServer;
- }
+export const fetchAllFaculty = async (): Promise<Course[] | undefined> => {
+    try {
+        const res = await axiosInstance.get("/get-courses");
+        if (res.data.courseDetailFromServer) {
+            return res.data.courseDetailFromServer;
+        }
+        
+    } catch (error) {
+        {/** */}
+    }
+    
+}
 
