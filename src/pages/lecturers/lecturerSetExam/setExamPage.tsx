@@ -12,7 +12,10 @@ import {
 } from "../../../components/dashboardStyle/ResponsivenessStyle";
 import { fetchDepartmentByFaculty } from "../../../api/department";
 import { Course } from "../../../interfaces/courses";
-import { fetchCoursesDetailBySemesterAndDepartment } from "../../../api/courses";
+import {
+  fetchCoursesDetailBySemesterAndDepartment,
+  fetchAllFaculty,
+} from "../../../api/courses";
 import { FaPlus } from "react-icons/fa6";
 import { MdCancel } from "react-icons/md";
 interface Question {
@@ -35,7 +38,7 @@ interface SectionValue {
   questionType: string;
 }
 
-function SetExamPage() {
+export default function SetExamPage() {
   const { lecturerData } = useAuth();
   const navigate = useNavigate();
   // section handling state
@@ -52,8 +55,10 @@ function SetExamPage() {
   const [faculty, setFaculty] = useState("");
   const [examDate, setExamDate] = useState("");
   const [courseTitle, setCourseTitle] = useState("");
-  const [courseDetails, setCourseDetails] = useState([]);
+  const [courseDetails, setCourseDetails] = useState<Course[]>();
   const [error, setError] = useState("");
+  const [currentSectionAlphabet, setCurrentSectionAlphabet] = useState("");
+  const [currentSectionScore, setCurrentSectionScore] = useState("");
   const [isInside, setIsInside] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
@@ -71,9 +76,22 @@ function SetExamPage() {
   }, [department, semester]);
 
   useEffect(() => {
-    fetchCourseDetails();
+    fetchAllFaculty().then((data) => {
+      if (data) {
+        setCourseDetails(data);
+      }
+    });
     return;
   }, []);
+
+  // to set the values of the course course code and course title to the first option in the course data if a user has not selected any course
+  useEffect(() => {
+    if (courseData && courseData.length > 0 && (!courseCode || !courseTitle)) {
+      const firstCourse = courseData[0];
+      setCourseCode(firstCourse.courseCode);
+      setCourseTitle(firstCourse.courseTitle);
+    }
+  }, [courseData, courseCode, courseTitle]);
 
   const [popup, setPopup] = useState(false);
   const toggleAddSectionModal = () => {
@@ -128,6 +146,8 @@ function SetExamPage() {
       ScoreObtainable: updatedSectionDetail.ScoreObtainable,
       questionType: updatedSectionDetail.questionType,
     }));
+    setCurrentSectionAlphabet("");
+    setCurrentSectionScore("");
     toggleAddSectionModal();
   };
   useEffect(() => {
@@ -148,14 +168,6 @@ function SetExamPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionDetailCopy]);
 
-  // fetchting each course detail frm the backedn
-
-  const fetchCourseDetails = async () => {
-    const res = await axiosInstance.get("/get-courses");
-    setCourseDetails(res.data.coureDetailFromServer);
-  };
-
-  //
   const [sections, setSections] = useState<Section[]>([
     { questions: [] },
     { questions: [] },
@@ -266,6 +278,8 @@ function SetExamPage() {
     });
   };
 
+  isObjectivesSectionValid(sections[0]);
+
   const isTheorySectionValid = (section: Section) => {
     return section.questions.every((question) => {
       if (
@@ -366,14 +380,48 @@ function SetExamPage() {
                     <div className="set-exams-inner-pop-up">
                       <div className="checking-total-score-wrapper">
                         <p>Total Exam score: </p>
-                        {localStorage.getItem("totalScore") ? (
-                          <span className="total-score">
-                            {localStorage.getItem("totalScore")}
-                          </span>
+                        {totalScore ? (
+                          <span className="total-score">{totalScore}</span>
                         ) : (
                           <span className="no-total-score">
-                            You have not entered the total exam score
+                            You have not entered
+                            <br /> the total exam score
                           </span>
+                        )}
+                        {currentSectionScore && (
+                          <table>
+                            {/* <thead>
+                            <tr>
+                              <th>Section</th>
+                              <th>Score</th>
+                            </tr>
+                          </thead> */}
+                            <tbody>
+                              {sectionValue.map((section, index) => (
+                                <tr key={index}>
+                                  <td>
+                                    Section{" "}
+                                    {section.sectionAlphabet.toUpperCase()}
+                                  </td>
+                                  <td>{section.ScoreObtainable}</td>
+                                </tr>
+                              ))}
+                              <tr>
+                                <td>Section{currentSectionAlphabet}</td>
+                                <td>{Number(currentSectionScore)}</td>
+                              </tr>
+                              <tr className="score-left">
+                                <td>Score Left</td>
+                                <td>
+                                  {Number(totalScore) -
+                                    (sectionValue.reduce((acc, item) => {
+                                      return acc + Number(item.ScoreObtainable);
+                                    }, 0) +
+                                      Number(currentSectionScore))}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
                         )}
                       </div>
                       <h1>Add Section</h1>
@@ -394,12 +442,13 @@ function SetExamPage() {
                             type="text"
                             className="section-detail"
                             value={sectionDetail.sectionAlphabet}
-                            onChange={(e) =>
+                            onChange={(e) => {
                               setSectionDetail({
                                 ...sectionDetail,
                                 sectionAlphabet: e.target.value,
-                              })
-                            }
+                              });
+                              setCurrentSectionAlphabet(e.target.value);
+                            }}
                             placeholder="Type section number or alphabet"
                           />
                         </fieldset>
@@ -410,12 +459,13 @@ function SetExamPage() {
                             className="section-detail"
                             placeholder="Enter total marks obtainable in this section"
                             value={sectionDetail.ScoreObtainable}
-                            onChange={(e) =>
+                            onChange={(e) => {
                               setSectionDetail({
                                 ...sectionDetail,
                                 ScoreObtainable: e.target.value,
-                              })
-                            }
+                              });
+                              setCurrentSectionScore(e.target.value);
+                            }}
                           />
                         </fieldset>
                         <fieldset className="add-section-fieldset">
@@ -576,22 +626,17 @@ function SetExamPage() {
                           onChange={(e) => setFaculty(e.target.value)}
                         >
                           <option value="Please select">Please Select</option>
-                          {courseDetails.length > 0 ? (
-                            courseDetails.map(
-                              (
-                                course: Record<string, unknown>,
-                                index: number
-                              ) => (
-                                <option
-                                  value={course.faculty as string}
-                                  key={index}
-                                >
-                                  {course.faculty as string}
-                                </option>
-                              )
-                            )
+                          {courseDetails! && courseDetails.length ? (
+                            courseDetails.map((course, index: number) => (
+                              <option
+                                value={course.faculty as string}
+                                key={index}
+                              >
+                                {course.faculty as string}
+                              </option>
+                            ))
                           ) : (
-                            <option value="no-data" disabled>
+                            <option className="no-data" disabled>
                               No course available, contact admin to add course
                             </option>
                           )}
@@ -1349,5 +1394,3 @@ function SetExamPage() {
     </OuterWrapper>
   );
 }
-
-export default SetExamPage;

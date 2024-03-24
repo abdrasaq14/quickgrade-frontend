@@ -12,7 +12,6 @@ import {
 import { fetchExamTimeTable } from "../../../api/exams";
 import { Exam } from "../../../interfaces/examsInterface";
 
-
 function LecturerDashboard() {
   const { lecturerData } = useAuth();
 
@@ -51,44 +50,43 @@ function LecturerDashboard() {
         {/* Main content */}
         <main className="lecturer-dashboard-exam-timetable-container">
           <div className="lecturer-dashboard-semester-session-container">
-            2022/2023 : First Semester
-          </div>
-
-          <div className="lecturer-dashboard-exam-timetable-header">
-            Course Examination TimeTable
+            <p>2022/2023 : First Semester</p>
           </div>
 
           {examData && examData.length ? (
-            <table className="lecturer-exam-timetable">
-              <thead>
-                <tr>
-                  <th>Course Code</th>
-                  <th>Department</th>
-                  <th>Exam Date</th>
-                  <th>Venue</th>
-                  <th>Registered</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {examData.map((exam, index) => (
-                  <tr className="lecturer-exam-timetable-row" key={index}>
-                    <td>{exam.courseCode}</td>
-                    <td>{exam.department}</td>
-                    <td className="date-column">
-                      {format(exam.examDate, "d MMM,yyyy / h:mmaa")}
-                    </td>
-                    <td>Campus E-center</td>
-                    <td>{exam.noOfStudents}</td>
-                    <td>
-                      <button>
-                        <p>Set Exam</p>
-                      </button>
-                    </td>
+            <>
+              <p className="dashboard-course-exam-timeable">Course Examination TimeTable</p>
+              <table className="lecturer-exam-timetable">
+                <thead>
+                  <tr>
+                    <th>Course Code</th>
+                    <th>Department</th>
+                    <th>Exam Date</th>
+                    <th>Venue</th>
+                    <th>Registered</th>
+                    <th>Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {examData.map((exam, index) => (
+                    <tr className="lecturer-exam-timetable-row" key={index}>
+                      <td>{exam.courseCode}</td>
+                      <td>{exam.department}</td>
+                      <td className="date-column">
+                        {format(exam.examDate, "d MMM,yyyy / h:mmaa")}
+                      </td>
+                      <td>Campus E-center</td>
+                      <td>{exam.noOfStudents}</td>
+                      <td>
+                        <button>
+                          <p>Set Exam</p>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
           ) : (
             <p className="no-exam-paragraph">
               No exam data available, Kindly set an Exam

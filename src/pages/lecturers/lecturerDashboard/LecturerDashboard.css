@@ -2,7 +2,9 @@
   display: flex;
   width: 100%;
 }
-
+.heading-dashboard {
+  margin: 0;
+}
 .lecturer-dashboard-body {
   width: 80%;
   margin-left: 20%;
@@ -11,16 +13,16 @@
 
 .lecturer-blue-header {
   width: 90%;
-  margin: 1rem auto 2rem;
+  margin: 0 auto;
   border-radius: 1rem;
   background-color: var(--button-color);
-  padding: 2rem 1rem;
+  padding: 2rem;
   justify-content: space-around;
   align-items: center;
 }
 
 .lecturer-blue-header-content {
-  color: var(--White, #fff);
+  color: #ffff;
   font-family: "Inter";
   font-size: 1.3rem;
   font-weight: 700;
@@ -34,19 +36,27 @@
 
 .lecturer-dashboard-exam-timetable-container {
   width: 90%;
-  margin: 1rem auto;
+  margin: 0 auto;
 }
 
 .lecturer-dashboard-semester-session-container {
   font-family: "Inter";
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 34px;
-  letter-spacing: 0px;
   text-align: left;
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem 0;
 }
 
+.lecturer-dashboard-semester-session-container p {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.dashboard-course-exam-timeable {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
 .lecturer-dashboard-exam-timetable-header {
   font-family: "Inter";
   font-size: 1rem;
@@ -66,7 +76,8 @@
   border-collapse: separate;
   border-spacing: 0 2rem;
   table-layout: auto;
-  width: 96%;
+  width: 100%;
+  padding: 2rem;
   background-color: white;
   margin: 1rem auto 1rem;
 }

@@ -1,3 +1,4 @@
+import { Course } from "../interfaces/courses";
 import axiosInstance from "../utils/axiosInstance";
 
 export const fetchCoursesDetailBySemesterAndDepartment = async (semester: string, department: string) => { 
@@ -8,3 +9,9 @@ export const fetchCoursesDetailBySemesterAndDepartment = async (semester: string
         return error;
     }
 }
+
+export const fetchAllFaculty = async ():Promise<Course[]> => {
+ const res = await axiosInstance.get("/get-courses");
+        return res.data.coureDetailFromServer;
+ }
+

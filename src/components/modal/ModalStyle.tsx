@@ -30,17 +30,17 @@ const ModalStyle = styled.div`
     height: 50px;
     width: 50px;
     border-radius: 50%;
-    border: 10px solid #bfe1f7;
-    border-bottom: 10px solid var(--button-color);
+    border: 5px solid #bfe1f7;
+    border-bottom: 5px solid var(--button-color);
     animation: spin 1s linear infinite;
   }
 
   @keyframes spin {
     0% {
-      transform: rotate(360deg);
+      transform: rotate(0deg);
     }
     100% {
-      transform: rotate(0deg);
+      transform: rotate(360deg);
     }
   }
 `;
