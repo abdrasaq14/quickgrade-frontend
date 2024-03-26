@@ -7,5 +7,10 @@ export const fetchExamTimeTable = async () => {
           return res.data.examsTotal;
         }
     };
-
+export const fetchDraftExamDetail = async (lecturerId:string, courseCode: string) => {
+  const res = await axiosInstance.get(`/lecturers/fetch-draft-exams/?lecturerId=${lecturerId}&courseCode=${courseCode}`)
+  if (res.data.draftExamDetail || res.data.draftQuestions) {
+   return res.data
+ }  
+}
 

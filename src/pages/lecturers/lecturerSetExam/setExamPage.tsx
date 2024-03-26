@@ -20,8 +20,10 @@ import { MdCancel } from "react-icons/md";
 import PopUp from "../../../components/pop/PopUp";
 import Modal from "../../../components/modal/Modal";
 import SuccessMessage from "../../../components/successModal/successMessage";
+import { nanoid } from "nanoid";
 
 interface Question {
+  id: string;
   type: "objectives" | "theory" | "fill-in-the-blank";
   questionText: string;
   optionA: string;
@@ -67,7 +69,11 @@ export default function SetExamPage() {
   const [success, setSuccess] = useState(false);
   const [isFinalSubmit, setIsFinalSubmit] = useState(false);
   const [examCreatedSuccess, setExamCreatedSuccess] = useState(false);
+  const [popup, setPopup] = useState(false);
 
+  useEffect(() => {
+    fetchDraftExamDetail(lecturerData?.lecturerId);
+  }, []);
   useEffect(() => {
     fetchDepartmentByFaculty(faculty).then((data) => {
       setDepartmentData(data);
@@ -100,7 +106,6 @@ export default function SetExamPage() {
     }
   }, [courseData, courseCode, courseTitle]);
 
-  const [popup, setPopup] = useState(false);
   const toggleAddSectionModal = () => {
     setError("");
     setPopup(!popup);
@@ -206,6 +211,7 @@ export default function SetExamPage() {
   const addQuestion = (sectionIndex: number) => {
     const updatedSections = [...sections];
     updatedSections[sectionIndex].questions.push({
+      id: nanoid(),
       type: "objectives",
       questionText: "",
       optionA: "",
@@ -220,6 +226,7 @@ export default function SetExamPage() {
   const addTheoryQuestion = (sectionIndex: number) => {
     const updatedSections = [...sections];
     updatedSections[sectionIndex].questions.push({
+      id: nanoid(),
       type: "theory",
       questionText: "",
       optionA: "",
@@ -233,6 +240,7 @@ export default function SetExamPage() {
   const addFillInTheBlankQuestions = (sectionIndex: number) => {
     const updatedSections = [...sections];
     updatedSections[sectionIndex].questions.push({
+      id: nanoid(),
       type: "fill-in-the-blank",
       questionText: "",
       optionA: "",
@@ -389,7 +397,9 @@ export default function SetExamPage() {
         questions: assembledQuestions,
       });
 
-      if (res.status === 200 && res.data.draftExamQuestionCreated) {
+      if (res.data.draftExamQuestionCreated) {
+        console.log("success");
+        setError("");
         setSuccess(true);
         setTimeout(() => {
           setShowPopup(false);
@@ -397,10 +407,12 @@ export default function SetExamPage() {
         }, 1200);
         return;
       } else {
+        console.log("failure");
         setShowPopup(false);
         setError("Unable to save exam as draft");
       }
     } catch (error) {
+      console.log("failure");
       setShowPopup(false);
       setError("Unable to save exam as draft");
     }
@@ -436,13 +448,15 @@ export default function SetExamPage() {
               <h1 className="set-exams-page-main-section-title">Set Exams</h1>
             </div>
             {error && (
-              <div className="error-wrapper">
-                {" "}
-                <p className="error-message">{error} </p>
-                <MdCancel
-                  className="cancel-icon"
-                  onClick={() => setError("")}
-                />
+              <div className="set-exams-error-wrapper">
+                <div className="error-wrapper">
+                  {" "}
+                  <p className="error-message">{error} </p>
+                  <MdCancel
+                    className="cancel-icon"
+                    onClick={() => setError("")}
+                  />
+                </div>
               </div>
             )}
             {/* set exam form wrapper */}
@@ -1228,27 +1242,72 @@ export default function SetExamPage() {
                                   </div>
                                 </div>
                                 {sections[0].questions.length > 0 && (
-                                  <>
+                                  <div className="submit-save-draft-btn-wrapper">
                                     <button
                                       className="set-exams-page-change-section-buttons set-exams-final-submit-btn"
                                       type="submit"
                                       disabled={
                                         !isObjectivesSectionValid(sections[0])
                                       }
+                                      id="submitExamButton"
+                                      onMouseEnter={() =>
+                                        setIsInside((prevState) => ({
+                                          ...prevState,
+                                          submitExamButton: true,
+                                        }))
+                                      }
+                                      onMouseLeave={() =>
+                                        setIsInside((prevState) => ({
+                                          ...prevState,
+                                          submitExamButton: false,
+                                        }))
+                                      }
                                     >
+                                      {isInside.submitExamButton && (
+                                        <div className="tooltip-wrapper extra-top">
+                                          <span className="tooltip-message">
+                                            Click to finish and create exam
+                                          </span>
+                                          <i className="fa-solid fa-caret-down tooltip-icon"></i>
+                                        </div>
+                                      )}
+                                      <i className="fa-solid fa-floppy-disk"></i>
                                       Submit
                                     </button>
                                     <button
-                                      className="set-exams-page-change-section-buttons set-exams-final-submit-btn"
+                                      className="set-exams-page-change-section-buttons set-exams-final-submit-btn save-as-draft"
                                       type="button"
                                       onClick={handleSaveAsDraft}
                                       disabled={
                                         !isObjectivesSectionValid(sections[0])
                                       }
+                                      id="draftExamButton"
+                                      onMouseEnter={() =>
+                                        setIsInside((prevState) => ({
+                                          ...prevState,
+                                          draftExamButton: true,
+                                        }))
+                                      }
+                                      onMouseLeave={() =>
+                                        setIsInside((prevState) => ({
+                                          ...prevState,
+                                          draftExamButton: false,
+                                        }))
+                                      }
                                     >
+                                      {isInside.draftExamButton && (
+                                        <div className="tooltip-wrapper extra-top">
+                                          <span className="tooltip-message">
+                                            Click to save Exam
+                                            <br /> as draft
+                                          </span>
+                                          <i className="fa-solid fa-caret-down tooltip-icon"></i>
+                                        </div>
+                                      )}
+                                      <i className="fa-solid fa-bookmark"></i>
                                       Save as draft
                                     </button>
-                                  </>
+                                  </div>
                                 )}
                               </div>
                             )}

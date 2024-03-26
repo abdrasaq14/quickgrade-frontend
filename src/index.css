@@ -6,6 +6,7 @@
   --placeholder-font: "Heebo", sans-serif;
   --input-border: rgba(189, 189, 189, 1);
   --button-color: #2d00f7;
+  --hover-color: #160077;
   --forget-password-color: rgba(21, 112, 239, 1);
   --form-background-color: #f9fafb;
   --error-color: #ff0000;
@@ -132,4 +133,8 @@ body {
   color: #f9fafb;
   margin-top: -10px;
   font-size: 1.2rem;
+}
+
+.extra-top {
+  top: -150%;
 }
