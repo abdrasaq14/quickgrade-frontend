@@ -10,6 +10,7 @@
   --forget-password-color: rgba(21, 112, 239, 1);
   --form-background-color: #f9fafb;
   --error-color: #ff0000;
+  --notification-color: #f76f00;
 }
 *,
 html,
@@ -137,4 +138,11 @@ body {
 
 .extra-top {
   top: -150%;
+}
+.notification-tooltip-extra-style {
+  top: -2.2rem;
+  min-width: 15rem;
+  left: -6rem !important;
+  align-self: flex-start;
+  justify-self: flex-start;
 }

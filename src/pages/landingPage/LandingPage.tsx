@@ -6,28 +6,35 @@ import axiosInstance from "../../utils/axiosInstance";
 import { Link } from "react-router-dom";
 import Footer from "../../components/footer/footer";
 import MainButton from "../../components/buttons/mainButton";
-
+import Loader from "../../components/loader/Loader";
+import { MdCancel } from "react-icons/md";
 function LandingPage() {
-  const [userRole, setUserRole] = useState(""); // State to manage user type selection
+  const [userRole, setUserRole] = useState("");
   const navigate = useNavigate();
-
+  const [isloading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const handleUserRoleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setUserRole((event.currentTarget as HTMLSelectElement).value);
   };
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    if (!userRole.trim()) setError("Please select a role");
+    setIsLoading(true);
 
     try {
       const res = await axiosInstance.get(`/${userRole}`);
 
       if (res.status === 200 && res.data.role === "lecturer") {
+        setIsLoading(false);
         navigate("/lecturers/signin");
       } else if (res.status === 200 && res.data.role === "student") {
+        setIsLoading(false);
         navigate("/students/signin");
       }
     } catch (error) {
-      console.log("error", error);
+      setIsLoading(false);
+      setError("An error occurred, try again");
     }
 
     // redirect to a different page based on user type
@@ -37,6 +44,18 @@ function LandingPage() {
     <div className="landing-container">
       <div className="landing-page-container">
         <div className="landing-page-sectionA">
+          {error && (
+            <div className="set-exams-error-wrapper">
+              <div className="error-wrapper">
+                {" "}
+                <p className="error-message">{error} </p>
+                <MdCancel
+                  className="cancel-icon"
+                  onClick={() => setError("")}
+                />
+              </div>
+            </div>
+          )}
           <div className="landing-page-title1">
             <img src={quickgradelogo} alt="logo png" />
           </div>
@@ -62,7 +81,7 @@ function LandingPage() {
                 onChange={handleUserRoleChange}
                 required
               >
-                <option value="" disabled>
+                <option value={""} disabled>
                   Select an option
                 </option>
                 <option value="lecturer">Lecturer</option>
@@ -71,7 +90,11 @@ function LandingPage() {
             </div>
 
             {/* <button type="submit">Get Started</button> */}
-            <MainButton button_text="Get Started" />
+            <MainButton
+              button_text="Get Started"
+              disabled={isloading}
+              loader={isloading && <Loader />}
+            />
 
             <div className="landing-page-register-here">
               <p className="no-account-register">

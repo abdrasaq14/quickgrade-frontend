@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useState, ChangeEvent, FormEvent } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import PopUp from "../../components/pop/PopUp";
-import Modal from "../../components/modal/Modal";
+import Modal from "../../components/onSubmitModal/OnSubmitModal";
 import OtherForms from "../../components/forms/OtherForms/OtherForms";
 
 function EnterOtp() {

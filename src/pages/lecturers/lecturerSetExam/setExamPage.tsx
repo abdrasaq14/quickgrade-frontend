@@ -18,10 +18,15 @@ import {
 import { FaPlus } from "react-icons/fa6";
 import { MdCancel } from "react-icons/md";
 import PopUp from "../../../components/pop/PopUp";
-import Modal from "../../../components/modal/Modal";
+import OnSubmitModal from "../../../components/onSubmitModal/OnSubmitModal";
 import SuccessMessage from "../../../components/successModal/successMessage";
 import { nanoid } from "nanoid";
+import { fetchDraftExamDetail } from "../../../api/exams";
+import { useDispatch, useSelector } from "react-redux";
+import { setLecturer } from "../../../app/lecturer/lecturerSlice";
 
+import AddSectionModal from "../../../components/Modal/Modal";
+import { RootState } from "../../../app/store";
 interface Question {
   id: string;
   type: "objectives" | "theory" | "fill-in-the-blank";
@@ -47,7 +52,10 @@ export default function SetExamPage() {
   const { lecturerData } = useAuth();
 
   // section handling state
-
+  const dispatch = useDispatch();
+  const draftcourse = useSelector(
+    (state: RootState) => state.lecturer.draftCourses
+  );
   const [departmentData, setDepartmentData] = useState<Course[]>();
   const [courseData, setCourseData] = useState<Course[]>();
   const [sectionValue, setSectionValue] = useState<SectionValue[]>([]);
@@ -70,9 +78,62 @@ export default function SetExamPage() {
   const [isFinalSubmit, setIsFinalSubmit] = useState(false);
   const [examCreatedSuccess, setExamCreatedSuccess] = useState(false);
   const [popup, setPopup] = useState(false);
-
+  const [section, setSection] = useState("blank-section");
+  const [instruction, setInstruction] = useState("");
+  const [sectionDetailCopy, setSectionDetailCopy] = useState({
+    sectionAlphabet: "",
+    ScoreObtainable: "",
+    questionType: "",
+  });
+  const [sections, setSections] = useState<Section[]>([
+    { questions: [] },
+    { questions: [] },
+    { questions: [] },
+  ]);
+  const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [draftExamQuestions, setDraftExamQuestions] = useState<Question[]>([]);
+  const [draftExamId, setDraftExamId] = useState("");
   useEffect(() => {
-    fetchDraftExamDetail(lecturerData?.lecturerId);
+    function formatDateForInput(dateString: string) {
+      // Parse the ISO 8601 string to a Date object
+      const date = new Date(dateString);
+
+      // Format the date to YYYY-MM-DDThh:mm
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+      const day = String(date.getDate()).padStart(2, "0");
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
+    }
+
+    fetchDraftExamDetail(lecturerData?.lecturerId as string, draftcourse[0])
+      .then((data) => {
+        if (data) {
+          console.log("data", data);
+          setTotalScore(data.draftExamDetail.totalScore);
+          setexamDuration(data.draftExamDetail.examDuration);
+          setCourseCode(data.draftExamDetail.courseCode);
+          setDepartment(data.draftExamDetail.department);
+          setSemester(data.draftExamDetail.semester);
+          setDraftExamId(data.draftExamDetail.id);
+          setInstruction(data.draftExamDetail.examInstruction);
+          setSession(data.draftExamDetail.session);
+          setTotalScore(data.draftExamDetail.totalScore);
+          setFaculty(data.draftExamDetail.faculty);
+          setExamDate(formatDateForInput(data.draftExamDetail.examDate));
+          setCourseTitle(data.draftExamDetail.courseTitle);
+          setDraftExamId(data.draftExamDetail.draftExamId);
+          setDraftExamQuestions(data.draftQuestions);
+          if (data.draftQuestions.questionType === "Objective") {
+            setSection("MultipleChoice");
+          }
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   }, []);
   useEffect(() => {
     fetchDepartmentByFaculty(faculty).then((data) => {
@@ -117,9 +178,6 @@ export default function SetExamPage() {
     questionType: "",
   });
 
-  const [section, setSection] = useState("blank-section");
-  const [instruction, setInstruction] = useState("");
-
   const nextSectionToggle = () => {
     sectionValue.forEach((EachSection, index) => {
       if (EachSection.questionType === section) {
@@ -136,11 +194,7 @@ export default function SetExamPage() {
     });
     // setCurrentSection((prevIndex) => (prevIndex - 1) % sectionValue.length);
   };
-  const [sectionDetailCopy, setSectionDetailCopy] = useState({
-    sectionAlphabet: "",
-    ScoreObtainable: "",
-    questionType: "",
-  });
+
   const handleAddSectionModalSubmitForm = (e: FormEvent) => {
     e.preventDefault();
     if (
@@ -179,13 +233,6 @@ export default function SetExamPage() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionDetailCopy]);
-
-  const [sections, setSections] = useState<Section[]>([
-    { questions: [] },
-    { questions: [] },
-    { questions: [] },
-  ]);
-  const [selectedAnswers, setSelectedAnswers] = useState({});
 
   const handleQuestionChange = (
     sectionIndex: number,
@@ -376,6 +423,13 @@ export default function SetExamPage() {
   const handleSaveAsDraft = async (e: FormEvent) => {
     e.preventDefault();
     setShowPopup(true);
+    const draftCourses = lecturerData?.draftCourses || [];
+    dispatch(
+      setLecturer({
+        ...lecturerData,
+        draftCourses: [...draftCourses, courseCode],
+      })
+    );
     const assembledQuestions: Question[] = sections.reduce(
       (allQuestions, section) => allQuestions.concat(section.questions),
       [] as Question[]
@@ -421,7 +475,7 @@ export default function SetExamPage() {
     <>
       {/* draft pop up and modal */}
       {success && <PopUp message="Exam saved as draft" />}
-      {showPopup && <Modal modalText="Saving exam as draft..." />}
+      {showPopup && <OnSubmitModal modalText="Saving exam as draft..." />}
       {/* final submission pop up and modal */}
       {examCreatedSuccess && (
         <SuccessMessage
@@ -429,7 +483,9 @@ export default function SetExamPage() {
           successMessageText={`You have submitted ${courseCode} examinations.`}
         />
       )}
-      {isFinalSubmit && <Modal modalText={`Submitting ${courseCode} exam..`} />}
+      {isFinalSubmit && (
+        <OnSubmitModal modalText={`Submitting ${courseCode} exam..`} />
+      )}
       {}
       <OuterWrapper>
         {/* Sidebar */}
@@ -465,193 +521,188 @@ export default function SetExamPage() {
                 <div className="set-exams-page-session-form-container">
                   {/* add modal pop up fixed position */}
                   {popup && (
-                    <div className="add-section-pop-up">
-                      <div className="set-exams-inner-pop-up">
-                        <div className="checking-total-score-wrapper">
-                          <p>Total Exam score: </p>
-                          {totalScore ? (
-                            <span className="total-score">{totalScore}</span>
-                          ) : (
-                            <span className="no-total-score">
-                              You have not entered
-                              <br /> the total exam score
-                            </span>
-                          )}
-                          {currentSectionScore && (
-                            <table>
-                              {/* <thead>
+                    <AddSectionModal
+                      children={{
+                        childElement: (
+                          <>
+                            <div className="checking-total-score-wrapper">
+                              <p>Total Exam score: </p>
+                              {totalScore ? (
+                                <span className="total-score">
+                                  {totalScore}
+                                </span>
+                              ) : (
+                                <span className="no-total-score">
+                                  You have not entered
+                                  <br /> the total exam score
+                                </span>
+                              )}
+                              {currentSectionScore && (
+                                <table>
+                                  {/* <thead>
                             <tr>
                               <th>Section</th>
                               <th>Score</th>
                             </tr>
                           </thead> */}
-                              <tbody>
-                                {sectionValue.map((section, index) => (
-                                  <tr key={index}>
-                                    <td>
-                                      Section{" "}
-                                      {section.sectionAlphabet.toUpperCase()}
-                                    </td>
-                                    <td>{section.ScoreObtainable}</td>
-                                  </tr>
-                                ))}
-                                <tr>
-                                  <td>Section{currentSectionAlphabet}</td>
-                                  <td>{Number(currentSectionScore)}</td>
-                                </tr>
-                                <tr className="score-left">
-                                  <td>Score Left</td>
-                                  <td>
-                                    {Number(totalScore) -
-                                      (sectionValue.reduce((acc, item) => {
-                                        return (
-                                          acc + Number(item.ScoreObtainable)
-                                        );
-                                      }, 0) +
-                                        Number(currentSectionScore))}
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          )}
-                        </div>
-                        <h1>Add Section</h1>
-                        {error && (
-                          <div className="error-wrapper">
-                            {" "}
-                            <p className="error-message">{error} </p>
-                            <MdCancel
-                              className="cancel-icon"
-                              onClick={() => setError("")}
-                            />
-                          </div>
-                        )}
-                        <form onSubmit={handleAddSectionModalSubmitForm}>
-                          <fieldset className="set-exam-page-modal-fieldset">
-                            <label htmlFor=""> Section</label>
-                            <input
-                              type="text"
-                              className="section-detail"
-                              value={sectionDetail.sectionAlphabet}
-                              onChange={(e) => {
-                                setSectionDetail({
-                                  ...sectionDetail,
-                                  sectionAlphabet: e.target.value,
-                                });
-                                setCurrentSectionAlphabet(e.target.value);
-                              }}
-                              placeholder="Type section number or alphabet"
-                            />
-                          </fieldset>
-                          <fieldset className="set-exam-page-modal-fieldset">
-                            <label htmlFor=""> Score obtainable</label>
-                            <input
-                              type="number"
-                              className="section-detail"
-                              placeholder="Enter total marks obtainable in this section"
-                              value={sectionDetail.ScoreObtainable}
-                              onChange={(e) => {
-                                setSectionDetail({
-                                  ...sectionDetail,
-                                  ScoreObtainable: e.target.value,
-                                });
-                                setCurrentSectionScore(e.target.value);
-                              }}
-                            />
-                          </fieldset>
-                          <fieldset className="add-section-fieldset">
-                            <div className="add-section-instruction">
-                              <p>
+                                  <tbody>
+                                    {sectionValue.map((section, index) => (
+                                      <tr key={index}>
+                                        <td>
+                                          Section{" "}
+                                          {section.sectionAlphabet.toUpperCase()}
+                                        </td>
+                                        <td>{section.ScoreObtainable}</td>
+                                      </tr>
+                                    ))}
+                                    <tr>
+                                      <td>Section{currentSectionAlphabet}</td>
+                                      <td>{Number(currentSectionScore)}</td>
+                                    </tr>
+                                    <tr className="score-left">
+                                      <td>Score Left</td>
+                                      <td>
+                                        {Number(totalScore) -
+                                          (sectionValue.reduce((acc, item) => {
+                                            return (
+                                              acc + Number(item.ScoreObtainable)
+                                            );
+                                          }, 0) +
+                                            Number(currentSectionScore))}
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              )}
+                            </div>
+                            <h1>Add Section</h1>
+                            {error && (
+                              <div className="error-wrapper">
                                 {" "}
-                                Question Type <br />{" "}
-                                <span className="set-exams-page-modal-selection-question">
-                                  Select 1 section at a time
-                                </span>
-                              </p>
-                            </div>
-                            <div className="add-section-type-wrapper">
-                              <fieldset className="set-exams-page-modal-question-type-input">
+                                <p className="error-message">{error} </p>
+                                <MdCancel
+                                  className="cancel-icon"
+                                  onClick={() => setError("")}
+                                />
+                              </div>
+                            )}
+                            <form onSubmit={handleAddSectionModalSubmitForm}>
+                              <fieldset className="set-exam-page-modal-fieldset">
+                                <label htmlFor=""> Section</label>
                                 <input
-                                  name="setSectionType"
-                                  type="radio"
-                                  id="Multiple-choice"
-                                  value="MultipleChoice"
-                                  onChange={(e) =>
+                                  type="text"
+                                  className="section-detail"
+                                  value={sectionDetail.sectionAlphabet}
+                                  onChange={(e) => {
                                     setSectionDetail({
                                       ...sectionDetail,
-                                      questionType: e.target.value,
-                                    })
-                                  }
+                                      sectionAlphabet: e.target.value,
+                                    });
+                                    setCurrentSectionAlphabet(e.target.value);
+                                  }}
+                                  placeholder="Type section number or alphabet"
                                 />
-                                <label htmlFor="Multiple-choice">
-                                  {" "}
-                                  Multiple Choice{" "}
-                                </label>
                               </fieldset>
-                              <fieldset className="set-exams-page-modal-question-type-input">
+                              <fieldset className="set-exam-page-modal-fieldset">
+                                <label htmlFor=""> Score obtainable</label>
                                 <input
-                                  name="setSectionType"
-                                  type="radio"
-                                  id="Fill-in-the-blank"
-                                  value="FillInTheBlank"
-                                  onChange={(e) =>
+                                  type="number"
+                                  className="section-detail"
+                                  placeholder="Enter total marks obtainable in this section"
+                                  value={sectionDetail.ScoreObtainable}
+                                  onChange={(e) => {
                                     setSectionDetail({
                                       ...sectionDetail,
-                                      questionType: e.target.value,
-                                    })
-                                  }
+                                      ScoreObtainable: e.target.value,
+                                    });
+                                    setCurrentSectionScore(e.target.value);
+                                  }}
                                 />
-                                <label htmlFor="Fill-in-the-blank">
-                                  {" "}
-                                  Fill in the blanks{" "}
-                                </label>
                               </fieldset>
-                              <fieldset className="set-exams-page-modal-question-type-input">
-                                <input
-                                  name="setSectionType"
-                                  type="radio"
-                                  id="Theory"
-                                  value="Theory"
-                                  onChange={(e) =>
-                                    setSectionDetail({
-                                      ...sectionDetail,
-                                      questionType: e.target.value,
-                                    })
-                                  }
-                                  // checked={sectionDetail.Theory.checked}
-
-                                  // onChange={(e) =>
-                                  //   setSectionDetail({
-                                  //     ...sectionDetail,
-                                  //     Theory: {
-                                  //       ...sectionDetail.Theory,
-                                  //       checked: e.target.checked,
-                                  //     },
-                                  //   })
-                                  // }
-                                />
-                                <label htmlFor="Theory"> Theory</label>
+                              <fieldset className="add-section-fieldset">
+                                <div className="add-section-instruction">
+                                  <p>
+                                    {" "}
+                                    Question Type <br />{" "}
+                                    <span className="set-exams-page-modal-selection-question">
+                                      Select 1 section at a time
+                                    </span>
+                                  </p>
+                                </div>
+                                <div className="add-section-type-wrapper">
+                                  <fieldset className="set-exams-page-modal-question-type-input">
+                                    <input
+                                      name="setSectionType"
+                                      type="radio"
+                                      id="Multiple-choice"
+                                      value="MultipleChoice"
+                                      onChange={(e) =>
+                                        setSectionDetail({
+                                          ...sectionDetail,
+                                          questionType: e.target.value,
+                                        })
+                                      }
+                                    />
+                                    <label htmlFor="Multiple-choice">
+                                      {" "}
+                                      Multiple Choice{" "}
+                                    </label>
+                                  </fieldset>
+                                  <fieldset className="set-exams-page-modal-question-type-input">
+                                    <input
+                                      name="setSectionType"
+                                      type="radio"
+                                      id="Fill-in-the-blank"
+                                      value="FillInTheBlank"
+                                      onChange={(e) =>
+                                        setSectionDetail({
+                                          ...sectionDetail,
+                                          questionType: e.target.value,
+                                        })
+                                      }
+                                    />
+                                    <label htmlFor="Fill-in-the-blank">
+                                      {" "}
+                                      Fill in the blanks{" "}
+                                    </label>
+                                  </fieldset>
+                                  <fieldset className="set-exams-page-modal-question-type-input">
+                                    <input
+                                      name="setSectionType"
+                                      type="radio"
+                                      id="Theory"
+                                      value="Theory"
+                                      onChange={(e) =>
+                                        setSectionDetail({
+                                          ...sectionDetail,
+                                          questionType: e.target.value,
+                                        })
+                                      }
+                                    />
+                                    <label htmlFor="Theory"> Theory</label>
+                                  </fieldset>
+                                </div>
                               </fieldset>
-                            </div>
-                          </fieldset>
-                          <div className="set-exams-page-modal-buttons-container">
-                            <button
-                              className="set-exams-page-modal-button"
-                              type="button"
-                              onClick={toggleAddSectionModal}
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              className="set-exams-page-modal-button"
-                              type="submit"
-                            >
-                              Add Section
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
+                              <div className="set-exams-page-modal-buttons-container">
+                                <button
+                                  className="set-exams-page-modal-button"
+                                  type="button"
+                                  onClick={toggleAddSectionModal}
+                                >
+                                  Cancel
+                                </button>
+                                <button
+                                  className="set-exams-page-modal-button"
+                                  type="submit"
+                                >
+                                  Add Section
+                                </button>
+                              </div>
+                            </form>
+                          </>
+                        ),
+                      }}
+                    />
                   )}
 
                   {/* all set main set exam form */}

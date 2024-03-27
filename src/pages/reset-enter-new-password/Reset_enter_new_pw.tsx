@@ -3,7 +3,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import OtherForms from "../../components/forms/OtherForms/OtherForms";
-import Modal from "../../components/modal/Modal";
+import Modal from "../../components/onSubmitModal/OnSubmitModal";
 import PopUp from "../../components/pop/PopUp";
 const ResetEnterNewPasswordPage = () => {
   const { token } = useParams();

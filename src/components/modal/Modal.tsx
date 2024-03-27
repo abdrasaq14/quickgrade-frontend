@@ -1,14 +1,17 @@
-import ModalStyle from "./ModalStyle";
-
+import { ReactNode } from "react";
+import "./ModalStyle.css";
 interface ModalProps {
-  modalText: string;
+  children: {
+    childElement: ReactNode;
+  };
 }
-function Modal({ modalText }: ModalProps) {
+
+function Modal({ children }: ModalProps) {
+  const { childElement } = children;
   return (
-    <ModalStyle>
-      <div className="modal-shape"></div>
-      <p>{modalText}</p>
-    </ModalStyle>
+    <div className="add-section-pop-up">
+      <div className="set-exams-inner-pop-up">{childElement}</div>
+    </div>
   );
 }
 

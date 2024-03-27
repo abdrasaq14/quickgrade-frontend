@@ -6,3 +6,10 @@ export const fetchDepartmentByFaculty = async (faculty: string) => {
             return res.data.departments;
         }
 }
+
+export const fetchFacultyAndDepartment = async () => { 
+    const res = await axiosInstance.get("/get-faculty-and-departments");
+    if (res.data.facultyAndDepartments) {
+        return res.data.facultyAndDepartments;
+    }
+}

@@ -6,7 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import MainButton from "../../buttons/mainButton";
 import axiosInstance from "../../../utils/axiosInstance";
 import { MdCancel } from "react-icons/md";
-import Modal from "../../modal/Modal";
+import OnSubmitModal from "../../onSubmitModal/OnSubmitModal";
 import PopUp from "../../pop/PopUp";
 interface FormComponentProps {
   id_or_email: string;
@@ -104,7 +104,9 @@ export default function LoginFormComponent({
   return (
     <>
       {success && <PopUp message="Successfully logged in" />}
-      {showPopup && <Modal modalText="Please wait while we sign you in" />}
+      {showPopup && (
+        <OnSubmitModal modalText="Please wait while we sign you in" />
+      )}
       <div className="login-page-main-body-wrapper">
         <div className="login-form-inner-body-wrapper">
           <LeftImageWrapper backgroundpic={backgroundimage}>

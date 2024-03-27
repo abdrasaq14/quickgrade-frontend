@@ -1,0 +1,170 @@
+.add-section-pop-up {
+  height: 100vh;
+  width: 80%;
+  margin-left: 20%;
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  color: #000000;
+  background: #212121f8;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.set-exams-inner-pop-up {
+  width: 35%;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 16px;
+
+  position: relative;
+}
+.checking-total-score-wrapper {
+  position: absolute;
+  top: 2%;
+  right: 5%;
+  display: flex;
+  gap: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafb;
+  border-radius: 4px;
+  min-width: 7rem;
+  padding: 0.5rem;
+}
+.checking-total-score-wrapper p {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--button-color);
+  margin-bottom: 0;
+}
+.checking-total-score-wrapper span {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--button-color);
+  text-align: center;
+  border-radius: 50%;
+}
+.no-total-score {
+  font-size: 0.6rem !important;
+  margin: 0.5rem;
+  color: var(--error-color) !important;
+  text-align: center;
+}
+
+.checking-total-score-wrapper table {
+  min-width: 6rem;
+  background-color: #fff;
+  /* box-shadow: 5px 5px 10px #1e00a45c; */
+  /* background-color: #d0d5dd; */
+  margin: 0.2rem 0;
+  top: 0;
+  padding: 0.2rem;
+  color: var(--button-color);
+}
+.checking-total-score-wrapper table thead {
+  padding: 0;
+}
+
+.checking-total-score-wrapper table thead tr {
+  padding: 0;
+  justify-self: space-between;
+}
+.checking-total-score-wrapper table thead tr th {
+  font-size: 0.6rem;
+  padding: 0;
+}
+
+.checking-total-score-wrapper table tbody {
+  padding: 0;
+}
+.checking-total-score-wrapper table tbody tr td {
+  padding: 0;
+  font-size: 0.6rem;
+}
+.score-left {
+  font-weight: 700;
+}
+.set-exams-inner-pop-up > h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.set-exams-inner-pop-up > form {
+  margin-top: 2rem;
+}
+
+.set-exams-inner-pop-up > form > fieldset {
+  margin-bottom: 1rem;
+}
+.add-section-fieldset {
+  display: flex;
+}
+.add-section-fieldset > * {
+  flex-basis: 100%;
+}
+.set-exams-inner-pop-up > form > fieldset > label {
+  font-weight: 700;
+}
+.set-exams-inner-pop-up > form > fieldset > input {
+  width: 100%;
+  height: 2.5rem;
+  border-radius: 5px;
+  border: 1px solid #000000;
+  padding-left: 1rem;
+  margin-top: 0.5rem;
+}
+
+.pick-up-from-where-you-left h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+.pick-up-from-where-you-left p {
+  width: 70%;
+  line-height: 1.5rem;
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 2rem auto;
+}
+.pick-up-from-where-you-left p span {
+  color: var(--button-color);
+}
+.complete-exam-cancel-wrapper {
+  display: flex;
+  width: 80%;
+  margin: 2rem auto;
+  gap: 1rem;
+  justify-content: space-between;
+}
+.complete-exam-cancel-wrapper a,
+.complete-exam-cancel-wrapper button {
+  flex: 1;
+  min-width: 50%;
+  height: 2.5rem;
+  margin-top: 1rem;
+  border-radius: 50px;
+  border: none;
+  background-color: var(--button-color);
+  color: #ffffff;
+  font-weight: 600;
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.8s ease-in-out;
+}
+.not-now {
+  background-color: #fff !important;
+  border: 2px solid var(--button-color) !important;
+  color: var(--button-color) !important;
+}
+.complete-exam-cancel-wrapper button:hover,
+.complete-exam-cancel-wrapper a:hover {
+  background-color: var(--hover-color);
+}

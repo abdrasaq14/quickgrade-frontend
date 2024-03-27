@@ -7,7 +7,7 @@ import Header from "../../components/header/header";
 import StudentSideBar from "../students/studentsSideBar/studentsSideBar";
 import LecturerSideBar from "../lecturers/lecturerSideBar/lecturerSideBar";
 import OtherForms from "../../components/forms/OtherForms/OtherForms";
-import Modal from "../../components/modal/Modal";
+import Modal from "../../components/onSubmitModal/OnSubmitModal";
 import PopUp from "../../components/pop/PopUp";
 import { OuterWrapper } from "../../components/dashboardStyle/ResponsivenessStyle";
 import { InnerWrapper } from "../../components/dashboardStyle/ResponsivenessStyle";

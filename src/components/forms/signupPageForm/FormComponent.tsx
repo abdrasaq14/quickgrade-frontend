@@ -1,17 +1,23 @@
 import { LeftImageWrapper } from "./FormBackGround";
 import "./FormComponentStyle.css";
 import Footer from "../../footer/footer";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import MainButton from "../../buttons/mainButton";
 import axiosInstance from "../../../utils/axiosInstance";
-import Modal from "../../modal/Modal";
+import OnSubmitModal from "../../onSubmitModal/OnSubmitModal";
 import PopUp from "../../pop/PopUp";
 import { MdCancel } from "react-icons/md";
+import { fetchFacultyAndDepartment } from "../../../api/department";
+
 interface FormComponentProps {
   backgroundimage: string;
   userType: string;
   lecturerTitle?: string;
+}
+interface FacultyAndDepartment {
+  faculty: string;
+  department: string;
 }
 
 export default function SignUpFormComponent({
@@ -33,6 +39,11 @@ export default function SignUpFormComponent({
     faculty: "",
     department: "",
   });
+  const [faculty, setFaculty] = useState<FacultyAndDepartment[]>([]);
+
+  useEffect(() => {
+    fetchFacultyAndDepartment().then((res) => setFaculty(res));
+  }, []);
   const handleSignUpFormInputs = (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -156,7 +167,7 @@ export default function SignUpFormComponent({
     <>
       {success && <PopUp message="Account created successfully" />}
       {showPopup && (
-        <Modal modalText="Please wait while we create your account" />
+        <OnSubmitModal modalText="Please wait while we create your account" />
       )}
       <div className="signup-page-main-body-wrapper">
         <div className="signup-form-inner-body-wrapper">
@@ -287,7 +298,17 @@ export default function SignUpFormComponent({
                       name="faculty"
                     >
                       <option value="">Select Faculty</option>
-                      <option value="Engineering">Engineering</option>
+                      {faculty.length ? (
+                        faculty.map((faculty) => (
+                          <option value={faculty.faculty}>
+                            {faculty.faculty}
+                          </option>
+                        ))
+                      ) : (
+                        <option className="no-data" disabled>
+                          Contact admin to create faculty
+                        </option>
+                      )}
                     </select>
                   </div>
                   <div className="signup-field">
@@ -299,9 +320,17 @@ export default function SignUpFormComponent({
                       name="department"
                     >
                       <option value="">Select Department</option>
-                      <option value="Chemical Engineering">
-                        Chemical Engineering
-                      </option>
+                      {faculty.length ? (
+                        faculty.map((faculty) => (
+                          <option value={faculty.department}>
+                            {faculty.department}
+                          </option>
+                        ))
+                      ) : (
+                        <option className="no-data" disabled>
+                          Contact admin to create department
+                        </option>
+                      )}
                     </select>
                   </div>
                 </div>

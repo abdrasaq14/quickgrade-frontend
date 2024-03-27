@@ -1,0 +1,23 @@
+.loader__spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 100%;
+  max-width: 100%;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  background-color: inherit;
+  animation: loader__spin 1s linear infinite;
+}
+
+@keyframes loader__spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -5,6 +5,10 @@
   font-weight: 500;
   font-family: var(--main-font);
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
   border-radius: 100px;
   width: 100%;
   min-height: 3rem;

@@ -8,29 +8,9 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
+import { Student, Lecturer } from "../../interfaces/users";
 interface ProtectedRouteProps {
   children: ReactNode;
-}
-interface Student {
-  studentId: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  matricNo: string;
-  password: string;
-  faculty: string;
-  department: string;
-}
-interface Lecturer {
-  title: string;
-  lecturerId: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  employeeID: string;
-  password: string;
-  faculty: string;
-  department: string;
 }
 
 interface AuthContextProps {

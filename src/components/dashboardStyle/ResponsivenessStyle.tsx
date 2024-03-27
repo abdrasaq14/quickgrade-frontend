@@ -22,7 +22,6 @@ export const InnerWrapper = styled.div`
   min-height: 100vh;
   align-self: center;
   overflow-x: hidden !important;
-  justify-content: center !important;
   align-items: center !important;
   flex-direction: column !important;
   gap: 0.5rem;

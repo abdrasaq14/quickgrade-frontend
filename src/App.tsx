@@ -18,7 +18,7 @@ import ChangePasswordPage from "./pages/change-password-page/changePasswordPage"
 import SetExamPage from "./pages/lecturers/lecturerSetExam/setExamPage";
 import { StudentProtectedRoute } from "./components/protectedRoutes/protectedRoute";
 import { LecturerProtectedRoute } from "./components/protectedRoutes/protectedRoute";
-// import CompletedExamOBJ from "../completed exam/completedExamObj";
+
 
 import StudentsResults from "./pages/students/studentsresults/Students-Results";
 

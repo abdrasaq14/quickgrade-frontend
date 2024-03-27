@@ -30,7 +30,7 @@ const ModalStyle = styled.div`
     height: 50px;
     width: 50px;
     border-radius: 50%;
-    border: 5px solid #bfe1f7;
+    border: 3px solid #bfe1f7;
     border-bottom: 5px solid var(--button-color);
     animation: spin 1s linear infinite;
   }

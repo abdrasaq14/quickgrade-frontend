@@ -11,12 +11,22 @@ import {
 } from "../../../components/dashboardStyle/ResponsivenessStyle";
 import { fetchExamTimeTable } from "../../../api/exams";
 import { Exam } from "../../../interfaces/examsInterface";
-
+import { useSelector } from "react-redux";
+import CheckIfDraftModal from "../../../components/Modal/Modal";
+import { Link } from "react-router-dom";
+// import { FaEdit } from "react-icons/fa";
+interface DraftCourseState {
+  lecturer: {
+    draftCourses: string[];
+  };
+}
 function LecturerDashboard() {
   const { lecturerData } = useAuth();
 
   const [examData, setExamData] = useState<Exam[]>([]);
-
+  const draftcourse = useSelector(
+    (state: DraftCourseState) => state.lecturer.draftCourses
+  );
   useEffect(() => {
     fetchExamTimeTable().then((data) => {
       setExamData(data);
@@ -26,7 +36,29 @@ function LecturerDashboard() {
   return (
     <OuterWrapper>
       <LecturerSideBar />
-
+      {draftcourse && (
+        <CheckIfDraftModal
+          children={{
+            childElement: (
+              <div className="pick-up-from-where-you-left">
+                <h1>Pick up from where you left</h1>
+                <p>
+                  Kindly complete setting <span>{draftcourse[0]}</span> exams.
+                </p>
+                <div className="complete-exam-cancel-wrapper">
+                  <Link to="/lecturers/dashboard/set-exams">
+                    {/* <FaEdit /> */}
+                    Complete now
+                  </Link>
+                  <button className="not-now" type="button">
+                    Not now
+                  </button>
+                </div>
+              </div>
+            ),
+          }}
+        />
+      )}
       <InnerWrapper>
         {lecturerData && (
           <Header newUser={lecturerData.title + " " + lecturerData.firstName} />
@@ -55,7 +87,9 @@ function LecturerDashboard() {
 
           {examData && examData.length ? (
             <>
-              <p className="dashboard-course-exam-timeable">Course Examination TimeTable</p>
+              <p className="dashboard-course-exam-timeable">
+                Course Examination TimeTable
+              </p>
               <table className="lecturer-exam-timetable">
                 <thead>
                   <tr>
