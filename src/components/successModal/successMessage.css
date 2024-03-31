@@ -14,11 +14,11 @@
   justify-content: center;
 }
 
-.success-modal-success-modal-inner-pop-up {
+.success-modal-inner-pop-up {
   width: 35%;
   min-height: 20rem;
   padding: 2rem;
-  background: #fff;
+  background-color: #fff;
   border-radius: 16px;
 }
 .success-modal-inner-pop-up > h1 {
@@ -30,7 +30,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
   justify-content: space-between;
 }
 

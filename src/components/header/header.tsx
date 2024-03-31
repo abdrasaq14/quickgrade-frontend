@@ -41,8 +41,10 @@ const Header: React.FC<HeaderProps> = (props) => {
           )}
           <CiBellOn className="notification-icon" />
           {/* <span className="new-notification">1</span> */}
-          {draftcourse && (
+          {draftcourse.length ? (
             <span className="new-notification">{draftcourse.length}</span>
+          ) : (
+            ""
           )}
         </div>
         <p>Welcome, {props.newUser}</p>

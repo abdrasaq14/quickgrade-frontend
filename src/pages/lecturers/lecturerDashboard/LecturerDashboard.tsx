@@ -36,12 +36,13 @@ function LecturerDashboard() {
   return (
     <OuterWrapper>
       <LecturerSideBar />
-      {draftcourse && (
+      {draftcourse.length && (
         <CheckIfDraftModal
           children={{
             childElement: (
               <div className="pick-up-from-where-you-left">
                 <h1>Pick up from where you left</h1>
+                <i className="fa-solid fa-pen-to-square pick-up-icon"></i>
                 <p>
                   Kindly complete setting <span>{draftcourse[0]}</span> exams.
                 </p>
@@ -98,7 +99,7 @@ function LecturerDashboard() {
                     <th>Exam Date</th>
                     <th>Venue</th>
                     <th>Registered</th>
-                    <th>Action</th>
+                    {/* <th>Action</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -111,11 +112,11 @@ function LecturerDashboard() {
                       </td>
                       <td>Campus E-center</td>
                       <td>{exam.noOfStudents}</td>
-                      <td>
+                      {/* <td>
                         <button>
-                          <p>Set Exam</p>
+                          <p></p>
                         </button>
-                      </td>
+                      </td> */}
                     </tr>
                   ))}
                 </tbody>

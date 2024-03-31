@@ -50,7 +50,9 @@ interface SectionValue {
 
 export default function SetExamPage() {
   const { lecturerData } = useAuth();
-
+  const lecturerId = useSelector(
+    (state: RootState) => state.lecturer.lecturerId
+  );
   // section handling state
   const dispatch = useDispatch();
   const draftcourse = useSelector(
@@ -91,8 +93,13 @@ export default function SetExamPage() {
     { questions: [] },
   ]);
   const [selectedAnswers, setSelectedAnswers] = useState({});
-  const [draftExamQuestions, setDraftExamQuestions] = useState<Question[]>([]);
-  const [draftExamId, setDraftExamId] = useState("");
+  // const [draftExamQuestions, setDraftExamQuestions] = useState<Question[]>([]);
+  // const [draftExamId, setDraftExamId] = useState("");
+  // const [draftExamDetail, setDraftExamDetail] = useState({
+  //   firstSection: [],
+  //   secondSection: [],
+  //   thirdSection: [],
+  // });
   useEffect(() => {
     function formatDateForInput(dateString: string) {
       // Parse the ISO 8601 string to a Date object
@@ -108,33 +115,75 @@ export default function SetExamPage() {
       return `${year}-${month}-${day}T${hours}:${minutes}`;
     }
 
-    fetchDraftExamDetail(lecturerData?.lecturerId as string, draftcourse[0])
+    fetchDraftExamDetail(lecturerId, draftcourse[0])
       .then((data) => {
         if (data) {
-          console.log("data", data);
           setTotalScore(data.draftExamDetail.totalScore);
           setexamDuration(data.draftExamDetail.examDuration);
           setCourseCode(data.draftExamDetail.courseCode);
           setDepartment(data.draftExamDetail.department);
           setSemester(data.draftExamDetail.semester);
-          setDraftExamId(data.draftExamDetail.id);
+          // setDraftExamId(data.draftExamDetail.id);
           setInstruction(data.draftExamDetail.examInstruction);
           setSession(data.draftExamDetail.session);
           setTotalScore(data.draftExamDetail.totalScore);
           setFaculty(data.draftExamDetail.faculty);
           setExamDate(formatDateForInput(data.draftExamDetail.examDate));
           setCourseTitle(data.draftExamDetail.courseTitle);
-          setDraftExamId(data.draftExamDetail.draftExamId);
-          setDraftExamQuestions(data.draftQuestions);
-          if (data.draftQuestions.questionType === "Objective") {
-            setSection("MultipleChoice");
+
+          setSection(
+            data.draftQuestions[0].questionType === "Objective"
+              ? "MultipleChoice"
+              : "blank-section"
+          );
+          // setDraftExamDetail({
+          //   firstSection: data.draftExamDetail.firstSection.split("|"),
+          //   secondSection: data.draftExamDetail.secondSection.split("|"),
+          //   thirdSection: data.draftExamDetail.thirdSection.split("|"),
+          // });
+          if (data.draftQuestions[0].questionType === "Objective") {
+            setSections([
+              {
+                questions: data.draftQuestions.map((question: Question) => ({
+                  id: question.id,
+                  type: "objectives",
+                  questionText: question.questionText,
+                  optionA: question.optionA,
+                  optionB: question.optionB,
+                  optionC: question.optionC,
+                  optionD: question.optionD,
+                  correctAnswer: question.correctAnswer,
+                })),
+              },
+            ]);
+            setSectionValue([
+              ...sectionValue,
+              {
+                sectionAlphabet:
+                  data.draftExamDetail.firstSection.split("|")[0],
+                ScoreObtainable:
+                  data.draftExamDetail.firstSection.split("|")[1],
+                questionType: "MultipleChoice",
+              },
+            ]);
+            const initialSelectedAnswers = data.draftQuestions.reduce(
+              (
+                acc: Record<string, string>,
+                question: Question,
+                index: number
+              ) => {
+                acc[`question${index}`] = question.correctAnswer;
+                return acc;
+              },
+              {}
+            );
+            setSelectedAnswers(initialSelectedAnswers);
           }
         }
       })
-      .catch((error) => {
-        console.log("error", error);
-      });
+      .catch(() => {});
   }, []);
+
   useEffect(() => {
     fetchDepartmentByFaculty(faculty).then((data) => {
       setDepartmentData(data);
@@ -166,12 +215,10 @@ export default function SetExamPage() {
       setCourseTitle(firstCourse.courseTitle);
     }
   }, [courseData, courseCode, courseTitle]);
-
   const toggleAddSectionModal = () => {
     setError("");
     setPopup(!popup);
   };
-
   const [sectionDetail, setSectionDetail] = useState({
     sectionAlphabet: "",
     ScoreObtainable: "",
@@ -308,7 +355,7 @@ export default function SetExamPage() {
   const isObjectivesSectionValid = (section: Section) => {
     return section.questions.every((question) => {
       if (
-        !totalScore.trim() ||
+        !totalScore.toString().trim() ||
         !examDuration.trim() ||
         !examDate.trim() ||
         !courseCode.trim() ||
@@ -345,15 +392,15 @@ export default function SetExamPage() {
   const isTheorySectionValid = (section: Section) => {
     return section.questions.every((question) => {
       if (
-        !totalScore.trim() &&
-        !examDuration.trim() &&
-        !examDate.trim() &&
-        !courseCode.trim() &&
-        !courseTitle.trim() &&
-        !department.trim() &&
-        !semester.trim() &&
-        !session.trim() &&
-        !faculty.trim() &&
+        !totalScore.toString().trim() ||
+        !examDuration.trim() ||
+        !examDate.trim() ||
+        !courseCode.trim() ||
+        !courseTitle.trim() ||
+        !department.trim() ||
+        !semester.trim() ||
+        !session.trim() ||
+        !faculty.trim() ||
         !instruction.trim()
       ) {
         return false;
@@ -367,15 +414,15 @@ export default function SetExamPage() {
   const isFillInTheBlankSectionValid = (section: Section) => {
     return section.questions.every((question) => {
       if (
-        !totalScore.trim() &&
-        !examDuration.trim() &&
-        !examDate.trim() &&
-        !courseCode.trim() &&
-        !courseTitle.trim() &&
-        !department.trim() &&
-        !semester.trim() &&
-        !session.trim() &&
-        !faculty.trim() &&
+        !totalScore.toString().trim() ||
+        !examDuration.trim() ||
+        !examDate.trim() ||
+        !courseCode.trim() ||
+        !courseTitle.trim() ||
+        !department.trim() ||
+        !semester.trim() ||
+        !session.trim() ||
+        !faculty.trim() ||
         !instruction.trim()
       ) {
         return false;
@@ -452,7 +499,6 @@ export default function SetExamPage() {
       });
 
       if (res.data.draftExamQuestionCreated) {
-        console.log("success");
         setError("");
         setSuccess(true);
         setTimeout(() => {
@@ -461,12 +507,10 @@ export default function SetExamPage() {
         }, 1200);
         return;
       } else {
-        console.log("failure");
         setShowPopup(false);
         setError("Unable to save exam as draft");
       }
     } catch (error) {
-      console.log("failure");
       setShowPopup(false);
       setError("Unable to save exam as draft");
     }
@@ -1021,10 +1065,10 @@ export default function SetExamPage() {
                                       )
                                       .map((section) => {
                                         return (
-                                          <>
+                                          <div key={nanoid()}>
                                             Section{" "}
                                             {section.sectionAlphabet.toUpperCase()}
-                                          </>
+                                          </div>
                                         );
                                       })}
                                     <span className="set-exams-page-questions-section-header-subtitle">
@@ -1041,10 +1085,10 @@ export default function SetExamPage() {
                                       )
                                       .map((section) => {
                                         return (
-                                          <>
+                                          <div key={nanoid()}>
                                             {section.ScoreObtainable}
                                             Marks
-                                          </>
+                                          </div>
                                         );
                                       })}
                                   </p>

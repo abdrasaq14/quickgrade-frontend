@@ -12,6 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: 0.8s linear ease-in-out;
 }
 
 .set-exams-inner-pop-up {
@@ -19,9 +20,19 @@
   padding: 2rem;
   background: #fff;
   border-radius: 16px;
-
+  animation: animateMe 0.5s ease-in-out;
   position: relative;
 }
+
+@keyframes animateMe {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .checking-total-score-wrapper {
   position: absolute;
   top: 2%;
@@ -118,7 +129,12 @@
   padding-left: 1rem;
   margin-top: 0.5rem;
 }
-
+.pick-up-from-where-you-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
 .pick-up-from-where-you-left h1 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
@@ -126,9 +142,9 @@
 .pick-up-from-where-you-left p {
   width: 70%;
   line-height: 1.5rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   text-align: center;
-  margin: 2rem auto;
+  margin: 0 auto;
 }
 .pick-up-from-where-you-left p span {
   color: var(--button-color);
@@ -145,7 +161,6 @@
   flex: 1;
   min-width: 50%;
   height: 2.5rem;
-  margin-top: 1rem;
   border-radius: 50px;
   border: none;
   background-color: var(--button-color);
@@ -167,4 +182,23 @@
 .complete-exam-cancel-wrapper button:hover,
 .complete-exam-cancel-wrapper a:hover {
   background-color: var(--hover-color);
+}
+
+.pick-up-icon {
+  color: var(--button-color);
+  font-size: 6rem;
+  animation: bounceMe 0.8s linear ease-in-out !important;
+  animation-delay: 0.8s;
+}
+
+@keyframes bounceMe {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
