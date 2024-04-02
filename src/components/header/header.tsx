@@ -12,7 +12,6 @@ const Header: React.FC<HeaderProps> = (props) => {
   const draftcourse = useSelector(
     (state: RootState) => state.lecturer.draftCourses
   );
-  console.log("draftcourse", draftcourse)
   return (
     <div className="header-bar">
       <div className="header-bar-text-container">
