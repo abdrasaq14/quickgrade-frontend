@@ -12,7 +12,7 @@ import {
 import { fetchExamTimeTable } from "../../../api/exams";
 import { Exam } from "../../../interfaces/examsInterface";
 import { useSelector } from "react-redux";
-import Modal from "../../../components/Modal/Modal";
+import CheckIfDraftModal from "../../../components/Modal/Modal";
 import { Link } from "react-router-dom";
 // import { FaEdit } from "react-icons/fa";
 interface DraftCourseState {
@@ -37,7 +37,7 @@ function LecturerDashboard() {
     <OuterWrapper>
       <LecturerSideBar />
       {draftcourse.length && draftcourse[0] !== null ? (
-        <Modal
+        <CheckIfDraftModal
           children={{
             childElement: (
               <div className="pick-up-from-where-you-left">

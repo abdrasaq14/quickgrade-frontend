@@ -25,7 +25,7 @@ import { fetchDraftExamDetail } from "../../../api/exams";
 import { useDispatch, useSelector } from "react-redux";
 import { setLecturer } from "../../../app/lecturer/lecturerSlice";
 
-import Modal from "../../../components/Modal/Modal";
+import AddSectionModal from "../../../components/Modal/Modal";
 import { RootState } from "../../../app/store";
 interface Question {
   id: string;
@@ -578,7 +578,7 @@ export default function SetExamPage() {
                 <div className="set-exams-page-session-form-container">
                   {/* add modal pop up fixed position */}
                   {popup && (
-                    <Modal
+                    <AddSectionModal
                       children={{
                         childElement: (
                           <>
