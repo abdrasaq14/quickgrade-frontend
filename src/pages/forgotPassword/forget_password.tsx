@@ -49,7 +49,6 @@ export function ForgotPassword({ extraTextLink }: ForgotPasswordProps) {
       }
     } catch (error) {
       setShowPopup(false);
-      console.log("error", error);
     }
   };
   return (

@@ -164,7 +164,7 @@ const TakeExamOBJ = () => {
         <div className="student-take-exam-body-wrapper">
           <Header newUser={studentData?.firstName || ""} />
 
-          <div className="takeExamTimer">
+          {/* <div className="takeExamTimer">
             <div className="take-exam-header">Take Exam</div>
 
             <div className="take-exams-timer-container">
@@ -184,7 +184,7 @@ const TakeExamOBJ = () => {
                 <p>Seconds</p>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {questions.length ? (
             <div className="take-exam-form-container">

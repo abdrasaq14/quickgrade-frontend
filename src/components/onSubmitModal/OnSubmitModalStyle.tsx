@@ -4,7 +4,7 @@ const ModalStyle = styled.div`
   height: 100vh;
   width: 100vw;
   position: fixed;
-  z-index: 1000;
+  z-index: 1500;
   top: 0;
   left: 0;
   gap: 1rem;

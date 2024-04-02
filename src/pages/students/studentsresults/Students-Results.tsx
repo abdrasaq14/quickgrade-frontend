@@ -25,8 +25,7 @@ function StudentsResults() {
   const { studentData } = useAuth();
   const navigate = useNavigate();
   const [studentResults, setStudentResults] = useState<StudentResult[]>([]);
-  const [selectedSemester, setSelectedSemester] =
-    useState<string>("first semester");
+  const [selectedSemester, setSelectedSemester] = useState<string>("First");
   const [enrolledExam, setEnrolledExam] = useState<EnrolledExam[]>([]);
 
   useEffect(() => {
@@ -40,11 +39,10 @@ function StudentsResults() {
         });
 
         if (
-          res.status === 200 &&
-          (res.data.noTokenError ||
-            res.data.tokenExpiredError ||
-            res.data.unknownStudent ||
-            res.data.internalServeError)
+          res.data.noTokenError ||
+          res.data.tokenExpiredError ||
+          res.data.unknownStudent ||
+          res.data.internalServeError
         ) {
           navigate("/students/signin");
         } else if (
@@ -56,7 +54,7 @@ function StudentsResults() {
           setStudentResults(res.data.StudentResult);
         }
       } catch (error) {
-        console.log("Error fetching dashboard data:", error);
+        /* empty */
       }
     };
 
@@ -85,8 +83,8 @@ function StudentsResults() {
               value={selectedSemester}
               onChange={(e) => setSelectedSemester(e.target.value)}
             >
-              <option value="first semester">First</option>
-              <option value="second semester">Second</option>
+              <option value="First">First</option>
+              <option value="Second">Second</option>
             </select>
           </div>
           <div className="session-info">
@@ -94,7 +92,6 @@ function StudentsResults() {
               Session :
             </label>
             <select id="session" className="top-selection-options">
-              <option value="2022/2023">2022/2023</option>
               <option value="2023/2024">2023/2024</option>
             </select>
           </div>

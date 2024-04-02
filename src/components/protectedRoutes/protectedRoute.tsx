@@ -9,6 +9,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import { Student, Lecturer } from "../../interfaces/users";
+import { setLecturer } from "../../app/lecturer/lecturerSlice";
+import { useDispatch } from "react-redux";
 interface ProtectedRouteProps {
   children: ReactNode;
 }
@@ -58,7 +60,7 @@ export function StudentProtectedRoute({ children }: ProtectedRouteProps) {
 export function LecturerProtectedRoute({ children }: ProtectedRouteProps) {
   const navigate = useNavigate();
   const [lecturerData, setLecturerData] = useState<Lecturer>();
-
+  const dispatch = useDispatch();
   useEffect(() => {
     async function checkToken() {
       const auth = await axiosInstance.get("/protected-routes/lecturers");
@@ -71,6 +73,7 @@ export function LecturerProtectedRoute({ children }: ProtectedRouteProps) {
         navigate("/lecturers/signin");
       } else if (auth.status === 200 && auth.data.lecturer) {
         setLecturerData(auth.data.lecturer);
+        dispatch(setLecturer(auth.data.lecturer));
       }
     }
     checkToken();

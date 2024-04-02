@@ -457,14 +457,27 @@ export default function SetExamPage() {
         questions: assembledQuestions,
       });
 
-      if (res.status === 200 && res.data.examQuestionCreated) {
+      if (res.data.examQuestionCreated) {
+        dispatch(
+          setLecturer({
+            ...lecturerData,
+            draftCourses: lecturerData?.draftCourses?.filter(
+              (course) => course !== courseCode
+            ),
+          })
+        );
+
         setIsFinalSubmit(false);
         setExamCreatedSuccess(true);
 
         return;
+      } else {
+        setShowPopup(false);
+        setIsFinalSubmit(false);
+        setError("Unable to create exam, please try again");
       }
     } catch (error) {
-      // {}
+      setError("Unable to create exam, please try again");
     }
   };
   const handleSaveAsDraft = async (e: FormEvent) => {

@@ -23,7 +23,7 @@ function StudentTakeExamsInstructions() {
           <div className="exam-instructions-body">
             <section className="exam-instructions-body-section1">
               <div className="exam-instructions-body-title">Take Exams</div>
-              <div className="exam-instructions-timer">
+              {/* <div className="exam-instructions-timer">
                 <div className="exam-instructions-timer-minutes">
                   <div>120</div>
                   <div>Minutes</div>
@@ -33,7 +33,7 @@ function StudentTakeExamsInstructions() {
                   <div>00</div>
                   <div>Seconds</div>
                 </div>
-              </div>
+              </div> */}
             </section>
             <section className="exam-instructions-body-section2">
               <form

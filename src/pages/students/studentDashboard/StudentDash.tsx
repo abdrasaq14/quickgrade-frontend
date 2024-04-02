@@ -42,9 +42,7 @@ export const StudentDash = () => {
         } else if (studentRes.status === 200 && studentRes.data.courses) {
           setCourses(studentRes.data.courses);
         }
-      } catch (error) {
-        console.log("Error fetching dashboard data:", error);
-      }
+      } catch (error) { /* empty */ }
     };
 
     fetchData();

@@ -36,7 +36,7 @@ function LecturerDashboard() {
   return (
     <OuterWrapper>
       <LecturerSideBar />
-      {draftcourse.length && (
+      {draftcourse.length && draftcourse[0] !== null ? (
         <CheckIfDraftModal
           children={{
             childElement: (
@@ -59,6 +59,8 @@ function LecturerDashboard() {
             ),
           }}
         />
+      ) : (
+        ""
       )}
       <InnerWrapper>
         {lecturerData && (
@@ -83,7 +85,7 @@ function LecturerDashboard() {
         {/* Main content */}
         <main className="lecturer-dashboard-exam-timetable-container">
           <div className="lecturer-dashboard-semester-session-container">
-            <p>2022/2023 : First Semester</p>
+            <p>2023/2024 : First Semester</p>
           </div>
 
           {examData && examData.length ? (

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import "./sideBar.css";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation, NavLink } from "react-router-dom";
 
 interface SideBarChildren {
   children: {
@@ -28,7 +28,7 @@ function SideBar({ children }: SideBarChildren) {
 
       navigate(`${redirectURL}/signin`);
     } catch (error) {
-      console.error("Logout error:", error);
+      /* empty */
     }
   };
 
@@ -49,8 +49,10 @@ function SideBar({ children }: SideBarChildren) {
         <div className="frame-3">
           <div className="text-wrapper-4">Others</div>
           <div className="frame-4">
-            <Link
-              className="feature-2"
+            <NavLink
+              className={({ isActive }) =>
+                `feature-2 ${isActive ? "active-link" : ""}`
+              }
               to={
                 location.pathname.startsWith("/students")
                   ? "/students/dashboard/change-password"
@@ -63,7 +65,7 @@ function SideBar({ children }: SideBarChildren) {
               />
 
               <span className="text-wrapper-6">Settings</span>
-            </Link>
+            </NavLink>
             <div className="feature-2">
               <img
                 className="img-2"

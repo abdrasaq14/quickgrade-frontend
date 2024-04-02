@@ -299,7 +299,7 @@
   text-align: center;
   align-self: flex-end;
   position: fixed;
-  z-index: 9000;
+  z-index: 1000;
 }
 .set-exams-page-questions-form-multiple-choice-add-question-button:hover {
   background-color: #2d00f7;

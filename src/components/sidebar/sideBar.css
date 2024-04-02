@@ -242,10 +242,19 @@
 .feature-2:hover {
   background-color: var(--white);
   border-radius: 6px;
-  margin-left: 1rem;
+  margin-left: .5rem;
+  color: var(--button-color);
+  gap: 10px;
+  position: relative;
+  transition: 0.5s ease-in-out;
+}
+.active-link {
+  background-color: var(--white);
+  border-radius: 6px;
   color: var(--button-color);
   gap: 10px;
   padding: 10px;
+  margin: .5rem 0;
   position: relative;
   flex: 0 0 auto;
   transition: 0.5s ease-in-out;

@@ -4,7 +4,10 @@ import LecturerSideBar from "../lecturerSideBar/lecturerSideBar";
 import { useAuth } from "../../../components/protectedRoutes/protectedRoute";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useState, useEffect } from "react";
-import { InnerWrapper, OuterWrapper } from "../../../components/dashboardStyle/ResponsivenessStyle";
+import {
+  InnerWrapper,
+  OuterWrapper,
+} from "../../../components/dashboardStyle/ResponsivenessStyle";
 
 interface StudentsResultsDetail {
   studentId: string;
@@ -22,7 +25,7 @@ function LecturerGrades() {
   const [studentsResultsDetail, setStudentsResultsDetail] = useState<
     StudentsResultsDetail[]
   >([]);
-  const [selectedSemester, setSelectedSemester] = useState("first semester");
+  const [selectedSemester, setSelectedSemester] = useState("First");
   // const [secondSemester, setSecondSemester] = useState("second");
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +42,7 @@ function LecturerGrades() {
           setStudentsResultsDetail(res.data.StudentResult);
         }
       } catch (error) {
-        console.log("Error fetching dashboard data:", error);
+        /* empty */
       }
     };
 
@@ -50,9 +53,7 @@ function LecturerGrades() {
       <LecturerSideBar />
       <InnerWrapper>
         {lecturerData && (
-          <Header
-            newUser={`${lecturerData.title}, ${lecturerData.firstName}`}
-          />
+          <Header newUser={`${lecturerData.title} ${lecturerData.firstName}`} />
         )}
 
         {studentsResultsDetail.length > 0 ? (
@@ -78,8 +79,8 @@ function LecturerGrades() {
                         value={selectedSemester}
                         onChange={(e) => setSelectedSemester(e.target.value)}
                       >
-                        <option value="first semester">First</option>
-                        <option value="second semester">Second</option>
+                        <option value="First">First</option>
+                        <option value="Second">Second</option>
                       </select>
                     </div>
                   </div>
@@ -158,8 +159,8 @@ function LecturerGrades() {
                     value={selectedSemester}
                     onChange={(e) => setSelectedSemester(e.target.value)}
                   >
-                    <option value="first semester">First</option>
-                    <option value="second semester">Second</option>
+                    <option value="First">First</option>
+                    <option value="Second">Second</option>
                   </select>
                 </div>
               </div>

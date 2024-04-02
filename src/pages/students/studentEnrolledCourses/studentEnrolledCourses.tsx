@@ -41,9 +41,7 @@ function StudentEnrolledCourses() {
         } else if (studentRes.status === 200 && studentRes.data.exams) {
           setExams(studentRes.data.exams);
         }
-      } catch (error) {
-        console.log("Error fetching dashboard data:", error);
-      }
+      } catch (error) { /* empty */ }
     };
 
     fetchData();
