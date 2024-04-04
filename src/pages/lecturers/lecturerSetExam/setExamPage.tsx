@@ -24,9 +24,8 @@ import { nanoid } from "nanoid";
 import { fetchDraftExamDetail } from "../../../api/exams";
 import { useDispatch, useSelector } from "react-redux";
 import { setLecturer } from "../../../app/lecturer/lecturerSlice";
-
-import AddSectionModal from "../../../components/Modal/ModalAdjusted";
 import { RootState } from "../../../app/store";
+import Modal from "../../../components/AdjustedModal/ModalAdjusted";
 interface Question {
   id: string;
   type: "objectives" | "theory" | "fill-in-the-blank";
@@ -578,7 +577,7 @@ export default function SetExamPage() {
                 <div className="set-exams-page-session-form-container">
                   {/* add modal pop up fixed position */}
                   {popup && (
-                    <AddSectionModal
+                    <Modal
                       children={{
                         childElement: (
                           <>
