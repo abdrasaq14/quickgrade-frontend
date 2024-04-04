@@ -25,7 +25,7 @@ import { fetchDraftExamDetail } from "../../../api/exams";
 import { useDispatch, useSelector } from "react-redux";
 import { setLecturer } from "../../../app/lecturer/lecturerSlice";
 
-import AddSectionModal from "../../../components/Modal/Modal";
+import AddSectionModal from "../../../components/Modal/ModalAdjusted";
 import { RootState } from "../../../app/store";
 interface Question {
   id: string;

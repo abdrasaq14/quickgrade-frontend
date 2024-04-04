@@ -19,13 +19,14 @@ import SetExamPage from "./pages/lecturers/lecturerSetExam/setExamPage";
 import { StudentProtectedRoute } from "./components/protectedRoutes/protectedRoute";
 import { LecturerProtectedRoute } from "./components/protectedRoutes/protectedRoute";
 
-
 import StudentsResults from "./pages/students/studentsresults/Students-Results";
 
 import LecturerGrades from "./pages/lecturers/lecturesGradeExam/lec_grade";
 
 import GradeExamPage from "./pages/grade_exams_page/GradeExamPage";
 import GradeExamTheory from "./pages/gradeExamTheory/GradeExamTheory";
+import ScreenSizeChecker from "./components/screenSize/SmallScreenSize";
+import BigScreenSizeChecker from "./components/screenSize/BigScreenSize";
 
 function App() {
   return (
@@ -39,10 +40,39 @@ function App() {
           element={
             <LecturerProtectedRoute>
               <Routes>
-                <Route index element={<LecturerDashboard />} />
-                <Route path="results" element={<LecturerResults />} />
-                <Route path="set-exams" element={<SetExamPage />} />
-                <Route path="grade-exams" element={<LecturerGrades />} />
+                <Route
+                  index
+                  element={
+                    <ScreenSizeChecker>
+                      <LecturerDashboard />
+                    </ScreenSizeChecker>
+                  }
+                />
+
+                <Route
+                  path="results"
+                  element={
+                    <BigScreenSizeChecker>
+                      <LecturerResults />
+                    </BigScreenSizeChecker>
+                  }
+                />
+                <Route
+                  path="set-exams"
+                  element={
+                    <BigScreenSizeChecker>
+                      <SetExamPage />
+                    </BigScreenSizeChecker>
+                  }
+                />
+                <Route
+                  path="grade-exams"
+                  element={
+                    <BigScreenSizeChecker>
+                      <LecturerGrades />
+                    </BigScreenSizeChecker>
+                  }
+                />
                 <Route
                   path="change-password"
                   element={<ChangePasswordPage />}

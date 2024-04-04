@@ -12,7 +12,7 @@ import {
 import { fetchExamTimeTable } from "../../../api/exams";
 import { Exam } from "../../../interfaces/examsInterface";
 import { useSelector } from "react-redux";
-import CheckIfDraftModal from "../../../components/Modal/Modal";
+import CheckIfDraftModal from "../../../components/Modal/ModalAdjusted";
 import { Link } from "react-router-dom";
 // import { FaEdit } from "react-icons/fa";
 interface DraftCourseState {
